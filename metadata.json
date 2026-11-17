@@ -1,0 +1,8 @@
+{
+  "name": "Pier 25",
+  "description": "Pier 25 restaurant and artisanal café platform featuring handcrafted coffee, laminated croissants, interactive menu, online ordering, table reservations, AI concierge, and owner management studio.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

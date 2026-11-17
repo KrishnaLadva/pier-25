@@ -1,0 +1,19 @@
+{
+  "name": "resturent",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "start": "node server.mjs",
+    "build": "node build.mjs",
+    "lint": "eslint firestore.rules && node --check server.mjs ai-service.mjs backend-store.mjs build.mjs booking.js slider.js app.js firebase-client.js cart-checkout.js ai-concierge.js owner-dashboard.js"
+  },
+  "dependencies": {
+    "@firebase/eslint-plugin-security-rules": "^0.0.2",
+    "@google/genai": "^3.3.0",
+    "esbuild": "^0.28.2",
+    "eslint": "^10.15.0",
+    "firebase": "^13.3.0"
+  }
+}

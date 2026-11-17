@@ -3,311 +3,851 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pier 25 — Artisanal Coffee, Dining, Online Ordering &amp; Table Reservations</title>
+  <meta name="description" content="Pier 25 restaurant and artisanal café platform featuring handcrafted coffee, laminated croissants, interactive menu, online ordering, table reservations, AI concierge, and owner management studio.">
+  <meta property="og:title" content="Pier 25 — Artisanal Coffee, Dining &amp; Culinary AI">
+  <meta property="og:description" content="Artisanal coffee, hand-laminated croissants, signature Indian dining, AI food concierge, online ordering, and table reservations at Pier 25.">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="res.css">
 </head>
-  <body>
-    <header>
-      <div class="header">
-            <div class="headerbar">
-              <div class="account">
-                <ul>
-                      <a href="#">
-                        <li>
-                          <i class="fa-solid fa-house-chimney"></i>
-                        </li>
-                      </a>
-
-                      <a href="#">
-                      <li>
-                        <i class="fa-solid fa-magnifying-glass searchicon" id="searchicon1"></i>
-                      </li>
-                      </a>
-                      <div class="search" id="searchinput1">
-                        <input type="search">
-                        <i class="fa-solid fa-magnifying-glass srchicon"></i>
-                      </div>
-                    
-                    <a href="#">
-                      <li>
-                        <i class="fa-solid fa-user"id="user-mb"></i>
-                      </li>
-                    </a>
-                </ul>
-              </div>
-              <div class="nav">
-                <ul>
-                    <a href="#">
-                      <li>Home</li>
-                    </a>
-                    <a href="#">
-                      <li>About Us</li>
-                    </a>
-                    <a href="#">
-                      <li>Food Menu</li>
-                    </a>
-                    <a href="#">
-                      <li>Book Table</li>
-                    </a>
-                </ul>
-              </div>
-              
-
+<body>
+  <header class="site-header">
+    <div class="header">
+      <div class="headerbar" aria-label="Mobile navigation">
+        <div class="account">
+          <ul>
+            <li><a href="#home" aria-label="Home"><i class="fa-solid fa-house-chimney"></i></a></li>
+            <li><button type="button" class="icon-btn searchicon" id="searchicon1" aria-label="Search menu"><i class="fa-solid fa-magnifying-glass"></i></button></li>
+            <li><button type="button" class="icon-btn" id="open-ai-mb" aria-label="AI Food Concierge"><i class="fa-solid fa-wand-magic-sparkles"></i></button></li>
+            <li><button type="button" class="icon-btn" id="open-cart-mb" aria-label="Open Cart"><i class="fa-solid fa-bag-shopping"></i> <span class="cart-badge tabular-nums" data-cart-count>0</span></button></li>
+            <li><button type="button" class="icon-btn" id="user-mb" aria-label="Account"><i class="fa-solid fa-user"></i></button></li>
+          </ul>
+          <div class="search" id="searchinput1">
+            <input type="search" id="mobile-header-search" placeholder="Search dishes..." aria-label="Search dishes">
+            <button type="button" class="srchicon" id="mobile-header-search-btn" aria-label="Run search"><i class="fa-solid fa-magnifying-glass"></i></button>
+          </div>
         </div>
-        <div class="search" id="searchinput">
-          <input type="search">
-          <i class="fa-solid fa-magnifying-glass srchicon"></i>
-        </div>
-    <div class="logo">KRAZZY</div>
-    <div class="bar">
-        <i class="fa-solid fa-bars"></i>
-        <i class="fa-solid fa-xmark" id="hdcross"></i>
-    </div>
-      <div class="nav">
-        <ul>
-            <a href="#">
-              <li>Home</li>
-            </a>
-            <a href="#">
-              <li>About Us</li>
-            </a>
-            <a href="#">
-              <li>Food Menu</li>
-            </a>
-            <a href="#">
-              <li>Book Table</li>
-            </a>
-        </ul>
+        <nav class="nav" aria-label="Mobile menu links">
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#coffee-croissant-collection">Coffee &amp; Croissants</a></li>
+            <li><a href="#interactive-menu">Food Menu</a></li>
+            <li><a href="#new-food-items">New Items</a></li>
+            <li><a href="#reviews-section">Reviews</a></li>
+            <li><a href="#book-table" class="book-table-link">Book Table</a></li>
+          </ul>
+        </nav>
       </div>
+
+      <a href="#home" class="logo" aria-label="Pier 25 Home">
+        <span class="logo-wordmark">Pier 25</span>
+        <span class="logo-sub">DineFlow AI</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#coffee-croissant-collection">Coffee &amp; Croissants</a></li>
+          <li><a href="#interactive-menu">Food Menu</a></li>
+          <li><a href="#new-food-items">New Arrivals</a></li>
+          <li><a href="#reviews-section">Reviews</a></li>
+          <li><a href="#book-table" class="book-table-link" aria-label="Book Table">Book Table</a></li>
+          <li id="nav-owner-wrap" hidden>
+            <button type="button" class="owner-nav-btn" id="open-owner-nav-btn">Owner Studio</button>
+          </li>
+        </ul>
+      </nav>
+
       <div class="account">
         <ul>
-          <a href="#">
-            <li>
-              <i class="fa-solid fa-house-chimney"></i>
-            </li>
-          </a>
-          <a href="#">
-            <li>
-              <i class="fa-solid fa-magnifying-glass searchicon" id="searchicon2"></i>
-            </li>
-          </a>
-          <div class="search" id="searchinput2">
-            <input type="search">
-            <i class="fa-solid fa-magnifying-glass srchicon"></i>
-          </div>
-          
-          <a href="#">
-            <li>
-              <i class="fa-solid fa-user" id="user-lap"></i>
-            </li>
-          </a>
-          
+          <li>
+            <button type="button" class="icon-btn searchicon" id="searchicon2" aria-label="Toggle quick search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+            <div class="search" id="searchinput2">
+              <input type="search" id="desktop-header-search" placeholder="Search dishes or cravings..." aria-label="Search dishes">
+              <button type="button" class="srchicon" id="desktop-header-search-btn" aria-label="Submit search"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+          </li>
+          <li>
+            <button type="button" class="header-action-btn" id="open-ai-btn" aria-label="Open AI Food Concierge">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+              <span>AI Concierge</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="header-action-btn" id="open-cart-btn" aria-label="Open Shopping Cart">
+              <i class="fa-solid fa-bag-shopping"></i>
+              <span>Cart</span>
+              <span class="cart-badge tabular-nums" data-cart-count>0</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="header-account-btn" id="user-lap" aria-label="Sign in or open account">
+              <i class="fa-solid fa-user"></i>
+              <span id="header-user-label">Sign In</span>
+            </button>
+          </li>
         </ul>
       </div>
+
+      <button type="button" class="bar" aria-label="Open mobile navigation">
+        <i class="fa-solid fa-bars"></i>
+        <i class="fa-solid fa-xmark" id="hdcross"></i>
+      </button>
     </div>
-    </header>
-    <div class="Home">
-      <div class="main-slide">
-    
+  </header>
 
+  <main class="Home" id="home">
+    <section class="main-slide" aria-label="Hero showcase">
+      <div class="hero-copy">
+        <p class="eyebrow">Ahmedabad · Artisanal Kitchen &amp; Culinary Intelligence</p>
+        <h1>Enjoy <span>Delicious Food</span> Crafted for Modern Living</h1>
+        <p class="hero-lead">Experience wood-fired paneer sizzlers, crispy South Indian classics, handcrafted brioche burgers, and specialty chai—paired with instant online ordering, table reservations, and our Gemini AI Food Concierge.</p>
+        <div class="hero-actions">
+          <button type="button" class="red-btn" id="hero-book-btn">Reserve Table <i class="fa-solid fa-arrow-right-long"></i></button>
+          <a href="#food-menu" class="white-btn hero-secondary-btn">Explore Menu</a>
+          <button type="button" class="gold-outline-btn" id="hero-ai-btn"><i class="fa-solid fa-wand-magic-sparkles"></i> Ask AI Concierge</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img src="men4.png" alt="Pier 25 signature chef platter">
+      </div>
+    </section>
+
+    <section class="food-items" aria-label="Signature spotlight dishes">
+      <div class="item" data-dish-id="crispy-grill-wrap">
         <div>
-          <h1>Enjoy<span> Delicious Food</span>in your Healthy Life</h1>
-          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi, ut sed voluptates explicabo eligendi vero excepturi exercitationem quas, dolorem voluptate reiciendis esse laborum perspiciatis quisquam.</p>
-
-
-          <button class="red-btn">Visit Now <i class="fa-solid fa-arrow-right-long"></i></button>
+          <img src="mc5.png" alt="Crispy Grill Wrap">
         </div>
+        <h1>Crispy Grill Wrap</h1>
+        <p>Tender crispy patty wrapped with fresh lettuce, cheddar, and smoky house sauce.</p>
+        <p class="item-price tabular-nums">₹249</p>
+        <button class="white-btn" type="button" data-quick-dish="crispy-grill-wrap">See Menu</button>
+      </div>
+      <div class="item" data-dish-id="roasted-black-coffee">
         <div>
-          <img src="men4.png" alt="">
-          
+          <img src="mc3.png" alt="Roasted Black Coffee">
         </div>
+        <h1>Roasted Black Coffee</h1>
+        <p>Freshly brewed dark roast coffee served piping hot with rich cacao aroma.</p>
+        <p class="item-price tabular-nums">₹129</p>
+        <button class="red-btn" type="button" data-quick-dish="roasted-black-coffee">See Menu</button>
       </div>
+      <div class="item" data-dish-id="jalapeno-cheese-burger">
+        <div>
+          <img src="mc4.png" alt="Jalapeño Cheese Burger">
+        </div>
+        <h1>Jalapeño Cheese Burger</h1>
+        <p>Crispy golden patty topped with melted cheese, jalapeños, and zesty sauce.</p>
+        <p class="item-price tabular-nums">₹229</p>
+        <button class="white-btn" type="button" data-quick-dish="jalapeno-cheese-burger">See Menu</button>
+      </div>
+    </section>
 
-      <div class="food-items">
-        <div class="item">
-          <div>
-            <img src="mc5.png" alt="">
-          </div>
-          <h1>Food name</h1>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, praesentium.</p>
-          <button class="white-btn">See Menu</button>
-        </div>
-        <div class="item">
-          <div>
-            <img src="mc3.png" alt="">
-          </div>
-          <h1>Food name</h1>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, praesentium.</p>
-          <button class="red-btn">See Menu</button>
-        </div>
-        <div class="item">
-          <div>
-            <img src="mc4.png" alt="">
-          </div>
-          <h1>Food name</h1>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, praesentium.</p>
-          <button class="white-btn">See Menu</button>
-        </div>
-        
+    <section class="main-slide1" id="about-us">
+      <div class="food-img">
+        <img src="mc1.png" alt="Fresh ingredients at Pier 25 kitchen">
       </div>
-      <div class="main-slide1">
-        <div class="food-img">
-          <img src="mc1.png" alt="">
+      <div class="question">
+        <div>
+          <h2>Why Guests Choose <span>Pier 25</span></h2>
         </div>
-        <div class="question">
+        <div class="q-ans">
           <div>
-            <h2>Why People Choose Us?</h2>
+            <img src="mc7.png" alt="Freshly prepared desserts and pairings">
+          </div>
+          <div>
+            <h4>Curated Farm-Fresh Ingredients</h4>
+            <p>Every wrap, dosa, burger, and sizzler is cooked to order with whole spices and zero shortcuts.</p>
           </div>
         </div>
         <div class="q-ans">
           <div>
-           <img src="mc7.png" alt="">
+            <img src="mc5.png" alt="AI culinary recommendations">
           </div>
           <div>
-            <h4>
-            Choose your favourite
-          </h4>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p></div>
+            <h4>AI Concierge &amp; Visual Dish Search</h4>
+            <p>Snap or upload a photo of any craving, or ask our Gemini Food Concierge for tailored pairings.</p>
+          </div>
         </div>
         <div class="q-ans">
           <div>
-           <img src="mc5.png" alt="">
+            <img src="mc6.png" alt="Loyalty rewards and live tracking">
           </div>
           <div>
-            <h4>
-            Choose your favourite
-          </h4>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing. </p></div>
-        </div>
-        <div class="q-ans">
-          <div>
-           <img src="mc6.png" alt="">
+            <h4>Live Order Tracking &amp; Rewards</h4>
+            <p>Earn loyalty points on every order and review, redeemable seamlessly at checkout.</p>
           </div>
-          <div>
-            <h4>
-            Choose your favourite
-          </h4>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing .</p>
         </div>
-
-
       </div>
+    </section>
 
-    </div>
-    <div class="main-slide3">
+    <section class="main-slide3" id="food-menu">
       <div class="fav-head">
         <h3>Our Popular Food Items</h3>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugit incidunt et modi minus ullam itaque labore facilis qui doloribus deleniti corrupti, consequatur ducimus! Repellat aliquid minima, expedita quae dolores pariatur.
-
-        </p>
+        <p>Explore our customer favorites, freshly prepared daily with signature spices, crisp greens, and bold flavors.</p>
       </div>
       <div class="fav-food">
-        <div class="item">
+        <div class="item" data-dish-id="choco-frappe-combo" tabindex="0">
           <div>
-            <img src="mc8.png" alt="">
+            <img src="mc8.png" alt="Choco Frappe Burger Combo">
           </div>
-          <h3>Food name</h3>
-          <p>Lorem ipsum dolor Vero natus repellat ullam beatae non a fugiat odit sed nesciunt! </p>
-          <p class="fav-price">$2.90</p>
+          <h3>Choco Frappe Combo</h3>
+          <p>Signature crispy burger paired with a rich, chilled chocolate frappe.</p>
+          <p class="fav-price tabular-nums">₹349</p>
         </div>
-        <div class="item">
+        <div class="item" data-dish-id="piri-piri-fries-meal" tabindex="0">
           <div>
-            <img src="mc9.png" alt="">
+            <img src="mc9.png" alt="Piri Piri Fries Meal">
           </div>
-          <h3>Food name</h3>
-          <p>Lorem ipsum dolor Vero natus repellat ullam beatae non a fugiat odit sed nesciunt! </p>
-          <p class="fav-price">$2.93</p>
+          <h3>Piri Piri Fries Meal</h3>
+          <p>Classic crispy burger served with golden fries and tangy piri piri spice.</p>
+          <p class="fav-price tabular-nums">₹369</p>
         </div>
-        <div class="item">
+        <div class="item" data-dish-id="korean-spicy-duo" tabindex="0">
           <div>
-            <img src="mc10.jpg" alt="">
+            <img src="mc10.jpg" alt="Korean Spicy Duo Meal">
           </div>
-          <h3>Food name</h3>
-          <p>Lorem ipsum dolor Vero natus repellat ullam beatae non a fugiat odit sed nesciunt! </p>
-          <p class="fav-price">$2.95</p>
+          <h3>Korean Spicy Duo</h3>
+          <p>Two fiery Korean-glazed crispy burgers with fries and sparkling cooler.</p>
+          <p class="fav-price tabular-nums">₹499</p>
         </div>
-        <div class="item">
+        <div class="item" data-dish-id="classic-crispy-burger" tabindex="0">
           <div>
-            <img src="mc11.png" alt="">
+            <img src="mc11.png" alt="Classic Crispy Burger">
           </div>
-          <h3>Food name</h3>
-          <p>Lorem ipsum dolor Vero natus repellat ullam beatae non a fugiat odit sed nesciunt! </p>
-          <p class="fav-price">$2.97</p>
+          <h3>Classic Crispy Burger</h3>
+          <p>Crunchy herb-seasoned patty layered with crisp lettuce and creamy mayo.</p>
+          <p class="fav-price tabular-nums">₹219</p>
         </div>
       </div>
       <div class="dsgn"></div>
+    </section>
 
-    </div>
-    <div class="main-slide4">
-      <div class="chef-feed">
-        <h2>Customer<span style="color:red;"> Feedback</span></h2>
-        <p>Lorem ipsum, dolor Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam nobis corporis error non mollitia officia doloremque eaque nam recusandae aperiam aut incidunt necessitatibus minima ducimus, veritatis sunt! Veniam, aspernatur Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reprehenderit inventore accusamus natus tenetur, quasi veritatis eos rem perferendis ut ipsum harum voluptate maiores nam expedita dolorum! Laudmpora fugiat sunt at recusandae eius, tempore ea repellendus eveniet animi minima voluptatibus vitae alias iste aut eum ducimus sapiente. Impedit, eligendi.
-        </p>
-       <div class="chef-detail">
-         <div>         
-           <img src="t6.png" alt="">
-          </div>
-          <div>
-           <h6>Developer dude</h6>
-           <p>Web Devloper</p>
+    <section class="cafe-collection-section" id="coffee-croissant-collection" aria-labelledby="cafe-collection-heading">
+      <div class="cafe-collection-header">
+        <div>
+          <p class="eyebrow">Artisanal Roastery &amp; Viennoiserie</p>
+          <h2 id="cafe-collection-heading">Coffee, <span>Croissants</span> &amp; Bakery Collection</h2>
+          <p class="cafe-collection-lead">Hand-laminated cultured butter croissants, single-origin espresso pours, cold brews, and small-batch desserts crafted fresh daily.</p>
+        </div>
+        <div class="cafe-section-nav" id="cafe-section-nav" aria-label="Jump to Coffee and Croissant sections"></div>
+      </div>
+      <div id="coffee-croissant-sections" class="cafe-sections-stack" aria-live="polite"></div>
+    </section>
+
+    <section class="catalog-section" id="interactive-menu" aria-labelledby="catalog-heading">
+      <div class="catalog-header">
+        <div>
+          <p class="eyebrow">Full Interactive Menu</p>
+          <h2 id="catalog-heading">Explore Dishes, Search &amp; Order Online</h2>
+        </div>
+        <div class="catalog-tools">
+          <div class="catalog-search-box">
+            <input type="search" id="menu-search-input" placeholder="Search coffees, croissants, ingredients, or ask e.g. 'cold brew or almond croissant'..." aria-label="Search menu items">
+            <button type="button" id="ai-search-btn" class="btn-gold-sm" title="AI Semantic Search">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> AI Search
+            </button>
+            <button type="button" id="open-visual-search-btn" class="btn-outline-sm" title="Search by food photo">
+              <i class="fa-solid fa-camera"></i> Visual Search
+            </button>
           </div>
         </div>
-      <div class="chef-vic">
-            <div>
-              <i class="fa-solid fa-hand-peace"></i>
-              <h4>68</h4>
-              <p> Lorem ipsum dolor sit amet.</p>
+      </div>
+
+      <div class="catalog-filters-bar">
+        <div class="category-tabs" id="menu-category-tabs" role="tablist" aria-label="Menu categories"></div>
+        <div class="filter-controls">
+          <select id="menu-subcategory-filter" aria-label="Filter by subcategory">
+            <option value="all">All Subcategories</option>
+          </select>
+          <select id="menu-veg-filter" aria-label="Filter by Veg or Non-Veg">
+            <option value="all">Veg &amp; Non-Veg</option>
+            <option value="veg">Veg Only</option>
+            <option value="non-veg">Non-Veg Only</option>
+          </select>
+          <select id="menu-highlight-filter" aria-label="Filter by menu highlight">
+            <option value="all">All Highlights</option>
+            <option value="bestseller">Bestsellers</option>
+            <option value="new">New Arrivals</option>
+            <option value="recommended">Recommended</option>
+          </select>
+          <select id="menu-dietary-filter" aria-label="Filter by dietary tag">
+            <option value="all">All Dietary</option>
+            <option value="Vegetarian">Vegetarian</option>
+            <option value="Vegan">Vegan</option>
+            <option value="Gluten-Free">Gluten-Free</option>
+            <option value="High-Protein">High-Protein</option>
+            <option value="Spicy">Spicy</option>
+          </select>
+          <select id="menu-sort-select" aria-label="Sort menu items">
+            <option value="featured">Featured First</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="prep-asc">Fastest Prep</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="ai-search-banner" class="ai-search-banner" hidden></div>
+      <div id="menu-catalog-grid" class="menu-catalog-grid" aria-live="polite"></div>
+    </section>
+
+    <section id="new-food-items" class="new-food-section" aria-labelledby="new-food-heading">
+      <div class="new-food-header">
+        <div>
+          <h2 id="new-food-heading">New <span>Food Items</span></h2>
+          <p>Fresh chef specials, sizzling platters, and handcrafted café pairings.</p>
+        </div>
+        <div class="new-food-controls">
+          <button type="button" id="new-food-prev" class="slider-btn" aria-label="Previous new food items">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <button type="button" id="new-food-toggle" class="slider-btn slider-toggle-btn" aria-label="Pause auto slide" aria-pressed="false">
+            <i class="fa-solid fa-pause"></i>
+          </button>
+          <button type="button" id="new-food-next" class="slider-btn" aria-label="Next new food items">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+      <div class="new-food-viewport" id="new-food-viewport">
+        <div class="new-food-track" id="new-food-track">
+          <article class="new-food-slide">
+            <div class="new-food-card" data-dish-id="artisan-brioche-burger">
+              <div class="new-food-img-wrap">
+                <img src="burger.jpg" alt="Artisan Brioche Burger">
+                <span class="new-food-badge">New</span>
+              </div>
+              <div class="new-food-body">
+                <h3>Artisan Brioche Burger</h3>
+                <p>Herb-crusted patty on toasted sesame brioche with roasted fries and olives.</p>
+                <div class="new-food-foot">
+                  <p class="new-food-price tabular-nums">₹399</p>
+                  <button type="button" class="btn-gold-sm slider-add-btn" data-add-dish="artisan-brioche-burger">+ Add</button>
+                </div>
+              </div>
             </div>
-      <div>
-        <i class="fa-solid fa-trophy"></i>
-        <h4>956</h4>
-        <p> Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+          </article>
+          <article class="new-food-slide">
+            <div class="new-food-card" data-dish-id="crispy-masala-dosa">
+              <div class="new-food-img-wrap">
+                <img src="dosa.jpg" alt="Crispy Masala Dosa">
+                <span class="new-food-badge">New</span>
+              </div>
+              <div class="new-food-body">
+                <h3>Crispy Masala Dosa</h3>
+                <p>Golden crepe stuffed with spiced potato masala, coconut chutney, and sambar.</p>
+                <div class="new-food-foot">
+                  <p class="new-food-price tabular-nums">₹279</p>
+                  <button type="button" class="btn-gold-sm slider-add-btn" data-add-dish="crispy-masala-dosa">+ Add</button>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="new-food-slide">
+            <div class="new-food-card" data-dish-id="smoky-paneer-sizzler">
+              <div class="new-food-img-wrap">
+                <img src="sizzlers.jpg" alt="Smoky Paneer Sizzler">
+                <span class="new-food-badge">New</span>
+              </div>
+              <div class="new-food-body">
+                <h3>Smoky Paneer Sizzler</h3>
+                <p>Char-grilled cottage cheese over stir-fried noodles, veggies, and fries.</p>
+                <div class="new-food-foot">
+                  <p class="new-food-price tabular-nums">₹489</p>
+                  <button type="button" class="btn-gold-sm slider-add-btn" data-add-dish="smoky-paneer-sizzler">+ Add</button>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="new-food-slide">
+            <div class="new-food-card" data-dish-id="healthy-protein-bowl">
+              <div class="new-food-img-wrap">
+                <img src="dish.png" alt="Healthy Protein Bowl">
+                <span class="new-food-badge">New</span>
+              </div>
+              <div class="new-food-body">
+                <h3>Healthy Protein Bowl</h3>
+                <p>Grilled paneer cubes with edamame, sweet corn, tomatoes, and crisp greens.</p>
+                <div class="new-food-foot">
+                  <p class="new-food-price tabular-nums">₹349</p>
+                  <button type="button" class="btn-gold-sm slider-add-btn" data-add-dish="healthy-protein-bowl">+ Add</button>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="new-food-slide">
+            <div class="new-food-card" data-dish-id="masala-puff-chai">
+              <div class="new-food-img-wrap">
+                <img src="m2.png" alt="Masala Puff and Chai Combo">
+                <span class="new-food-badge">New</span>
+              </div>
+              <div class="new-food-body">
+                <h3>Masala Puff &amp; Chai</h3>
+                <p>Flaky spiced puff pastries paired with a steaming cup of masala chai.</p>
+                <div class="new-food-foot">
+                  <p class="new-food-price tabular-nums">₹199</p>
+                  <button type="button" class="btn-gold-sm slider-add-btn" data-add-dish="masala-puff-chai">+ Add</button>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="new-food-slide">
+            <div class="new-food-card" data-dish-id="methi-thepla-chai">
+              <div class="new-food-img-wrap">
+                <img src="m7.png" alt="Methi Thepla and Chai">
+                <span class="new-food-badge">New</span>
+              </div>
+              <div class="new-food-body">
+                <h3>Methi Thepla &amp; Chai</h3>
+                <p>Spiced flatbread rolls served warm with tangy mango chundo and hot chai.</p>
+                <div class="new-food-foot">
+                  <p class="new-food-price tabular-nums">₹179</p>
+                  <button type="button" class="btn-gold-sm slider-add-btn" data-add-dish="methi-thepla-chai">+ Add</button>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="new-food-slide">
+            <div class="new-food-card" data-dish-id="muffin-cafe-latte">
+              <div class="new-food-img-wrap">
+                <img src="mc6.png" alt="Breakfast Muffin and Latte">
+                <span class="new-food-badge">New</span>
+              </div>
+              <div class="new-food-body">
+                <h3>Muffin &amp; Café Latte</h3>
+                <p>Toasted English muffin with savory patty, hash brown, and foamy latte.</p>
+                <div class="new-food-foot">
+                  <p class="new-food-price tabular-nums">₹319</p>
+                  <button type="button" class="btn-gold-sm slider-add-btn" data-add-dish="muffin-cafe-latte">+ Add</button>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="new-food-slide">
+            <div class="new-food-card" data-dish-id="choco-brownie-sundae">
+              <div class="new-food-img-wrap">
+                <img src="mc7.png" alt="Choco Oreo Sundae Trio">
+                <span class="new-food-badge">New</span>
+              </div>
+              <div class="new-food-body">
+                <h3>Choco Brownie Sundae</h3>
+                <p>Creamy soft-serve swirled with dark fudge brownie bites and crushed cookies.</p>
+                <div class="new-food-foot">
+                  <p class="new-food-price tabular-nums">₹199</p>
+                  <button type="button" class="btn-gold-sm slider-add-btn" data-add-dish="choco-brownie-sundae">+ Add</button>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="new-food-slide">
+            <div class="new-food-card" data-dish-id="chilled-sparkling-cola">
+              <div class="new-food-img-wrap">
+                <img src="coca.jpg" alt="Chilled Sparkling Cola">
+                <span class="new-food-badge">New</span>
+              </div>
+              <div class="new-food-body">
+                <h3>Chilled Sparkling Cola</h3>
+                <p>Ice-cold classic sparkling cola poured over fresh zesty lime slices.</p>
+                <div class="new-food-foot">
+                  <p class="new-food-price tabular-nums">₹89</p>
+                  <button type="button" class="btn-gold-sm slider-add-btn" data-add-dish="chilled-sparkling-cola">+ Add</button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
       </div>
+      <div class="new-food-dots" id="new-food-dots" role="tablist" aria-label="New food items slides"></div>
+    </section>
+
+    <section class="main-slide4" id="reviews-section">
+      <div class="chef-feed">
+        <h2>Guest <span>Reviews &amp; Rewards</span></h2>
+        <p class="chef-quote">Every dining experience earns Pier 25 Loyalty Rewards. Share your thoughts after dining or ordering and earn +15 bonus points toward your next meal.</p>
+        <div class="chef-detail">
+          <div>
+            <img src="t6.png" alt="Executive Chef Krishna Ladva">
+          </div>
+          <div>
+            <h6>Chef Krishna Ladva</h6>
+            <p>Culinary Founder · Pier 25</p>
+          </div>
+        </div>
+        <div id="reviews-list" class="reviews-grid"></div>
+        <form id="review-form" class="review-form">
+          <h4>Leave a Review</h4>
+          <div class="review-form-row">
+            <select id="review-rating" aria-label="Star rating">
+              <option value="5">5 Stars — Exceptional</option>
+              <option value="4">4 Stars — Great</option>
+              <option value="3">3 Stars — Good</option>
+              <option value="2">2 Stars — Fair</option>
+              <option value="1">1 Star — Needs Care</option>
+            </select>
+            <select id="review-dish" aria-label="Dish reviewed">
+              <option value="">Overall Dining Experience</option>
+            </select>
+          </div>
+          <textarea id="review-comment" rows="2" placeholder="Share what you loved about your dish or table experience..." required></textarea>
+          <div class="review-form-actions">
+            <button type="submit" class="btn-forest">Post Review (+15 pts)</button>
+            <span id="review-status" class="inline-status"></span>
+          </div>
+        </form>
       </div>
-
-      
-    </div>
-    <div class="chef">
-      <img src="chef-main.jpeg" alt="">
-    </div>
-
-  </div>
-  <div class="letter">
-    <div class="letter-head">
-      <h2>Subscribe<span> Newsletter</span></h2>
-    </div>
-    <div class="letter-input">
-      <div>
-        <input type="email" placeholder="Exmaple.com">
+      <div class="chef">
+        <img src="chef-main.jpeg" alt="Pier 25 Executive Chef plating signature dish">
       </div>
-      <button class="red-btn">Subscribe</button>
-    </div>
+    </section>
 
-  </div>
-  <div class="footer">
+    <section id="book-table" class="book-table-section" aria-labelledby="book-table-heading">
+      <div class="booking-card">
+        <div class="booking-header">
+          <h2 id="book-table-heading">Book a <span>Table</span></h2>
+          <p>Reserve your table in advance for a seamless dining experience at Pier 25.</p>
+        </div>
+        <form id="booking-form" class="booking-form" novalidate>
+          <div class="booking-grid">
+            <div class="booking-field">
+              <label for="booking-name">Name</label>
+              <input
+                type="text"
+                id="booking-name"
+                name="name"
+                placeholder="Your full name"
+                autocomplete="name"
+                required
+              >
+              <span class="field-error" id="error-name" role="alert" aria-live="polite"></span>
+            </div>
+            <div class="booking-field">
+              <label for="booking-date">Date</label>
+              <input
+                type="date"
+                id="booking-date"
+                name="date"
+                required
+              >
+              <span class="field-error" id="error-date" role="alert" aria-live="polite"></span>
+            </div>
+            <div class="booking-field">
+              <label for="booking-time">Time</label>
+              <input
+                type="time"
+                id="booking-time"
+                name="time"
+                required
+              >
+              <span class="field-error" id="error-time" role="alert" aria-live="polite"></span>
+            </div>
+            <div class="booking-field">
+              <label for="booking-party-size">Party Size</label>
+              <input
+                type="number"
+                id="booking-party-size"
+                name="partySize"
+                min="1"
+                max="20"
+                placeholder="2"
+                required
+              >
+              <span class="field-error" id="error-partySize" role="alert" aria-live="polite"></span>
+            </div>
+          </div>
+          <div class="booking-actions">
+            <button type="submit" class="red-btn booking-submit-btn">
+              Reserve Table <i class="fa-solid fa-calendar-check"></i>
+            </button>
+          </div>
+        </form>
+        <div id="booking-confirmation" class="booking-confirmation" role="status" aria-live="polite" hidden></div>
+        <div id="booking-list-wrapper" class="booking-list-wrapper" hidden>
+          <h3>Your Reservations</h3>
+          <ul id="booking-list" class="booking-list"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="letter" aria-label="Newsletter subscription">
+      <div class="letter-head">
+        <h2>Subscribe <span>Newsletter</span></h2>
+        <p>Seasonal tasting menus, loyalty perks, and private table events.</p>
+      </div>
+      <form id="newsletter-form" class="letter-input">
+        <div>
+          <input type="email" id="newsletter-email" placeholder="guest@example.com" required aria-label="Newsletter email">
+        </div>
+        <button type="submit" class="red-btn">Subscribe</button>
+      </form>
+      <p id="newsletter-status" class="inline-status"></p>
+    </section>
+  </main>
+
+  <footer class="footer">
     <div class="footer-1">
       <div class="logo">
-        <div class="logo">KRAZZY</div>
-
+        <span class="logo-wordmark">Pier 25</span>
+        <span class="logo-sub">DineFlow AI</span>
       </div>
-      <div>
-        <address>
-          <p>Email: krishnaladva5@gmail.com</p>
-          <p>Youtube: Krazzy Dude</p>
-          <p>Miss.Krishna ladva 25, <br>My Street, Ahmedabad <br> India </p>
-        </address>
-      </div>
-    
+      <address>
+        <p>Email: krishnaladva25@gmail.com</p>
+        <p>25 Heritage Courtyard, Ahmedabad, India</p>
+        <p>Open Daily · 10:00 AM – 11:00 PM</p>
+      </address>
     </div>
     <div class="footer-2">
-      <div class="logo">KRAZZY</div>
-      <h2>Powered by<em> Krazzy Dude</em></h2>
+      <div class="footer-links">
+        <a href="#food-menu">Menu</a> ·
+        <a href="#new-food-items">New Arrivals</a> ·
+        <a href="#book-table">Reservations</a> ·
+        <button type="button" class="text-link-btn" id="footer-owner-link">Owner Studio</button>
+      </div>
+      <h2>Powered by <em>Pier 25 DineFlow AI</em></h2>
+    </div>
+  </footer>
 
+  <!-- Backdrop for drawers -->
+  <div id="drawer-backdrop" class="drawer-backdrop" hidden></div>
+
+  <!-- Food Detail Modal -->
+  <div id="dish-modal" class="modal-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="dish-modal-title">
+    <div class="modal-card dish-modal-card">
+      <button type="button" class="modal-close" id="close-dish-modal" aria-label="Close dish details"><i class="fa-solid fa-xmark"></i></button>
+      <div id="dish-modal-content"></div>
     </div>
   </div>
 
+  <!-- Shopping Cart, Checkout & Live Order Tracking Drawer -->
+  <aside id="cart-drawer" class="side-drawer" hidden aria-hidden="true" aria-label="Shopping Cart and Checkout">
+    <div class="drawer-header">
+      <div>
+        <h3>Your Order &amp; Checkout</h3>
+        <p class="drawer-sub">Promo codes: <code>PIER10</code> (10% off) · <code>CHEF100</code> (₹100 off ₹499+)</p>
+      </div>
+      <button type="button" class="modal-close" id="close-cart-btn" aria-label="Close cart drawer"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="drawer-body">
+      <div id="cart-empty-state" class="empty-state">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <p>Your basket is empty. Add signature dishes from the menu or ask our AI Concierge.</p>
+      </div>
+      <ul id="cart-items-list" class="cart-items-list"></ul>
 
+      <form id="checkout-form" class="checkout-form" hidden>
+        <div class="checkout-section">
+          <label>Fulfillment
+            <select id="checkout-order-type">
+              <option value="delivery">Delivery (₹40 · Free over ₹499)</option>
+              <option value="pickup">Express Pickup (Free)</option>
+              <option value="dine_in">Dine-In Table Service (Free)</option>
+            </select>
+          </label>
+          <label>Guest Name <input type="text" id="checkout-name" placeholder="Full name" required></label>
+          <label>Phone <input type="tel" id="checkout-phone" placeholder="+91 98..." required></label>
+          <label id="checkout-address-group">Delivery Address
+            <input type="text" id="checkout-address" placeholder="Street, apartment, landmark">
+          </label>
+          <label>Kitchen Notes <input type="text" id="checkout-notes" placeholder="Extra spice, allergies..."></label>
+        </div>
 
-    <script src="app.js"></script>
+        <div class="promo-row">
+          <input type="text" id="checkout-promo" placeholder="Promo code (e.g. PIER10)" aria-label="Promo code">
+          <button type="button" id="apply-promo-btn" class="btn-outline-sm">Apply</button>
+        </div>
+
+        <label class="loyalty-check">
+          <input type="checkbox" id="checkout-redeem-points">
+          <span id="checkout-redeem-label">Redeem Loyalty Points</span>
+        </label>
+
+        <div class="checkout-section">
+          <label>Payment Method
+            <select id="checkout-payment-method">
+              <option value="card">Credit / Debit Card</option>
+              <option value="upi">UPI Instant Pay</option>
+              <option value="cash_on_delivery">Pay on Delivery / Table</option>
+            </select>
+          </label>
+          <div id="payment-card-fields" class="payment-grid">
+            <input type="text" id="checkout-card-number" placeholder="Card number (16 digits)" inputmode="numeric">
+            <input type="text" id="checkout-card-expiry" placeholder="MM/YY">
+            <input type="text" id="checkout-card-cvv" placeholder="CVV" inputmode="numeric">
+          </div>
+          <div id="payment-upi-fields" hidden>
+            <input type="text" id="checkout-upi-id" placeholder="yourname@okbank">
+          </div>
+        </div>
+
+        <div id="checkout-summary" class="checkout-summary"></div>
+        <button type="submit" class="btn-forest btn-full">Verify Payment &amp; Place Order</button>
+      </form>
+      <p id="checkout-status" class="form-status" aria-live="polite"></p>
+
+      <div id="order-tracking-panel" class="order-tracking-panel" hidden></div>
+      <form id="order-lookup-form" class="order-lookup-form">
+        <input type="text" id="order-lookup-input" placeholder="Track order ID (e.g. ORD-...)" aria-label="Track order ID">
+        <button type="submit" class="btn-outline-sm">Track</button>
+      </form>
+    </div>
+  </aside>
+
+  <!-- AI Food Concierge Drawer -->
+  <aside id="ai-drawer" class="side-drawer" hidden aria-hidden="true" aria-label="AI Food Concierge">
+    <div class="drawer-header">
+      <div>
+        <h3>AI Food Concierge</h3>
+        <p class="drawer-sub">Powered by Google Gemini Culinary Intelligence</p>
+      </div>
+      <button type="button" class="modal-close" id="close-ai-btn" aria-label="Close AI drawer"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="ai-tabs" role="tablist">
+      <button type="button" class="ai-tab-btn active" data-ai-tab="chat" role="tab" aria-selected="true">Concierge Chat</button>
+      <button type="button" class="ai-tab-btn" data-ai-tab="recommend" role="tab" aria-selected="false">For You</button>
+      <button type="button" class="ai-tab-btn" data-ai-tab="visual" role="tab" aria-selected="false">Visual Search</button>
+    </div>
+    <div class="drawer-body">
+      <div data-ai-panel="chat">
+        <div class="ai-quick-prompts">
+          <button type="button" class="btn-outline-sm" data-ai-prompt="Pair a bestselling coffee with a flaky croissant.">Coffee + Croissant Pairing</button>
+          <button type="button" class="btn-outline-sm" data-ai-prompt="Suggest a high-protein vegetarian dinner under ₹500.">High-Protein Veg Dinner</button>
+          <button type="button" class="btn-outline-sm" data-ai-prompt="Build a 2-person meal under ₹800.">2-Person Meal under ₹800</button>
+        </div>
+        <div id="ai-chat-messages" class="ai-chat-messages">
+          <div class="ai-msg ai-msg-assistant">
+            <p>Welcome to Pier 25! Ask me about our artisanal coffees, laminated croissants, bakery desserts, or signature Indian dishes in ₹.</p>
+          </div>
+        </div>
+        <form id="ai-chat-form" class="ai-chat-form">
+          <input type="text" id="ai-chat-input" placeholder="Ask about coffees, croissants, spice, pairings..." required>
+          <button type="submit" class="btn-forest">Send</button>
+        </form>
+      </div>
+
+      <div data-ai-panel="recommend" hidden>
+        <form id="ai-recommend-form" class="checkout-form">
+          <label>Craving or Mood
+            <input type="text" id="ai-rec-preferences" placeholder="e.g. Cold brew with almond croissant or warm sizzler">
+          </label>
+          <label>Max Budget (₹)
+            <input type="number" id="ai-rec-budget" min="50" max="10000" placeholder="500">
+          </label>
+          <div class="tag-checks">
+            <label><input type="checkbox" name="ai-rec-tag" value="Vegetarian"> Vegetarian</label>
+            <label><input type="checkbox" name="ai-rec-tag" value="Spicy"> Spicy</label>
+            <label><input type="checkbox" name="ai-rec-tag" value="High-Protein"> High-Protein</label>
+            <label><input type="checkbox" name="ai-rec-tag" value="Gluten-Free"> Gluten-Free</label>
+          </div>
+          <button type="submit" class="btn-forest btn-full">Get Personalized Picks</button>
+        </form>
+        <div id="ai-recommend-results" class="ai-results-stack"></div>
+      </div>
+
+      <div data-ai-panel="visual" hidden>
+        <form id="ai-visual-form" class="checkout-form">
+          <label>Upload a Food Photo to Identify &amp; Match Menu
+            <input type="file" id="ai-visual-file" accept="image/png,image/jpeg,image/webp">
+          </label>
+          <div class="visual-samples">
+            <span>Or test with dish photo:</span>
+            <button type="button" class="btn-outline-sm" data-visual-sample="sizzlers.jpg">Sizzler</button>
+            <button type="button" class="btn-outline-sm" data-visual-sample="dosa.jpg">Dosa</button>
+            <button type="button" class="btn-outline-sm" data-visual-sample="burger.jpg">Burger</button>
+          </div>
+          <div id="ai-visual-preview" class="ai-visual-preview" hidden></div>
+          <button type="submit" class="btn-forest btn-full">Analyze Image with Gemini Vision</button>
+        </form>
+        <div id="ai-visual-results" class="ai-results-stack"></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Customer Auth, Profile & Order History Modal -->
+  <div id="auth-modal" class="modal-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
+    <div class="modal-card auth-modal-card">
+      <button type="button" class="modal-close" id="close-auth-modal" aria-label="Close account dialog"><i class="fa-solid fa-xmark"></i></button>
+      <div id="auth-guest-view">
+        <h3 id="auth-modal-title">Welcome to Pier 25</h3>
+        <p class="drawer-sub">Sign in to track orders, earn loyalty points, save delivery details, or access Owner Studio.</p>
+        <button type="button" id="google-signin-btn" class="google-btn">
+          <i class="fa-brands fa-google"></i> Continue with Google (Firebase Auth)
+        </button>
+        <div class="auth-divider"><span>or use email</span></div>
+        <div class="auth-mode-tabs">
+          <button type="button" class="ai-tab-btn active" data-auth-mode="login">Sign In</button>
+          <button type="button" class="ai-tab-btn" data-auth-mode="register">Create Account</button>
+        </div>
+        <form id="auth-form" class="checkout-form">
+          <label id="auth-name-wrap" hidden>Full Name <input type="text" id="auth-name" placeholder="Your full name"></label>
+          <label>Email <input type="email" id="auth-email" placeholder="you@example.com" required></label>
+          <label>Password <input type="password" id="auth-password" placeholder="At least 6 characters" required></label>
+          <button type="submit" class="btn-forest btn-full" id="auth-submit-btn">Sign In</button>
+        </form>
+        <p id="auth-status" class="form-status" aria-live="polite"></p>
+      </div>
+
+      <div id="auth-profile-view" hidden>
+        <div class="profile-head">
+          <div>
+            <h3 id="profile-display-name">Guest</h3>
+            <p id="profile-email-role" class="drawer-sub"></p>
+          </div>
+          <div class="loyalty-pill-box">
+            <span>Loyalty Balance</span>
+            <strong id="profile-loyalty-pts" class="tabular-nums">0 pts</strong>
+          </div>
+        </div>
+        <div class="profile-actions-bar">
+          <button type="button" id="profile-open-owner-btn" class="btn-gold-sm" hidden><i class="fa-solid fa-chart-line"></i> Open Owner Dashboard</button>
+          <button type="button" id="profile-logout-btn" class="btn-outline-sm">Sign Out</button>
+        </div>
+        <form id="profile-update-form" class="checkout-form">
+          <label>Display Name <input type="text" id="prof-name" required></label>
+          <div class="owner-form-row">
+            <label>Phone <input type="tel" id="prof-phone"></label>
+            <label>Dietary Notes <input type="text" id="prof-dietary" placeholder="Vegetarian, mild spice..."></label>
+          </div>
+          <label>Saved Delivery Address <input type="text" id="prof-address"></label>
+          <button type="submit" class="btn-forest">Save Profile</button>
+          <span id="profile-save-status" class="inline-status"></span>
+        </form>
+        <div class="profile-history">
+          <h4>Order History</h4>
+          <div id="profile-orders-list" class="profile-orders-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Owner Operations Dashboard Modal -->
+  <div id="owner-dashboard-modal" class="modal-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="owner-dash-title">
+    <div class="modal-card owner-modal-card">
+      <div class="owner-modal-header">
+        <div>
+          <p class="eyebrow">Executive Operations</p>
+          <h3 id="owner-dash-title">Pier 25 Owner Studio</h3>
+        </div>
+        <button type="button" class="modal-close" id="close-owner-modal" aria-label="Close Owner Dashboard"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="owner-tabs" role="tablist">
+        <button type="button" class="owner-tab-btn active" data-owner-tab="overview">Revenue &amp; Overview</button>
+        <button type="button" class="owner-tab-btn" data-owner-tab="menu">Food Items</button>
+        <button type="button" class="owner-tab-btn" data-owner-tab="orders">Orders</button>
+        <button type="button" class="owner-tab-btn" data-owner-tab="reservations">Reservations</button>
+        <button type="button" class="owner-tab-btn" data-owner-tab="inventory">Inventory</button>
+        <button type="button" class="owner-tab-btn" data-owner-tab="crm">CRM &amp; Reviews</button>
+        <button type="button" class="owner-tab-btn" data-owner-tab="ai-studio">AI Studio &amp; Staff</button>
+      </div>
+      <div id="owner-tab-content" class="owner-tab-content"></div>
+    </div>
+  </div>
+
+  <script type="module" src="app.bundle.js"></script>
 </body>
 </html>

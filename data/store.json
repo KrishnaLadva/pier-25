@@ -1,0 +1,2742 @@
+{
+  "sessionSecret": "958402ff10a7ebd226abf3c91279b0b05f9dc5ace6fc9f77e59d57ba2292ed9c",
+  "users": [],
+  "menuItems": [
+    {
+      "id": "crispy-grill-wrap",
+      "name": "Crispy Grill Wrap",
+      "category": "Wraps & Snacks",
+      "subcategory": "Signature Wraps",
+      "showcaseSection": "Signature Menu",
+      "description": "Tender crispy patty wrapped with fresh lettuce, aged cheddar, and smoky house sauce.",
+      "price": 249,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "mc5.png",
+      "ingredients": [
+        "Herb Crispy Patty",
+        "Romaine Lettuce",
+        "Aged Cheddar",
+        "Smoky House Sauce",
+        "Warm Tortilla"
+      ],
+      "dietaryTags": [
+        "Signature",
+        "Vegetarian"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Spice Level",
+          "choices": [
+            "Classic",
+            "Extra Smoky"
+          ]
+        }
+      ],
+      "prepMinutes": 10,
+      "calories": 490,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": true,
+      "isBestseller": true,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "roasted-black-coffee",
+      "name": "Roasted Black Coffee",
+      "category": "Beverages",
+      "subcategory": "Filter Brew",
+      "showcaseSection": "Hot Coffee",
+      "description": "Freshly brewed dark roast single-origin coffee served piping hot with rich cacao aroma.",
+      "price": 129,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "mc3.png",
+      "ingredients": [
+        "Dark Roast Arabica Beans",
+        "Filtered Spring Water"
+      ],
+      "dietaryTags": [
+        "Vegan",
+        "Gluten-Free"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Strength",
+          "choices": [
+            "Regular",
+            "Bold"
+          ]
+        }
+      ],
+      "prepMinutes": 4,
+      "calories": 10,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": true,
+      "isBestseller": true,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "jalapeno-cheese-burger",
+      "name": "Jalapeño Cheese Burger",
+      "category": "Burgers",
+      "subcategory": "Artisan Burgers",
+      "showcaseSection": "Signature Menu",
+      "description": "Crispy golden patty topped with melted cheddar, pickled jalapeños, and zesty herb aioli.",
+      "price": 229,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "mc4.png",
+      "ingredients": [
+        "Golden Crispy Patty",
+        "Melted Cheddar",
+        "Pickled Jalapeños",
+        "Zesty Aioli",
+        "Toasted Bun"
+      ],
+      "dietaryTags": [
+        "Spicy",
+        "Vegetarian"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Cheese",
+          "choices": [
+            "Single Cheddar",
+            "Double Cheddar"
+          ]
+        }
+      ],
+      "prepMinutes": 12,
+      "calories": 560,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": true,
+      "isBestseller": true,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "choco-frappe-combo",
+      "name": "Choco Frappe Combo",
+      "category": "Combos",
+      "subcategory": "Meal Combos",
+      "showcaseSection": "Signature Menu",
+      "description": "Signature crispy burger paired with a rich, chilled dark chocolate espresso frappe.",
+      "price": 349,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "mc8.png",
+      "ingredients": [
+        "Crispy Burger",
+        "Dark Cocoa Blend",
+        "Chilled Milk",
+        "Espresso Shot",
+        "Whipped Cream"
+      ],
+      "dietaryTags": [
+        "Combo",
+        "Vegetarian"
+      ],
+      "customisationOptions": [],
+      "prepMinutes": 14,
+      "calories": 780,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": true,
+      "isBestseller": true,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "piri-piri-fries-meal",
+      "name": "Piri Piri Fries Meal",
+      "category": "Combos",
+      "subcategory": "Meal Combos",
+      "showcaseSection": "Signature Menu",
+      "description": "Classic crispy burger served with golden shoestring fries and house piri piri spice dust.",
+      "price": 369,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "mc9.png",
+      "ingredients": [
+        "Crispy Burger",
+        "Russet Fries",
+        "Piri Piri Spice",
+        "Garlic Dip"
+      ],
+      "dietaryTags": [
+        "Spicy",
+        "Combo",
+        "Vegetarian"
+      ],
+      "customisationOptions": [],
+      "prepMinutes": 14,
+      "calories": 820,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": true,
+      "isBestseller": true,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "korean-spicy-duo",
+      "name": "Korean Spicy Duo",
+      "category": "Combos",
+      "subcategory": "Sharing Combos",
+      "showcaseSection": "Signature Menu",
+      "description": "Two fiery gochujang-glazed crispy burgers with seasoned fries and sparkling cooler.",
+      "price": 499,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "mc10.jpg",
+      "ingredients": [
+        "Double Crispy Burgers",
+        "Gochujang Glaze",
+        "Sesame Slaw",
+        "Seasoned Fries",
+        "Citrus Cooler"
+      ],
+      "dietaryTags": [
+        "Spicy",
+        "Sharing",
+        "Vegetarian"
+      ],
+      "customisationOptions": [],
+      "prepMinutes": 16,
+      "calories": 1090,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": true,
+      "isBestseller": true,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "classic-crispy-burger",
+      "name": "Classic Crispy Burger",
+      "category": "Burgers",
+      "subcategory": "Artisan Burgers",
+      "showcaseSection": "Signature Menu",
+      "description": "Crunchy herb-seasoned patty layered with crisp iceberg lettuce and creamy house mayo.",
+      "price": 219,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "mc11.png",
+      "ingredients": [
+        "Herb-Seasoned Patty",
+        "Iceberg Lettuce",
+        "Creamy Mayo",
+        "Sesame Bun"
+      ],
+      "dietaryTags": [
+        "Classic",
+        "Vegetarian"
+      ],
+      "customisationOptions": [],
+      "prepMinutes": 10,
+      "calories": 510,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": true,
+      "isBestseller": true,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "artisan-brioche-burger",
+      "name": "Artisan Brioche Burger",
+      "category": "Burgers",
+      "subcategory": "Artisan Burgers",
+      "showcaseSection": "Signature Menu",
+      "description": "Herb-crusted patty on toasted sesame brioche served with roasted fries and marinated olives.",
+      "price": 399,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "burger.jpg",
+      "ingredients": [
+        "Artisan Patty",
+        "Toasted Sesame Brioche",
+        "Caramelized Onions",
+        "Roasted Fries",
+        "Olives"
+      ],
+      "dietaryTags": [
+        "Chef Special",
+        "Vegetarian"
+      ],
+      "customisationOptions": [],
+      "prepMinutes": 15,
+      "calories": 690,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": true,
+      "isNewArrival": true,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "crispy-masala-dosa",
+      "name": "Crispy Masala Dosa",
+      "category": "Chef Specials",
+      "subcategory": "South Indian Classics",
+      "showcaseSection": "Signature Menu",
+      "description": "Golden fermented crepe stuffed with spiced potato masala, coconut chutney, and lentil sambar.",
+      "price": 279,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "dosa.jpg",
+      "ingredients": [
+        "Fermented Rice-Lentil Batter",
+        "Spiced Potato Masala",
+        "Coconut Chutney",
+        "Sambar"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "Gluten-Free"
+      ],
+      "customisationOptions": [],
+      "prepMinutes": 14,
+      "calories": 440,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": true,
+      "isNewArrival": true,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "smoky-paneer-sizzler",
+      "name": "Smoky Paneer Sizzler",
+      "category": "Chef Specials",
+      "subcategory": "Sizzlers",
+      "showcaseSection": "Signature Menu",
+      "description": "Char-grilled cottage cheese over wok-tossed noodles, blistered veggies, and crispy fries.",
+      "price": 489,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "sizzlers.jpg",
+      "ingredients": [
+        "Char-Grilled Paneer",
+        "Wok Noodles",
+        "Bell Peppers",
+        "Herb Pepper Sauce",
+        "Crispy Fries"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "High-Protein"
+      ],
+      "customisationOptions": [],
+      "prepMinutes": 18,
+      "calories": 740,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": true,
+      "isNewArrival": true,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "healthy-protein-bowl",
+      "name": "Healthy Protein Bowl",
+      "category": "Healthy Bowls",
+      "subcategory": "Power Bowls",
+      "showcaseSection": "Signature Menu",
+      "description": "Grilled paneer cubes with shelled edamame, sweet corn, heirloom tomatoes, and crisp greens.",
+      "price": 349,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "dish.png",
+      "ingredients": [
+        "Grilled Paneer",
+        "Edamame",
+        "Sweet Corn",
+        "Cherry Tomatoes",
+        "Baby Spinach",
+        "Lemon Vinaigrette"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "Gluten-Free",
+        "High-Protein"
+      ],
+      "customisationOptions": [],
+      "prepMinutes": 11,
+      "calories": 410,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": true,
+      "isNewArrival": true,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "masala-puff-chai",
+      "name": "Masala Puff & Chai",
+      "category": "Café & Bakery",
+      "subcategory": "Savory Tea Pairings",
+      "showcaseSection": "Signature Menu",
+      "description": "Flaky spiced puff pastries paired with a steaming cup of cardamom-ginger masala chai.",
+      "price": 199,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "m2.png",
+      "ingredients": [
+        "Flaky Puff Pastry",
+        "Spiced Vegetable Filling",
+        "Assam Tea",
+        "Cardamom",
+        "Fresh Ginger"
+      ],
+      "dietaryTags": [
+        "Vegetarian"
+      ],
+      "customisationOptions": [],
+      "prepMinutes": 8,
+      "calories": 380,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": true,
+      "isNewArrival": true,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "methi-thepla-chai",
+      "name": "Methi Thepla & Chai",
+      "category": "Café & Bakery",
+      "subcategory": "Gujarati Café Bites",
+      "showcaseSection": "Signature Menu",
+      "description": "Warm fenugreek flatbread rolls served with tangy mango chundo and spiced house chai.",
+      "price": 179,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "m7.png",
+      "ingredients": [
+        "Whole Wheat Flour",
+        "Fresh Fenugreek Leaves",
+        "Sweet Mango Chundo",
+        "Masala Chai"
+      ],
+      "dietaryTags": [
+        "Vegetarian"
+      ],
+      "customisationOptions": [],
+      "prepMinutes": 8,
+      "calories": 340,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": true,
+      "isNewArrival": true,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "muffin-cafe-latte",
+      "name": "Muffin & Café Latte",
+      "category": "Café & Bakery",
+      "subcategory": "Breakfast Combos",
+      "showcaseSection": "Signature Menu",
+      "description": "Toasted English muffin with savory herb patty, golden hash brown, and velvety café latte.",
+      "price": 319,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "mc6.png",
+      "ingredients": [
+        "English Muffin",
+        "Savory Herb Patty",
+        "Crispy Hash Brown",
+        "Steamed Milk",
+        "Espresso"
+      ],
+      "dietaryTags": [
+        "Breakfast",
+        "Vegetarian"
+      ],
+      "customisationOptions": [],
+      "prepMinutes": 10,
+      "calories": 590,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": true,
+      "isNewArrival": true,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "choco-brownie-sundae",
+      "name": "Choco Brownie Sundae",
+      "category": "Desserts",
+      "subcategory": "Sundaes",
+      "showcaseSection": "Signature Menu",
+      "description": "Creamy vanilla bean soft-serve swirled with dark fudge brownie bites and crushed cookies.",
+      "price": 199,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "mc7.png",
+      "ingredients": [
+        "Vanilla Bean Soft-Serve",
+        "Dark Fudge Brownie",
+        "Crushed Chocolate Cookies",
+        "Hot Fudge"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "Sweet"
+      ],
+      "customisationOptions": [],
+      "prepMinutes": 5,
+      "calories": 460,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": true,
+      "isNewArrival": true,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "chilled-sparkling-cola",
+      "name": "Chilled Sparkling Cola",
+      "category": "Beverages",
+      "subcategory": "Coolers",
+      "showcaseSection": "Signature Menu",
+      "description": "Ice-cold classic sparkling cola poured over crushed ice and fresh zesty lime slices.",
+      "price": 89,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "coca.jpg",
+      "ingredients": [
+        "Sparkling Cola",
+        "Fresh Lime Slices",
+        "Crushed Ice"
+      ],
+      "dietaryTags": [
+        "Vegan",
+        "Gluten-Free"
+      ],
+      "customisationOptions": [],
+      "prepMinutes": 2,
+      "calories": 140,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": true,
+      "isNewArrival": true,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "coffee-espresso",
+      "name": "Espresso",
+      "category": "Coffee",
+      "subcategory": "Espresso",
+      "showcaseSection": "Hot Coffee",
+      "description": "Concentrated single-origin Arabica extraction crowned with thick hazelnut-hued crema.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "ingredients": [
+        "Single-Origin Arabica Beans",
+        "Filtered Water"
+      ],
+      "dietaryTags": [
+        "Vegan",
+        "Gluten-Free",
+        "Bestseller"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Roast Profile",
+          "choices": [
+            "House Medium-Dark",
+            "Single-Origin Fruity"
+          ]
+        },
+        {
+          "name": "Sugar",
+          "choices": [
+            "No Sugar",
+            "Raw Cane Side"
+          ]
+        }
+      ],
+      "prepMinutes": 3,
+      "calories": 5,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": true,
+      "isBestseller": true,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "coffee-double-espresso",
+      "name": "Double Espresso",
+      "category": "Coffee",
+      "subcategory": "Double Espresso",
+      "showcaseSection": "Hot Coffee",
+      "description": "Bold doppio pull delivering velvety body, roasted cacao intensity, and lingering caramel finish.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "ingredients": [
+        "Double Shot Arabica Espresso",
+        "Filtered Water"
+      ],
+      "dietaryTags": [
+        "Vegan",
+        "Gluten-Free"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Roast Profile",
+          "choices": [
+            "House Medium-Dark",
+            "Single-Origin Fruity"
+          ]
+        }
+      ],
+      "prepMinutes": 4,
+      "calories": 10,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "coffee-americano",
+      "name": "Americano",
+      "category": "Coffee",
+      "subcategory": "Americano",
+      "showcaseSection": "Hot Coffee",
+      "description": "Freshly pulled espresso lengthened with hot spring water for a clean, aromatic cup.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "ingredients": [
+        "Arabica Espresso",
+        "Steaming Hot Water"
+      ],
+      "dietaryTags": [
+        "Vegan",
+        "Gluten-Free"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Cup Size",
+          "choices": [
+            "Single / Regular",
+            "Large"
+          ]
+        },
+        {
+          "name": "Milk Choice",
+          "choices": [
+            "Regular Dairy",
+            "Oat Milk",
+            "Almond Milk",
+            "Skim Milk"
+          ]
+        },
+        {
+          "name": "Espresso Strength",
+          "choices": [
+            "House Balance",
+            "Extra Shot"
+          ]
+        }
+      ],
+      "prepMinutes": 4,
+      "calories": 10,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "coffee-cappuccino",
+      "name": "Cappuccino",
+      "category": "Coffee",
+      "subcategory": "Cappuccino",
+      "showcaseSection": "Hot Coffee",
+      "description": "Equal parts rich espresso, steamed milk, and airy micro-foam dusted lightly with cocoa.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "ingredients": [
+        "Arabica Espresso",
+        "Steamed Whole Milk",
+        "Velvety Micro-Foam",
+        "Cocoa Dust"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "Bestseller"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Cup Size",
+          "choices": [
+            "Single / Regular",
+            "Large"
+          ]
+        },
+        {
+          "name": "Milk Choice",
+          "choices": [
+            "Regular Dairy",
+            "Oat Milk",
+            "Almond Milk",
+            "Skim Milk"
+          ]
+        },
+        {
+          "name": "Espresso Strength",
+          "choices": [
+            "House Balance",
+            "Extra Shot"
+          ]
+        }
+      ],
+      "prepMinutes": 5,
+      "calories": 140,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": true,
+      "isBestseller": true,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "coffee-cafe-latte",
+      "name": "Café Latte",
+      "category": "Coffee",
+      "subcategory": "Café Latte",
+      "showcaseSection": "Hot Coffee",
+      "description": "Silky steamed milk poured through balanced espresso shots with classic rosetta latte art.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "ingredients": [
+        "Arabica Espresso",
+        "Steamed Farm Milk"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "Bestseller"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Cup Size",
+          "choices": [
+            "Single / Regular",
+            "Large"
+          ]
+        },
+        {
+          "name": "Milk Choice",
+          "choices": [
+            "Regular Dairy",
+            "Oat Milk",
+            "Almond Milk",
+            "Skim Milk"
+          ]
+        },
+        {
+          "name": "Espresso Strength",
+          "choices": [
+            "House Balance",
+            "Extra Shot"
+          ]
+        }
+      ],
+      "prepMinutes": 5,
+      "calories": 170,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": true,
+      "isBestseller": true,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "coffee-flat-white",
+      "name": "Flat White",
+      "category": "Coffee",
+      "subcategory": "Flat White",
+      "showcaseSection": "Hot Coffee",
+      "description": "Double ristretto married with glossy micro-textured milk for an espresso-forward pour.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "ingredients": [
+        "Double Ristretto",
+        "Silky Micro-Foam Milk"
+      ],
+      "dietaryTags": [
+        "Vegetarian"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Cup Size",
+          "choices": [
+            "Single / Regular",
+            "Large"
+          ]
+        },
+        {
+          "name": "Milk Choice",
+          "choices": [
+            "Regular Dairy",
+            "Oat Milk",
+            "Almond Milk",
+            "Skim Milk"
+          ]
+        },
+        {
+          "name": "Espresso Strength",
+          "choices": [
+            "House Balance",
+            "Extra Shot"
+          ]
+        }
+      ],
+      "prepMinutes": 5,
+      "calories": 130,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": true,
+      "isNewArrival": true,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "coffee-mocha",
+      "name": "Mocha",
+      "category": "Coffee",
+      "subcategory": "Mocha",
+      "showcaseSection": "Hot Coffee",
+      "description": "Dark Belgian chocolate ganache melted into espresso and finished with steamed milk.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "ingredients": [
+        "Arabica Espresso",
+        "Dark Chocolate Ganache",
+        "Steamed Milk",
+        "Cocoa Drizzle"
+      ],
+      "dietaryTags": [
+        "Vegetarian"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Cup Size",
+          "choices": [
+            "Single / Regular",
+            "Large"
+          ]
+        },
+        {
+          "name": "Milk Choice",
+          "choices": [
+            "Regular Dairy",
+            "Oat Milk",
+            "Almond Milk",
+            "Skim Milk"
+          ]
+        },
+        {
+          "name": "Espresso Strength",
+          "choices": [
+            "House Balance",
+            "Extra Shot"
+          ]
+        }
+      ],
+      "prepMinutes": 6,
+      "calories": 240,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "coffee-macchiato",
+      "name": "Macchiato",
+      "category": "Coffee",
+      "subcategory": "Macchiato",
+      "showcaseSection": "Hot Coffee",
+      "description": "Traditional Italian espresso marked gently with a spoonful of sweet steamed milk foam.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "ingredients": [
+        "Arabica Espresso",
+        "Steamed Milk Foam"
+      ],
+      "dietaryTags": [
+        "Vegetarian"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Cup Size",
+          "choices": [
+            "Single / Regular",
+            "Large"
+          ]
+        },
+        {
+          "name": "Milk Choice",
+          "choices": [
+            "Regular Dairy",
+            "Oat Milk",
+            "Almond Milk",
+            "Skim Milk"
+          ]
+        },
+        {
+          "name": "Espresso Strength",
+          "choices": [
+            "House Balance",
+            "Extra Shot"
+          ]
+        }
+      ],
+      "prepMinutes": 4,
+      "calories": 40,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "coffee-caramel-macchiato",
+      "name": "Caramel Macchiato",
+      "category": "Coffee",
+      "subcategory": "Caramel Macchiato",
+      "showcaseSection": "Speciality Coffee",
+      "description": "Vanilla-infused steamed milk layered beneath espresso and ribbons of burnt-sugar caramel.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "ingredients": [
+        "Arabica Espresso",
+        "Madagascar Vanilla",
+        "Steamed Milk",
+        "Salted Caramel Drizzle"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "Bestseller"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Cup Size",
+          "choices": [
+            "Single / Regular",
+            "Large"
+          ]
+        },
+        {
+          "name": "Milk Choice",
+          "choices": [
+            "Regular Dairy",
+            "Oat Milk",
+            "Almond Milk",
+            "Skim Milk"
+          ]
+        },
+        {
+          "name": "Espresso Strength",
+          "choices": [
+            "House Balance",
+            "Extra Shot"
+          ]
+        }
+      ],
+      "prepMinutes": 6,
+      "calories": 230,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": true,
+      "isBestseller": true,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "coffee-vanilla-latte",
+      "name": "Vanilla Latte",
+      "category": "Coffee",
+      "subcategory": "Vanilla Latte",
+      "showcaseSection": "Speciality Coffee",
+      "description": "Creamy espresso latte perfumed with house-steeped Madagascar vanilla bean syrup.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "ingredients": [
+        "Arabica Espresso",
+        "Steamed Milk",
+        "Madagascar Vanilla Bean Syrup"
+      ],
+      "dietaryTags": [
+        "Vegetarian"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Cup Size",
+          "choices": [
+            "Single / Regular",
+            "Large"
+          ]
+        },
+        {
+          "name": "Milk Choice",
+          "choices": [
+            "Regular Dairy",
+            "Oat Milk",
+            "Almond Milk",
+            "Skim Milk"
+          ]
+        },
+        {
+          "name": "Espresso Strength",
+          "choices": [
+            "House Balance",
+            "Extra Shot"
+          ]
+        }
+      ],
+      "prepMinutes": 5,
+      "calories": 210,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "coffee-hazelnut-latte",
+      "name": "Hazelnut Latte",
+      "category": "Coffee",
+      "subcategory": "Hazelnut Latte",
+      "showcaseSection": "Speciality Coffee",
+      "description": "Nutty roasted Piedmont hazelnut praline blended into velvety espresso and warm milk.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "ingredients": [
+        "Arabica Espresso",
+        "Roasted Hazelnut Praline",
+        "Steamed Milk"
+      ],
+      "dietaryTags": [
+        "Vegetarian"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Cup Size",
+          "choices": [
+            "Single / Regular",
+            "Large"
+          ]
+        },
+        {
+          "name": "Milk Choice",
+          "choices": [
+            "Regular Dairy",
+            "Oat Milk",
+            "Almond Milk",
+            "Skim Milk"
+          ]
+        },
+        {
+          "name": "Espresso Strength",
+          "choices": [
+            "House Balance",
+            "Extra Shot"
+          ]
+        }
+      ],
+      "prepMinutes": 5,
+      "calories": 220,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "coffee-spanish-latte",
+      "name": "Spanish Latte",
+      "category": "Coffee",
+      "subcategory": "Spanish Latte",
+      "showcaseSection": "Speciality Coffee",
+      "description": "Rich espresso layered over sweet condensed milk and textured dairy for a caramel-silky sip.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "ingredients": [
+        "Double Espresso",
+        "Sweetened Condensed Milk",
+        "Textured Milk"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "New Arrival"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Cup Size",
+          "choices": [
+            "Single / Regular",
+            "Large"
+          ]
+        },
+        {
+          "name": "Milk Choice",
+          "choices": [
+            "Regular Dairy",
+            "Oat Milk",
+            "Almond Milk",
+            "Skim Milk"
+          ]
+        },
+        {
+          "name": "Espresso Strength",
+          "choices": [
+            "House Balance",
+            "Extra Shot"
+          ]
+        }
+      ],
+      "prepMinutes": 6,
+      "calories": 250,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": true,
+      "isNewArrival": true,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "coffee-iced-americano",
+      "name": "Iced Americano",
+      "category": "Coffee",
+      "subcategory": "Iced Americano",
+      "showcaseSection": "Cold Coffee",
+      "description": "Crisp double-shot espresso poured over crystal ice and chilled water for bright acidity.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/cold_coffee_brew_1794843900373.jpg",
+      "ingredients": [
+        "Double Arabica Espresso",
+        "Chilled Water",
+        "Crystal Ice"
+      ],
+      "dietaryTags": [
+        "Vegan",
+        "Gluten-Free"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Glass Size",
+          "choices": [
+            "Regular (300ml)",
+            "Tall (450ml)"
+          ]
+        },
+        {
+          "name": "Milk Choice",
+          "choices": [
+            "Regular Dairy",
+            "Oat Milk",
+            "Almond Milk"
+          ]
+        },
+        {
+          "name": "Ice & Sweetness",
+          "choices": [
+            "Regular Ice",
+            "Less Ice",
+            "Unsweetened",
+            "Light Sweet"
+          ]
+        }
+      ],
+      "prepMinutes": 4,
+      "calories": 10,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "coffee-iced-latte",
+      "name": "Iced Latte",
+      "category": "Coffee",
+      "subcategory": "Iced Latte",
+      "showcaseSection": "Cold Coffee",
+      "description": "Chilled farm milk cascaded with fresh espresso over crystal ice cubes.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/cold_coffee_brew_1794843900373.jpg",
+      "ingredients": [
+        "Arabica Espresso",
+        "Chilled Milk",
+        "Ice Cubes"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "Bestseller"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Glass Size",
+          "choices": [
+            "Regular (300ml)",
+            "Tall (450ml)"
+          ]
+        },
+        {
+          "name": "Milk Choice",
+          "choices": [
+            "Regular Dairy",
+            "Oat Milk",
+            "Almond Milk"
+          ]
+        },
+        {
+          "name": "Ice & Sweetness",
+          "choices": [
+            "Regular Ice",
+            "Less Ice",
+            "Unsweetened",
+            "Light Sweet"
+          ]
+        }
+      ],
+      "prepMinutes": 4,
+      "calories": 150,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": true,
+      "isBestseller": true,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "coffee-iced-mocha",
+      "name": "Iced Mocha",
+      "category": "Coffee",
+      "subcategory": "Iced Mocha",
+      "showcaseSection": "Cold Coffee",
+      "description": "Dark chocolate espresso shaken chilled with cold milk and topped with cocoa shavings.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/cold_coffee_brew_1794843900373.jpg",
+      "ingredients": [
+        "Arabica Espresso",
+        "Belgian Cocoa Sauce",
+        "Chilled Milk",
+        "Ice"
+      ],
+      "dietaryTags": [
+        "Vegetarian"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Glass Size",
+          "choices": [
+            "Regular (300ml)",
+            "Tall (450ml)"
+          ]
+        },
+        {
+          "name": "Milk Choice",
+          "choices": [
+            "Regular Dairy",
+            "Oat Milk",
+            "Almond Milk"
+          ]
+        },
+        {
+          "name": "Ice & Sweetness",
+          "choices": [
+            "Regular Ice",
+            "Less Ice",
+            "Unsweetened",
+            "Light Sweet"
+          ]
+        }
+      ],
+      "prepMinutes": 5,
+      "calories": 230,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "coffee-cold-coffee",
+      "name": "Cold Coffee",
+      "category": "Coffee",
+      "subcategory": "Cold Coffee",
+      "showcaseSection": "Cold Coffee",
+      "description": "Classic Indian café-style frothy blended cold coffee finished with a rich espresso crown.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/cold_coffee_brew_1794843900373.jpg",
+      "ingredients": [
+        "House Espresso Blend",
+        "Chilled Milk",
+        "Raw Sugar",
+        "Cream Foam"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "Bestseller"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Glass Size",
+          "choices": [
+            "Regular (300ml)",
+            "Tall (450ml)"
+          ]
+        },
+        {
+          "name": "Milk Choice",
+          "choices": [
+            "Regular Dairy",
+            "Oat Milk",
+            "Almond Milk"
+          ]
+        },
+        {
+          "name": "Ice & Sweetness",
+          "choices": [
+            "Regular Ice",
+            "Less Ice",
+            "Unsweetened",
+            "Light Sweet"
+          ]
+        }
+      ],
+      "prepMinutes": 5,
+      "calories": 240,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": true,
+      "isBestseller": true,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "coffee-cold-brew",
+      "name": "Cold Brew",
+      "category": "Coffee",
+      "subcategory": "Cold Brew",
+      "showcaseSection": "Cold Coffee",
+      "description": "Slow-steeped for 18 hours in cold water for low acidity, dark chocolate notes, and ultra-smooth body.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/cold_coffee_brew_1794843900373.jpg",
+      "ingredients": [
+        "Coarse-Ground Single-Origin Arabica",
+        "Cold Filtered Water"
+      ],
+      "dietaryTags": [
+        "Vegan",
+        "Gluten-Free",
+        "New Arrival"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Glass Size",
+          "choices": [
+            "Regular (300ml)",
+            "Tall (450ml)"
+          ]
+        },
+        {
+          "name": "Milk Choice",
+          "choices": [
+            "Regular Dairy",
+            "Oat Milk",
+            "Almond Milk"
+          ]
+        },
+        {
+          "name": "Ice & Sweetness",
+          "choices": [
+            "Regular Ice",
+            "Less Ice",
+            "Unsweetened",
+            "Light Sweet"
+          ]
+        }
+      ],
+      "prepMinutes": 3,
+      "calories": 15,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": true,
+      "isNewArrival": true,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "coffee-vietnamese-coffee",
+      "name": "Vietnamese Coffee",
+      "category": "Coffee",
+      "subcategory": "Vietnamese Coffee",
+      "showcaseSection": "Cold Coffee",
+      "description": "Intense dark-roast phin brew swirled over velvety sweetened condensed milk and ice.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/cold_coffee_brew_1794843900373.jpg",
+      "ingredients": [
+        "Dark Roast Phin Coffee",
+        "Sweetened Condensed Milk",
+        "Crystal Ice"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "New Arrival"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Glass Size",
+          "choices": [
+            "Regular (300ml)",
+            "Tall (450ml)"
+          ]
+        },
+        {
+          "name": "Milk Choice",
+          "choices": [
+            "Regular Dairy",
+            "Oat Milk",
+            "Almond Milk"
+          ]
+        },
+        {
+          "name": "Ice & Sweetness",
+          "choices": [
+            "Regular Ice",
+            "Less Ice",
+            "Unsweetened",
+            "Light Sweet"
+          ]
+        }
+      ],
+      "prepMinutes": 6,
+      "calories": 210,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": true,
+      "isNewArrival": true,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "croissant-classic-butter",
+      "name": "Classic Butter Croissant",
+      "category": "Croissants",
+      "subcategory": "Classic Butter Croissant",
+      "showcaseSection": "Classic Croissants",
+      "description": "27 honeycomb-laminated layers baked golden with European cultured butter and sea salt.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/butter_croissants_classic_1794843900571.jpg",
+      "ingredients": [
+        "French T55 Flour",
+        "Cultured European Butter",
+        "Organic Milk",
+        "Sea Salt"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "Bestseller"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Serving Style",
+          "choices": [
+            "Served Warm",
+            "Crisp Room Temp"
+          ]
+        },
+        {
+          "name": "Accompaniment",
+          "choices": [
+            "None",
+            "Whipped Cultured Butter",
+            "Espresso Dip"
+          ]
+        }
+      ],
+      "prepMinutes": 6,
+      "calories": 290,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": true,
+      "isBestseller": true,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "croissant-chocolate",
+      "name": "Chocolate Croissant",
+      "category": "Croissants",
+      "subcategory": "Chocolate Croissant",
+      "showcaseSection": "Chocolate & Nut Croissants",
+      "description": "Flaky laminated pastry folded around twin batons of 70% dark Belgian couverture chocolate.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/chocolate_nut_croissants_1794843900444.jpg",
+      "ingredients": [
+        "Laminated Butter Pastry",
+        "70% Dark Belgian Chocolate",
+        "Cocoa Drizzle"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "Bestseller"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Serving Style",
+          "choices": [
+            "Served Warm",
+            "Crisp Room Temp"
+          ]
+        },
+        {
+          "name": "Accompaniment",
+          "choices": [
+            "None",
+            "Whipped Cultured Butter",
+            "Espresso Dip"
+          ]
+        }
+      ],
+      "prepMinutes": 6,
+      "calories": 360,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": true,
+      "isBestseller": true,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "croissant-almond",
+      "name": "Almond Croissant",
+      "category": "Croissants",
+      "subcategory": "Almond Croissant",
+      "showcaseSection": "Chocolate & Nut Croissants",
+      "description": "Twice-baked butter croissant filled with toasted almond frangipane and flaked California almonds.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/chocolate_nut_croissants_1794843900444.jpg",
+      "ingredients": [
+        "Butter Croissant",
+        "Roasted Almond Frangipane",
+        "Sliced Almonds",
+        "Icing Sugar"
+      ],
+      "dietaryTags": [
+        "Vegetarian"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Serving Style",
+          "choices": [
+            "Served Warm",
+            "Crisp Room Temp"
+          ]
+        },
+        {
+          "name": "Accompaniment",
+          "choices": [
+            "None",
+            "Whipped Cultured Butter",
+            "Espresso Dip"
+          ]
+        }
+      ],
+      "prepMinutes": 7,
+      "calories": 410,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "croissant-pistachio",
+      "name": "Pistachio Croissant",
+      "category": "Croissants",
+      "subcategory": "Pistachio Croissant",
+      "showcaseSection": "Chocolate & Nut Croissants",
+      "description": "Crisp French pastry piped generously with roasted pistachio mascarpone cream and crushed pistachios.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/chocolate_nut_croissants_1794843900444.jpg",
+      "ingredients": [
+        "Butter Croissant",
+        "Roasted Pistachio Cream",
+        "Crushed Green Pistachios"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "New Arrival"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Serving Style",
+          "choices": [
+            "Served Warm",
+            "Crisp Room Temp"
+          ]
+        },
+        {
+          "name": "Accompaniment",
+          "choices": [
+            "None",
+            "Whipped Cultured Butter",
+            "Espresso Dip"
+          ]
+        }
+      ],
+      "prepMinutes": 7,
+      "calories": 420,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": true,
+      "isNewArrival": true,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "croissant-nutella",
+      "name": "Nutella Croissant",
+      "category": "Croissants",
+      "subcategory": "Nutella Croissant",
+      "showcaseSection": "Chocolate & Nut Croissants",
+      "description": "Warm, flaky golden croissant generously filled with rich hazelnut cocoa spread and roasted nibs.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/chocolate_nut_croissants_1794843900444.jpg",
+      "ingredients": [
+        "Butter Croissant",
+        "Hazelnut Cocoa Spread",
+        "Roasted Hazelnuts"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "Bestseller"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Serving Style",
+          "choices": [
+            "Served Warm",
+            "Crisp Room Temp"
+          ]
+        },
+        {
+          "name": "Accompaniment",
+          "choices": [
+            "None",
+            "Whipped Cultured Butter",
+            "Espresso Dip"
+          ]
+        }
+      ],
+      "prepMinutes": 6,
+      "calories": 430,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": true,
+      "isBestseller": true,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "croissant-strawberry",
+      "name": "Strawberry Croissant",
+      "category": "Croissants",
+      "subcategory": "Strawberry Croissant",
+      "showcaseSection": "Fruit Croissants",
+      "description": "Flaky pastry filled with vanilla bean diplomat cream, fresh Mahabaleshwar strawberries, and berry glaze.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/fruit_savory_croissants_1794843901183.jpg",
+      "ingredients": [
+        "Butter Croissant",
+        "Vanilla Cream",
+        "Fresh Strawberries",
+        "Berry Glaze"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "New Arrival"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Serving Style",
+          "choices": [
+            "Served Warm",
+            "Crisp Room Temp"
+          ]
+        },
+        {
+          "name": "Accompaniment",
+          "choices": [
+            "None",
+            "Whipped Cultured Butter",
+            "Espresso Dip"
+          ]
+        }
+      ],
+      "prepMinutes": 6,
+      "calories": 350,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": true,
+      "isNewArrival": true,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "croissant-blueberry",
+      "name": "Blueberry Croissant",
+      "category": "Croissants",
+      "subcategory": "Blueberry Croissant",
+      "showcaseSection": "Fruit Croissants",
+      "description": "Golden flaky croissant layered with wild blueberry compote and silky lemon cream.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/fruit_savory_croissants_1794843901183.jpg",
+      "ingredients": [
+        "Butter Croissant",
+        "Wild Blueberry Compote",
+        "Lemon Zest Cream"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "New Arrival"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Serving Style",
+          "choices": [
+            "Served Warm",
+            "Crisp Room Temp"
+          ]
+        },
+        {
+          "name": "Accompaniment",
+          "choices": [
+            "None",
+            "Whipped Cultured Butter",
+            "Espresso Dip"
+          ]
+        }
+      ],
+      "prepMinutes": 6,
+      "calories": 345,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": true,
+      "isNewArrival": true,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "croissant-cheese",
+      "name": "Cheese Croissant",
+      "category": "Croissants",
+      "subcategory": "Cheese Croissant",
+      "showcaseSection": "Savory Croissants",
+      "description": "Savory flaky pastry baked with aged sharp cheddar, mozzarella, and toasted herb crust.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/fruit_savory_croissants_1794843901183.jpg",
+      "ingredients": [
+        "Butter Croissant",
+        "Aged Cheddar",
+        "Mozzarella",
+        "Cracked Black Pepper"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "Bestseller"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Serving Style",
+          "choices": [
+            "Served Warm",
+            "Crisp Room Temp"
+          ]
+        },
+        {
+          "name": "Accompaniment",
+          "choices": [
+            "None",
+            "Whipped Cultured Butter",
+            "Espresso Dip"
+          ]
+        }
+      ],
+      "prepMinutes": 7,
+      "calories": 380,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": true,
+      "isBestseller": true,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "croissant-garlic",
+      "name": "Garlic Croissant",
+      "category": "Croissants",
+      "subcategory": "Garlic Croissant",
+      "showcaseSection": "Savory Croissants",
+      "description": "Crisp oven-warmed croissant brushed with roasted garlic-parsley butter and parmesan flake.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/fruit_savory_croissants_1794843901183.jpg",
+      "ingredients": [
+        "Butter Croissant",
+        "Roasted Garlic Butter",
+        "Fresh Parsley",
+        "Aged Cheese"
+      ],
+      "dietaryTags": [
+        "Vegetarian"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Serving Style",
+          "choices": [
+            "Served Warm",
+            "Crisp Room Temp"
+          ]
+        },
+        {
+          "name": "Accompaniment",
+          "choices": [
+            "None",
+            "Whipped Cultured Butter",
+            "Espresso Dip"
+          ]
+        }
+      ],
+      "prepMinutes": 7,
+      "calories": 340,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "croissant-cream-cheese",
+      "name": "Cream Cheese Croissant",
+      "category": "Croissants",
+      "subcategory": "Cream Cheese Croissant",
+      "showcaseSection": "Savory Croissants",
+      "description": "Buttery pastry filled with whipped chive cream cheese and topped with toasted sesame.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/fruit_savory_croissants_1794843901183.jpg",
+      "ingredients": [
+        "Butter Croissant",
+        "Whipped Cream Cheese",
+        "Fresh Chives",
+        "Toasted Sesame"
+      ],
+      "dietaryTags": [
+        "Vegetarian"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Serving Style",
+          "choices": [
+            "Served Warm",
+            "Crisp Room Temp"
+          ]
+        },
+        {
+          "name": "Accompaniment",
+          "choices": [
+            "None",
+            "Whipped Cultured Butter",
+            "Espresso Dip"
+          ]
+        }
+      ],
+      "prepMinutes": 6,
+      "calories": 365,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "croissant-chicken",
+      "name": "Chicken Croissant",
+      "category": "Croissants",
+      "subcategory": "Chicken Croissant",
+      "showcaseSection": "Savory Croissants",
+      "description": "Warm butter croissant filled with herb-roasted shredded chicken, caramelised onion, and pepper aioli.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "non-veg",
+      "imageUrl": "/src/assets/images/fruit_savory_croissants_1794843901183.jpg",
+      "ingredients": [
+        "Butter Croissant",
+        "Herb-Roasted Chicken",
+        "Caramelised Onion",
+        "Pepper Aioli"
+      ],
+      "dietaryTags": [
+        "High-Protein"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Serving Style",
+          "choices": [
+            "Served Warm",
+            "Crisp Room Temp"
+          ]
+        },
+        {
+          "name": "Accompaniment",
+          "choices": [
+            "None",
+            "Whipped Cultured Butter",
+            "Espresso Dip"
+          ]
+        }
+      ],
+      "prepMinutes": 9,
+      "calories": 440,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "croissant-mushroom",
+      "name": "Mushroom Croissant",
+      "category": "Croissants",
+      "subcategory": "Mushroom Croissant",
+      "showcaseSection": "Savory Croissants",
+      "description": "Sautéed cremini and button mushrooms with thyme-garlic cream tucked inside flaky pastry.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/fruit_savory_croissants_1794843901183.jpg",
+      "ingredients": [
+        "Butter Croissant",
+        "Roasted Cremini Mushrooms",
+        "Thyme Cream Sauce",
+        "Swiss Cheese"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "New Arrival"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Serving Style",
+          "choices": [
+            "Served Warm",
+            "Crisp Room Temp"
+          ]
+        },
+        {
+          "name": "Accompaniment",
+          "choices": [
+            "None",
+            "Whipped Cultured Butter",
+            "Espresso Dip"
+          ]
+        }
+      ],
+      "prepMinutes": 8,
+      "calories": 355,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": true,
+      "isNewArrival": true,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "bakery-chocolate-muffin",
+      "name": "Chocolate Muffin",
+      "category": "Bakery & Desserts",
+      "subcategory": "Chocolate Muffin",
+      "showcaseSection": "Bakery & Desserts",
+      "description": "Double dark-cocoa bakery muffin studded with molten chocolate chunks and crisp sugar crown.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/bakery_desserts_assortment_1794843901822.jpg",
+      "ingredients": [
+        "Dutch Cocoa",
+        "Dark Chocolate Chunks",
+        "Cultured Buttermilk",
+        "Espresso Pinch"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "Bestseller"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Serving Style",
+          "choices": [
+            "Fresh Plated",
+            "Warmed Gently"
+          ]
+        },
+        {
+          "name": "Finish",
+          "choices": [
+            "House Finish",
+            "Light Sugar Dust"
+          ]
+        }
+      ],
+      "prepMinutes": 4,
+      "calories": 390,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": true,
+      "isBestseller": true,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "bakery-blueberry-muffin",
+      "name": "Blueberry Muffin",
+      "category": "Bakery & Desserts",
+      "subcategory": "Blueberry Muffin",
+      "showcaseSection": "Bakery & Desserts",
+      "description": "Tender sour-cream crumb bursting with whole wild blueberries and lemon streusel crumble.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/bakery_desserts_assortment_1794843901822.jpg",
+      "ingredients": [
+        "Wild Blueberries",
+        "Sour Cream",
+        "Lemon Zest",
+        "Butter Streusel"
+      ],
+      "dietaryTags": [
+        "Vegetarian"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Serving Style",
+          "choices": [
+            "Fresh Plated",
+            "Warmed Gently"
+          ]
+        },
+        {
+          "name": "Finish",
+          "choices": [
+            "House Finish",
+            "Light Sugar Dust"
+          ]
+        }
+      ],
+      "prepMinutes": 4,
+      "calories": 340,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "bakery-cinnamon-roll",
+      "name": "Cinnamon Roll",
+      "category": "Bakery & Desserts",
+      "subcategory": "Cinnamon Roll",
+      "showcaseSection": "Bakery & Desserts",
+      "description": "Pillow-soft brioche swirl baked with Ceylon cinnamon brown butter and warm vanilla bean glaze.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/bakery_desserts_assortment_1794843901822.jpg",
+      "ingredients": [
+        "Brioche Dough",
+        "Ceylon Cinnamon",
+        "Brown Butter",
+        "Vanilla Bean Glaze"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "Bestseller"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Serving Style",
+          "choices": [
+            "Fresh Plated",
+            "Warmed Gently"
+          ]
+        },
+        {
+          "name": "Finish",
+          "choices": [
+            "House Finish",
+            "Light Sugar Dust"
+          ]
+        }
+      ],
+      "prepMinutes": 6,
+      "calories": 420,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": true,
+      "isBestseller": true,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "bakery-brownies",
+      "name": "Brownies",
+      "category": "Bakery & Desserts",
+      "subcategory": "Brownies",
+      "showcaseSection": "Bakery & Desserts",
+      "description": "Dense crackle-top Belgian chocolate fudge brownie with roasted walnut crunch and sea salt.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/bakery_desserts_assortment_1794843901822.jpg",
+      "ingredients": [
+        "70% Couverture Chocolate",
+        "Cultured Butter",
+        "Cocoa Powder",
+        "Flaky Sea Salt"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "Bestseller"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Serving Style",
+          "choices": [
+            "Fresh Plated",
+            "Warmed Gently"
+          ]
+        },
+        {
+          "name": "Finish",
+          "choices": [
+            "House Finish",
+            "Light Sugar Dust"
+          ]
+        }
+      ],
+      "prepMinutes": 4,
+      "calories": 380,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": true,
+      "isBestseller": true,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "bakery-cheesecake",
+      "name": "Cheesecake",
+      "category": "Bakery & Desserts",
+      "subcategory": "Cheesecake",
+      "showcaseSection": "Bakery & Desserts",
+      "description": "Velvety baked New York style vanilla cheesecake set atop a spiced butter biscuit crust.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/bakery_desserts_assortment_1794843901822.jpg",
+      "ingredients": [
+        "Cream Cheese",
+        "Madagascar Vanilla",
+        "Whipped Cream",
+        "Butter Biscuit Base"
+      ],
+      "dietaryTags": [
+        "Vegetarian"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Serving Style",
+          "choices": [
+            "Fresh Plated",
+            "Warmed Gently"
+          ]
+        },
+        {
+          "name": "Finish",
+          "choices": [
+            "House Finish",
+            "Light Sugar Dust"
+          ]
+        }
+      ],
+      "prepMinutes": 4,
+      "calories": 410,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "bakery-tiramisu",
+      "name": "Tiramisu",
+      "category": "Bakery & Desserts",
+      "subcategory": "Tiramisu",
+      "showcaseSection": "Bakery & Desserts",
+      "description": "House espresso-soaked savoiardi layered with airy mascarpone mousse and bitter cacao dust.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/bakery_desserts_assortment_1794843901822.jpg",
+      "ingredients": [
+        "Mascarpone Cream",
+        "Espresso-Soaked Savoiardi",
+        "Cocoa Powder",
+        "Vanilla"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "New Arrival"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Serving Style",
+          "choices": [
+            "Fresh Plated",
+            "Warmed Gently"
+          ]
+        },
+        {
+          "name": "Finish",
+          "choices": [
+            "House Finish",
+            "Light Sugar Dust"
+          ]
+        }
+      ],
+      "prepMinutes": 4,
+      "calories": 370,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": true,
+      "isNewArrival": true,
+      "isRecommended": true,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "bakery-cookies",
+      "name": "Cookies",
+      "category": "Bakery & Desserts",
+      "subcategory": "Cookies",
+      "showcaseSection": "Bakery & Desserts",
+      "description": "Chewy-edged brown-butter dark chocolate chunk cookies finished with flaky Maldon salt.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/bakery_desserts_assortment_1794843901822.jpg",
+      "ingredients": [
+        "Brown Butter",
+        "Dark Chocolate Chunks",
+        "Demerara Sugar",
+        "Maldon Salt"
+      ],
+      "dietaryTags": [
+        "Vegetarian"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Serving Style",
+          "choices": [
+            "Fresh Plated",
+            "Warmed Gently"
+          ]
+        },
+        {
+          "name": "Finish",
+          "choices": [
+            "House Finish",
+            "Light Sugar Dust"
+          ]
+        }
+      ],
+      "prepMinutes": 3,
+      "calories": 260,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": false,
+      "isNewArrival": false,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    },
+    {
+      "id": "bakery-danish-pastry",
+      "name": "Danish Pastry",
+      "category": "Bakery & Desserts",
+      "subcategory": "Danish Pastry",
+      "showcaseSection": "Bakery & Desserts",
+      "description": "Crisp laminated danish crowned with vanilla custard and seasonal caramelized orchard fruit.",
+      "price": null,
+      "discountPrice": null,
+      "dietaryType": "veg",
+      "imageUrl": "/src/assets/images/bakery_desserts_assortment_1794843901822.jpg",
+      "ingredients": [
+        "Laminated Danish Dough",
+        "Vanilla Bean Custard",
+        "Seasonal Fruit Glaze"
+      ],
+      "dietaryTags": [
+        "Vegetarian",
+        "New Arrival"
+      ],
+      "customisationOptions": [
+        {
+          "name": "Serving Style",
+          "choices": [
+            "Fresh Plated",
+            "Warmed Gently"
+          ]
+        },
+        {
+          "name": "Finish",
+          "choices": [
+            "House Finish",
+            "Light Sugar Dust"
+          ]
+        }
+      ],
+      "prepMinutes": 5,
+      "calories": 330,
+      "available": true,
+      "stockStatus": "in_stock",
+      "isPopular": false,
+      "isBestseller": false,
+      "isNew": true,
+      "isNewArrival": true,
+      "isRecommended": false,
+      "updatedAt": "2026-11-17T13:26:14.250Z"
+    }
+  ],
+  "orders": [],
+  "reservations": [],
+  "reviews": [
+    {
+      "id": "rev-1",
+      "userId": "seed-guest-1",
+      "authorName": "Ananya Verma",
+      "rating": 5,
+      "comment": "The Smoky Paneer Sizzler arrived piping hot with unforgettable char. Our favorite dinner spot in Ahmedabad!",
+      "dishId": "smoky-paneer-sizzler",
+      "createdAt": "2026-11-10T18:30:00.000Z"
+    },
+    {
+      "id": "rev-2",
+      "userId": "seed-guest-2",
+      "authorName": "Rohan Desai",
+      "rating": 5,
+      "comment": "Crispy Masala Dosa paired with freshly pulled Espresso and a warm Classic Butter Croissant is unbeatable.",
+      "dishId": "crispy-masala-dosa",
+      "createdAt": "2026-11-12T10:15:00.000Z"
+    },
+    {
+      "id": "rev-3",
+      "userId": "seed-guest-3",
+      "authorName": "Meera Joshi",
+      "rating": 4,
+      "comment": "Loved the Korean Spicy Duo and Cinnamon Roll. Wish delivery packaging had extra lime wedges.",
+      "dishId": "korean-spicy-duo",
+      "createdAt": "2026-11-14T20:05:00.000Z"
+    }
+  ],
+  "inventory": [
+    {
+      "id": "inv-brioche",
+      "name": "Sesame Brioche & Burger Buns",
+      "sku": "KRD-101",
+      "unit": "pcs",
+      "stockQty": 96,
+      "reorderLevel": 30,
+      "costPerUnit": 18,
+      "linkedDishIds": [
+        "artisan-brioche-burger",
+        "jalapeno-cheese-burger",
+        "classic-crispy-burger"
+      ],
+      "updatedAt": "2026-11-17T13:26:14.252Z"
+    },
+    {
+      "id": "inv-paneer",
+      "name": "Artisanal Paneer Blocks",
+      "sku": "KRD-102",
+      "unit": "kg",
+      "stockQty": 18,
+      "reorderLevel": 6,
+      "costPerUnit": 320,
+      "linkedDishIds": [
+        "smoky-paneer-sizzler",
+        "healthy-protein-bowl"
+      ],
+      "updatedAt": "2026-11-17T13:26:14.252Z"
+    },
+    {
+      "id": "inv-dosa-batter",
+      "name": "Fermented Dosa Batter",
+      "sku": "KRD-103",
+      "unit": "liters",
+      "stockQty": 22,
+      "reorderLevel": 8,
+      "costPerUnit": 110,
+      "linkedDishIds": [
+        "crispy-masala-dosa"
+      ],
+      "updatedAt": "2026-11-17T13:26:14.252Z"
+    },
+    {
+      "id": "inv-arabica",
+      "name": "Single-Origin Espresso & Coffee Beans",
+      "sku": "KRD-104",
+      "unit": "kg",
+      "stockQty": 24,
+      "reorderLevel": 5,
+      "costPerUnit": 950,
+      "linkedDishIds": [
+        "roasted-black-coffee",
+        "muffin-cafe-latte",
+        "choco-frappe-combo",
+        "coffee-espresso",
+        "coffee-cappuccino",
+        "coffee-cafe-latte",
+        "coffee-cold-brew",
+        "coffee-vietnamese-coffee"
+      ],
+      "updatedAt": "2026-11-17T13:26:14.252Z"
+    },
+    {
+      "id": "inv-croissant-butter",
+      "name": "Cultured French Butter & Laminated Dough",
+      "sku": "KRD-109",
+      "unit": "pcs",
+      "stockQty": 84,
+      "reorderLevel": 24,
+      "costPerUnit": 45,
+      "linkedDishIds": [
+        "croissant-classic-butter",
+        "croissant-chocolate",
+        "croissant-almond",
+        "croissant-pistachio",
+        "croissant-nutella",
+        "croissant-strawberry",
+        "croissant-blueberry",
+        "croissant-cheese",
+        "croissant-garlic",
+        "croissant-cream-cheese",
+        "croissant-chicken",
+        "croissant-mushroom"
+      ],
+      "updatedAt": "2026-11-17T13:26:14.252Z"
+    },
+    {
+      "id": "inv-crispy-patty",
+      "name": "Signature Herb Crispy Patties",
+      "sku": "KRD-105",
+      "unit": "pcs",
+      "stockQty": 110,
+      "reorderLevel": 35,
+      "costPerUnit": 42,
+      "linkedDishIds": [
+        "crispy-grill-wrap",
+        "jalapeno-cheese-burger",
+        "classic-crispy-burger",
+        "korean-spicy-duo"
+      ],
+      "updatedAt": "2026-11-17T13:26:14.252Z"
+    },
+    {
+      "id": "inv-piri-fries",
+      "name": "Shoestring Potatoes & Piri Blend",
+      "sku": "KRD-106",
+      "unit": "kg",
+      "stockQty": 14,
+      "reorderLevel": 10,
+      "costPerUnit": 140,
+      "linkedDishIds": [
+        "piri-piri-fries-meal",
+        "artisan-brioche-burger",
+        "smoky-paneer-sizzler"
+      ],
+      "updatedAt": "2026-11-17T13:26:14.252Z"
+    },
+    {
+      "id": "inv-chai-pastry",
+      "name": "Assam Tea & Puff Pastry Sheets",
+      "sku": "KRD-107",
+      "unit": "packs",
+      "stockQty": 9,
+      "reorderLevel": 10,
+      "costPerUnit": 180,
+      "linkedDishIds": [
+        "masala-puff-chai",
+        "methi-thepla-chai",
+        "bakery-danish-pastry"
+      ],
+      "updatedAt": "2026-11-17T13:26:14.252Z"
+    },
+    {
+      "id": "inv-fudge-dairy",
+      "name": "Belgian Chocolate, Mascarpone & Creams",
+      "sku": "KRD-108",
+      "unit": "liters",
+      "stockQty": 18,
+      "reorderLevel": 5,
+      "costPerUnit": 340,
+      "linkedDishIds": [
+        "choco-brownie-sundae",
+        "choco-frappe-combo",
+        "bakery-tiramisu",
+        "bakery-cheesecake",
+        "bakery-brownies"
+      ],
+      "updatedAt": "2026-11-17T13:26:14.252Z"
+    }
+  ],
+  "staff": [
+    {
+      "id": "stf-1",
+      "name": "Krishna Ladva",
+      "role": "Owner & Executive Chef",
+      "shift": "Full Day (10:00 – 22:30)",
+      "email": "krishnaladva25@gmail.com",
+      "status": "active"
+    },
+    {
+      "id": "stf-2",
+      "name": "Aarav Mehta",
+      "role": "Head Sous Chef",
+      "shift": "Evening (14:00 – 23:00)",
+      "email": "aarav.kitchen@pier25.local",
+      "status": "active"
+    },
+    {
+      "id": "stf-3",
+      "name": "Priya Nair",
+      "role": "Front-of-House Manager",
+      "shift": "Split (11:00 – 21:00)",
+      "email": "priya.foh@pier25.local",
+      "status": "active"
+    },
+    {
+      "id": "stf-4",
+      "name": "Kabir Shah",
+      "role": "Lead Barista & Viennoiserie Chef",
+      "shift": "Morning (08:00 – 17:00)",
+      "email": "kabir.cafe@pier25.local",
+      "status": "active"
+    }
+  ],
+  "newsletterSubscribers": [],
+  "settings": {
+    "restaurantName": "Pier 25",
+    "tagline": "Artisanal Coffee, Hand-Laminated Croissants & Culinary Intelligence.",
+    "email": "krishnaladva25@gmail.com",
+    "phone": "+91 79 4000 8425",
+    "address": "25 Heritage Courtyard, Navrangpura, Ahmedabad",
+    "openingHours": "Daily · 08:00 AM – 11:00 PM",
+    "currency": "INR",
+    "currencySymbol": "₹",
+    "taxRate": 0.05,
+    "deliveryFee": 40,
+    "freeDeliveryThreshold": 499,
+    "loyaltyPointsPerRupee": 0.1,
+    "acceptingOrders": true,
+    "acceptingReservations": true
+  }
+}

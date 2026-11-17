@@ -1,0 +1,155 @@
+{
+  "entities": {
+    "UserPublic": {
+      "title": "UserPublic",
+      "description": "Public profile and non-PII loyalty summary for a customer or restaurant owner.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "displayName": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "loyaltyPoints": { "type": "integer" },
+        "totalOrders": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "displayName", "loyaltyPoints", "totalOrders", "createdAt", "updatedAt"]
+    },
+    "UserPrivateInfo": {
+      "title": "UserPrivateInfo",
+      "description": "Isolated PII document for user email, phone, and delivery address.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "email": { "type": "string", "format": "email", "maxLength": 160 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "address": { "type": "string", "maxLength": 240 },
+        "dietaryPreferences": { "type": "string", "maxLength": 200 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "updatedAt"]
+    },
+    "AdminMarker": {
+      "title": "AdminMarker",
+      "description": "Server-managed owner/admin grant document.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "email": { "type": "string", "format": "email", "maxLength": 160 },
+        "grantedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "grantedAt"]
+    },
+    "MenuItem": {
+      "title": "MenuItem",
+      "description": "Restaurant food item with category, subcategory, INR pricing, ingredients, customisations, tags, and stock status.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "name": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "category": { "type": "string", "minLength": 2, "maxLength": 50 },
+        "subcategory": { "type": "string", "maxLength": 80 },
+        "showcaseSection": { "type": "string", "maxLength": 80 },
+        "description": { "type": "string", "minLength": 5, "maxLength": 500 },
+        "price": { "type": "number" },
+        "discountPrice": { "type": "number" },
+        "dietaryType": { "type": "string", "enum": ["veg", "non-veg"] },
+        "imageUrl": { "type": "string", "minLength": 1, "maxLength": 300 },
+        "ingredients": { "type": "array" },
+        "dietaryTags": { "type": "array" },
+        "customisationOptions": { "type": "array" },
+        "prepMinutes": { "type": "integer" },
+        "calories": { "type": "integer" },
+        "available": { "type": "boolean" },
+        "stockStatus": { "type": "string", "enum": ["in_stock", "low_stock", "out_of_stock"] },
+        "isPopular": { "type": "boolean" },
+        "isBestseller": { "type": "boolean" },
+        "isNew": { "type": "boolean" },
+        "isNewArrival": { "type": "boolean" },
+        "isRecommended": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "category", "description", "imageUrl", "available", "updatedAt"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer online order linked to a verified user.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "customerName": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "itemCount": { "type": "integer" },
+        "total": { "type": "number" },
+        "status": { "type": "string", "enum": ["confirmed", "preparing", "ready", "out_for_delivery", "completed", "cancelled"] },
+        "paymentStatus": { "type": "string", "enum": ["verified", "pending", "refunded"] },
+        "paymentReference": { "type": "string", "maxLength": 80 },
+        "orderType": { "type": "string", "enum": ["delivery", "pickup", "dine_in"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "customerName", "itemCount", "total", "status", "paymentStatus", "orderType", "createdAt", "updatedAt"]
+    },
+    "Reservation": {
+      "title": "Reservation",
+      "description": "Table booking linked to a customer account.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "name": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+        "time": { "type": "string", "pattern": "^\\d{2}:\\d{2}$" },
+        "partySize": { "type": "integer" },
+        "status": { "type": "string", "enum": ["confirmed", "seated", "completed", "cancelled"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "name", "date", "time", "partySize", "status", "createdAt", "updatedAt"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Customer rating and review for the restaurant or a specific dish.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "authorName": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "rating": { "type": "integer" },
+        "comment": { "type": "string", "minLength": 3, "maxLength": 500 },
+        "dishId": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "authorName", "rating", "comment", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserPublic" },
+      "description": "Public customer profile & loyalty points."
+    },
+    "/users/{userId}/private/info": {
+      "schema": { "$ref": "#/entities/UserPrivateInfo" },
+      "description": "Private PII document isolated from public reads."
+    },
+    "/admins/{userId}": {
+      "schema": { "$ref": "#/entities/AdminMarker" },
+      "description": "Owner/admin role membership markers."
+    },
+    "/menuItems/{itemId}": {
+      "schema": { "$ref": "#/entities/MenuItem" },
+      "description": "Public menu catalog managed by owners."
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Customer orders with strict owner/customer read boundaries."
+    },
+    "/reservations/{reservationId}": {
+      "schema": { "$ref": "#/entities/Reservation" },
+      "description": "Table bookings linked to customer user IDs."
+    },
+    "/reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/Review" },
+      "description": "Customer reviews and ratings."
+    }
+  }
+}
