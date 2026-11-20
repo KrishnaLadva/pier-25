@@ -8,6 +8,7 @@
         "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
         "displayName": { "type": "string", "minLength": 1, "maxLength": 80 },
         "loyaltyPoints": { "type": "integer" },
+        "totalLoyaltyEarned": { "type": "integer" },
         "totalOrders": { "type": "integer" },
         "createdAt": { "type": "string", "format": "date-time" },
         "updatedAt": { "type": "string", "format": "date-time" }
@@ -52,6 +53,8 @@
         "description": { "type": "string", "minLength": 5, "maxLength": 500 },
         "price": { "type": "number" },
         "discountPrice": { "type": "number" },
+        "comboPrice": { "type": "number" },
+        "comboLabel": { "type": "string", "maxLength": 100 },
         "dietaryType": { "type": "string", "enum": ["veg", "non-veg"] },
         "imageUrl": { "type": "string", "minLength": 1, "maxLength": 300 },
         "ingredients": { "type": "array" },
@@ -66,6 +69,10 @@
         "isNew": { "type": "boolean" },
         "isNewArrival": { "type": "boolean" },
         "isRecommended": { "type": "boolean" },
+        "isDailySpecial": { "type": "boolean" },
+        "dailySpecialPrice": { "type": "number" },
+        "dailySpecialStartedAt": { "type": "string", "format": "date-time" },
+        "dailySpecialExpiresAt": { "type": "string", "format": "date-time" },
         "updatedAt": { "type": "string", "format": "date-time" }
       },
       "required": ["id", "name", "category", "description", "imageUrl", "available", "updatedAt"]
@@ -84,6 +91,7 @@
         "paymentStatus": { "type": "string", "enum": ["verified", "pending", "refunded"] },
         "paymentReference": { "type": "string", "maxLength": 80 },
         "orderType": { "type": "string", "enum": ["delivery", "pickup", "dine_in"] },
+        "tableNumber": { "type": "string", "maxLength": 24 },
         "createdAt": { "type": "string", "format": "date-time" },
         "updatedAt": { "type": "string", "format": "date-time" }
       },
@@ -101,6 +109,7 @@
         "time": { "type": "string", "pattern": "^\\d{2}:\\d{2}$" },
         "partySize": { "type": "integer" },
         "status": { "type": "string", "enum": ["confirmed", "seated", "completed", "cancelled"] },
+        "tableLabel": { "type": "string", "maxLength": 24 },
         "createdAt": { "type": "string", "format": "date-time" },
         "updatedAt": { "type": "string", "format": "date-time" }
       },
@@ -120,6 +129,59 @@
         "createdAt": { "type": "string", "format": "date-time" }
       },
       "required": ["id", "userId", "authorName", "rating", "comment", "createdAt"]
+    },
+    "EliteGuest": {
+      "title": "EliteGuest",
+      "description": "Public non-PII loyalty leaderboard record derived from customer CRM.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "displayName": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "tier": { "type": "string", "enum": ["Grand Reserve", "Gold Circle", "Forest Patron", "Club Guest"] },
+        "totalLoyaltyEarned": { "type": "integer" },
+        "loyaltyPoints": { "type": "integer" },
+        "totalOrders": { "type": "integer" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "displayName", "tier", "totalLoyaltyEarned", "loyaltyPoints", "totalOrders", "updatedAt"]
+    },
+    "InventoryItem": {
+      "title": "InventoryItem",
+      "description": "Kitchen ingredient inventory SKU with reorder threshold and low-stock alert metadata.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "name": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "sku": { "type": "string", "minLength": 2, "maxLength": 40 },
+        "unit": { "type": "string", "minLength": 1, "maxLength": 30 },
+        "stockQty": { "type": "number" },
+        "reorderLevel": { "type": "number" },
+        "costPerUnit": { "type": "number" },
+        "linkedDishIds": { "type": "array" },
+        "lowStockAlertAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "sku", "unit", "stockQty", "reorderLevel", "costPerUnit", "updatedAt"]
+    },
+    "TableSession": {
+      "title": "TableSession",
+      "description": "Occupied Pier 25 dining table session created via QR scanner check-in or dine-in order.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "tableLabel": { "type": "string", "minLength": 1, "maxLength": 24 },
+        "zone": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "seats": { "type": "integer" },
+        "status": { "type": "string", "enum": ["occupied"] },
+        "source": { "type": "string", "enum": ["qr_scanner", "qr_link", "owner_manual", "dine_in_order"] },
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "guestName": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "partySize": { "type": "integer" },
+        "activeOrderIds": { "type": "array" },
+        "checkedInAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "tableLabel", "zone", "seats", "status", "source", "userId", "guestName", "checkedInAt", "updatedAt"]
     }
   },
   "firestore": {
@@ -150,6 +212,18 @@
     "/reviews/{reviewId}": {
       "schema": { "$ref": "#/entities/Review" },
       "description": "Customer reviews and ratings."
+    },
+    "/eliteGuests/{guestId}": {
+      "schema": { "$ref": "#/entities/EliteGuest" },
+      "description": "Sanitized non-PII Elite Guests loyalty leaderboard."
+    },
+    "/inventory/{itemId}": {
+      "schema": { "$ref": "#/entities/InventoryItem" },
+      "description": "Kitchen ingredient inventory and reorder threshold state managed by owners."
+    },
+    "/tableSessions/{tableId}": {
+      "schema": { "$ref": "#/entities/TableSession" },
+      "description": "Active QR table check-ins and live floor plan occupancy state."
     }
   }
 }

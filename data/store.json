@@ -1,6 +1,124 @@
 {
   "sessionSecret": "958402ff10a7ebd226abf3c91279b0b05f9dc5ace6fc9f77e59d57ba2292ed9c",
-  "users": [],
+  "users": [
+    {
+      "uid": "seed-guest-1",
+      "email": "ananya.verma@guest.pier25.in",
+      "displayName": "Ananya Verma",
+      "passwordHash": "",
+      "role": "customer",
+      "phone": "+91 98250 11402",
+      "address": "14 Gulbai Tekra, Navrangpura, Ahmedabad",
+      "dietaryPreferences": "Smoky Paneer Sizzler · Pour-Over",
+      "loyaltyPoints": 1420,
+      "totalLoyaltyEarned": 1680,
+      "totalOrders": 24,
+      "historicalSpent": 16800,
+      "createdAt": "2026-08-12T10:00:00.000Z",
+      "updatedAt": "2026-11-15T19:10:00.000Z",
+      "lastOrderAt": "2026-11-15T19:10:00.000Z"
+    },
+    {
+      "uid": "seed-guest-2",
+      "email": "rohan.desai@guest.pier25.in",
+      "displayName": "Rohan Desai",
+      "passwordHash": "",
+      "role": "customer",
+      "phone": "+91 98791 44210",
+      "address": "78 Sindhu Bhavan Marg, Bodakdev, Ahmedabad",
+      "dietaryPreferences": "Crispy Masala Dosa · Cold Brew",
+      "loyaltyPoints": 980,
+      "totalLoyaltyEarned": 1290,
+      "totalOrders": 19,
+      "historicalSpent": 12900,
+      "createdAt": "2026-08-24T09:30:00.000Z",
+      "updatedAt": "2026-11-14T11:20:00.000Z",
+      "lastOrderAt": "2026-11-14T11:20:00.000Z"
+    },
+    {
+      "uid": "seed-guest-4",
+      "email": "kabir.malhotra@guest.pier25.in",
+      "displayName": "Kabir Malhotra",
+      "passwordHash": "",
+      "role": "customer",
+      "phone": "+91 98980 22319",
+      "address": "42 Prahlad Nagar, Ahmedabad",
+      "dietaryPreferences": "Almond Croissant · Double Espresso",
+      "loyaltyPoints": 865,
+      "totalLoyaltyEarned": 1045,
+      "totalOrders": 15,
+      "historicalSpent": 10450,
+      "createdAt": "2026-09-05T08:45:00.000Z",
+      "updatedAt": "2026-11-13T16:40:00.000Z",
+      "lastOrderAt": "2026-11-13T16:40:00.000Z"
+    },
+    {
+      "uid": "seed-guest-3",
+      "email": "meera.joshi@guest.pier25.in",
+      "displayName": "Meera Joshi",
+      "passwordHash": "",
+      "role": "customer",
+      "phone": "+91 97240 67108",
+      "address": "9 Satellite Road, Ahmedabad",
+      "dietaryPreferences": "Korean Spicy Duo · Cinnamon Roll",
+      "loyaltyPoints": 740,
+      "totalLoyaltyEarned": 890,
+      "totalOrders": 13,
+      "historicalSpent": 8900,
+      "createdAt": "2026-09-18T14:15:00.000Z",
+      "updatedAt": "2026-11-14T20:05:00.000Z",
+      "lastOrderAt": "2026-11-14T20:05:00.000Z"
+    },
+    {
+      "uid": "seed-guest-5",
+      "email": "diya.patel@guest.pier25.in",
+      "displayName": "Diya Patel",
+      "passwordHash": "",
+      "role": "customer",
+      "phone": "+91 98245 90311",
+      "address": "21 CG Road, Ahmedabad",
+      "dietaryPreferences": "Healthy Protein Bowl · Iced Latte",
+      "loyaltyPoints": 615,
+      "totalLoyaltyEarned": 725,
+      "totalOrders": 11,
+      "historicalSpent": 7250,
+      "createdAt": "2026-10-02T12:00:00.000Z",
+      "updatedAt": "2026-11-12T13:30:00.000Z",
+      "lastOrderAt": "2026-11-12T13:30:00.000Z"
+    },
+    {
+      "uid": "seed-guest-6",
+      "email": "vikram.nair@guest.pier25.in",
+      "displayName": "Vikram Nair",
+      "passwordHash": "",
+      "role": "customer",
+      "phone": "+91 99099 54321",
+      "address": "55 Thaltej Cross Road, Ahmedabad",
+      "dietaryPreferences": "Artisan Brioche Burger · Cold Coffee",
+      "loyaltyPoints": 490,
+      "totalLoyaltyEarned": 580,
+      "totalOrders": 9,
+      "historicalSpent": 5800,
+      "createdAt": "2026-10-19T18:00:00.000Z",
+      "updatedAt": "2026-11-11T21:15:00.000Z",
+      "lastOrderAt": "2026-11-11T21:15:00.000Z"
+    },
+    {
+      "uid": "usr-f7db740ede31",
+      "email": "krishnaladva25@gmail.com",
+      "displayName": "Krishna Ladva",
+      "passwordHash": "89fdb8abdd2ab0fd0fa79df2bebbbed0:06501719cb3e0a580c109abce8de5ce2b119898057095a63365360b03ecd9a9071a187f1fa6fc3c43d6f4d200a1c0238a7ef6e79cc0ff0eda03cf36ab139af2e",
+      "role": "owner",
+      "phone": "",
+      "address": "",
+      "dietaryPreferences": "",
+      "loyaltyPoints": 50,
+      "totalLoyaltyEarned": 50,
+      "totalOrders": 0,
+      "createdAt": "2026-11-17T14:12:06.190Z",
+      "updatedAt": "2026-11-18T09:04:28.096Z"
+    }
+  ],
   "menuItems": [
     {
       "id": "crispy-grill-wrap",
@@ -12,7 +130,7 @@
       "price": 249,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "mc5.png",
+      "imageUrl": "/src/assets/optimized/wrap-fries.webp",
       "ingredients": [
         "Herb Crispy Patty",
         "Romaine Lettuce",
@@ -42,7 +160,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": 319,
+      "comboLabel": "Wrap + Piri Piri Fries + Chilled Cola",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "roasted-black-coffee",
@@ -54,7 +178,7 @@
       "price": 129,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "mc3.png",
+      "imageUrl": "/src/assets/optimized/black-coffee.webp",
       "ingredients": [
         "Dark Roast Arabica Beans",
         "Filtered Spring Water"
@@ -81,7 +205,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": 219,
+      "comboLabel": "Black Coffee + Classic Butter Croissant",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "jalapeno-cheese-burger",
@@ -93,7 +223,7 @@
       "price": 229,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "mc4.png",
+      "imageUrl": "/src/assets/optimized/cheese-burger.webp",
       "ingredients": [
         "Golden Crispy Patty",
         "Melted Cheddar",
@@ -123,7 +253,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": 309,
+      "comboLabel": "Burger + Seasoned Fries + Sparkling Cola",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "choco-frappe-combo",
@@ -135,7 +271,7 @@
       "price": 349,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "mc8.png",
+      "imageUrl": "/src/assets/optimized/cold-coffee.webp",
       "ingredients": [
         "Crispy Burger",
         "Dark Cocoa Blend",
@@ -157,7 +293,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "piri-piri-fries-meal",
@@ -169,7 +311,7 @@
       "price": 369,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "mc9.png",
+      "imageUrl": "/src/assets/optimized/cheese-burger.webp",
       "ingredients": [
         "Crispy Burger",
         "Russet Fries",
@@ -191,7 +333,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "korean-spicy-duo",
@@ -203,7 +351,7 @@
       "price": 499,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "mc10.jpg",
+      "imageUrl": "/src/assets/optimized/korean-burger.webp",
       "ingredients": [
         "Double Crispy Burgers",
         "Gochujang Glaze",
@@ -226,7 +374,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "classic-crispy-burger",
@@ -238,7 +392,7 @@
       "price": 219,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "mc11.png",
+      "imageUrl": "/src/assets/optimized/cheese-burger.webp",
       "ingredients": [
         "Herb-Seasoned Patty",
         "Iceberg Lettuce",
@@ -259,7 +413,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": 299,
+      "comboLabel": "Burger + Piri Fries + House Dip",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "artisan-brioche-burger",
@@ -271,7 +431,7 @@
       "price": 399,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "burger.jpg",
+      "imageUrl": "/src/assets/optimized/cheese-burger.webp",
       "ingredients": [
         "Artisan Patty",
         "Toasted Sesame Brioche",
@@ -293,7 +453,13 @@
       "isNew": true,
       "isNewArrival": true,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": 469,
+      "comboLabel": "Brioche Burger + Iced Latte",
+      "isDailySpecial": true,
+      "dailySpecialPrice": 339,
+      "dailySpecialStartedAt": "2026-11-18T08:55:23.958Z",
+      "dailySpecialExpiresAt": "2026-11-19T08:55:23.958Z"
     },
     {
       "id": "crispy-masala-dosa",
@@ -305,7 +471,7 @@
       "price": 279,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "dosa.jpg",
+      "imageUrl": "/src/assets/optimized/masala-dosa.webp",
       "ingredients": [
         "Fermented Rice-Lentil Batter",
         "Spiced Potato Masala",
@@ -326,7 +492,13 @@
       "isNew": true,
       "isNewArrival": true,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": 349,
+      "comboLabel": "Masala Dosa + Cardamom Masala Chai",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "smoky-paneer-sizzler",
@@ -338,7 +510,7 @@
       "price": 489,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "sizzlers.jpg",
+      "imageUrl": "/src/assets/optimized/paneer-sizzler.webp",
       "ingredients": [
         "Char-Grilled Paneer",
         "Wok Noodles",
@@ -360,7 +532,13 @@
       "isNew": true,
       "isNewArrival": true,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": 549,
+      "comboLabel": "Paneer Sizzler + Chilled Sparkling Cola",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "healthy-protein-bowl",
@@ -372,7 +550,7 @@
       "price": 349,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "dish.png",
+      "imageUrl": "/src/assets/optimized/protein-bowl.webp",
       "ingredients": [
         "Grilled Paneer",
         "Edamame",
@@ -396,7 +574,13 @@
       "isNew": true,
       "isNewArrival": true,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": 419,
+      "comboLabel": "Protein Bowl + 18-Hour Cold Brew",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "masala-puff-chai",
@@ -408,7 +592,7 @@
       "price": 199,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "m2.png",
+      "imageUrl": "/src/assets/optimized/chai-snacks.webp",
       "ingredients": [
         "Flaky Puff Pastry",
         "Spiced Vegetable Filling",
@@ -429,7 +613,13 @@
       "isNew": true,
       "isNewArrival": true,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "methi-thepla-chai",
@@ -441,7 +631,7 @@
       "price": 179,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "m7.png",
+      "imageUrl": "/src/assets/optimized/chai-snacks.webp",
       "ingredients": [
         "Whole Wheat Flour",
         "Fresh Fenugreek Leaves",
@@ -461,7 +651,13 @@
       "isNew": true,
       "isNewArrival": true,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "muffin-cafe-latte",
@@ -473,7 +669,7 @@
       "price": 319,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "mc6.png",
+      "imageUrl": "/src/assets/optimized/hot-coffee.webp",
       "ingredients": [
         "English Muffin",
         "Savory Herb Patty",
@@ -495,7 +691,13 @@
       "isNew": true,
       "isNewArrival": true,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "choco-brownie-sundae",
@@ -507,7 +709,7 @@
       "price": 199,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "mc7.png",
+      "imageUrl": "/src/assets/optimized/sundae-cola.webp",
       "ingredients": [
         "Vanilla Bean Soft-Serve",
         "Dark Fudge Brownie",
@@ -528,7 +730,13 @@
       "isNew": true,
       "isNewArrival": true,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": 279,
+      "comboLabel": "Brownie Sundae + Double Espresso",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "chilled-sparkling-cola",
@@ -540,7 +748,7 @@
       "price": 89,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "coca.jpg",
+      "imageUrl": "/src/assets/optimized/sundae-cola.webp",
       "ingredients": [
         "Sparkling Cola",
         "Fresh Lime Slices",
@@ -560,7 +768,13 @@
       "isNew": true,
       "isNewArrival": true,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "coffee-espresso",
@@ -572,7 +786,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "imageUrl": "/src/assets/optimized/hot-coffee.webp",
       "ingredients": [
         "Single-Origin Arabica Beans",
         "Filtered Water"
@@ -607,7 +821,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "coffee-double-espresso",
@@ -619,7 +839,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "imageUrl": "/src/assets/optimized/hot-coffee.webp",
       "ingredients": [
         "Double Shot Arabica Espresso",
         "Filtered Water"
@@ -646,7 +866,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "coffee-americano",
@@ -658,7 +884,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "imageUrl": "/src/assets/optimized/hot-coffee.webp",
       "ingredients": [
         "Arabica Espresso",
         "Steaming Hot Water"
@@ -701,7 +927,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "coffee-cappuccino",
@@ -713,7 +945,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "imageUrl": "/src/assets/optimized/hot-coffee.webp",
       "ingredients": [
         "Arabica Espresso",
         "Steamed Whole Milk",
@@ -758,7 +990,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "coffee-cafe-latte",
@@ -770,7 +1008,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "imageUrl": "/src/assets/optimized/hot-coffee.webp",
       "ingredients": [
         "Arabica Espresso",
         "Steamed Farm Milk"
@@ -813,7 +1051,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "coffee-flat-white",
@@ -825,7 +1069,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "imageUrl": "/src/assets/optimized/hot-coffee.webp",
       "ingredients": [
         "Double Ristretto",
         "Silky Micro-Foam Milk"
@@ -867,7 +1111,13 @@
       "isNew": true,
       "isNewArrival": true,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "coffee-mocha",
@@ -879,7 +1129,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "imageUrl": "/src/assets/optimized/hot-coffee.webp",
       "ingredients": [
         "Arabica Espresso",
         "Dark Chocolate Ganache",
@@ -923,7 +1173,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "coffee-macchiato",
@@ -935,7 +1191,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "imageUrl": "/src/assets/optimized/hot-coffee.webp",
       "ingredients": [
         "Arabica Espresso",
         "Steamed Milk Foam"
@@ -977,7 +1233,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "coffee-caramel-macchiato",
@@ -989,7 +1251,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "imageUrl": "/src/assets/optimized/hot-coffee.webp",
       "ingredients": [
         "Arabica Espresso",
         "Madagascar Vanilla",
@@ -1034,7 +1296,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "coffee-vanilla-latte",
@@ -1046,7 +1314,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "imageUrl": "/src/assets/optimized/hot-coffee.webp",
       "ingredients": [
         "Arabica Espresso",
         "Steamed Milk",
@@ -1089,7 +1357,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "coffee-hazelnut-latte",
@@ -1101,7 +1375,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "imageUrl": "/src/assets/optimized/hot-coffee.webp",
       "ingredients": [
         "Arabica Espresso",
         "Roasted Hazelnut Praline",
@@ -1144,7 +1418,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "coffee-spanish-latte",
@@ -1156,7 +1436,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/hot_espresso_latte_1794843900170.jpg",
+      "imageUrl": "/src/assets/optimized/hot-coffee.webp",
       "ingredients": [
         "Double Espresso",
         "Sweetened Condensed Milk",
@@ -1200,7 +1480,13 @@
       "isNew": true,
       "isNewArrival": true,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "coffee-iced-americano",
@@ -1212,7 +1498,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/cold_coffee_brew_1794843900373.jpg",
+      "imageUrl": "/src/assets/optimized/cold-coffee.webp",
       "ingredients": [
         "Double Arabica Espresso",
         "Chilled Water",
@@ -1257,7 +1543,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "coffee-iced-latte",
@@ -1269,7 +1561,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/cold_coffee_brew_1794843900373.jpg",
+      "imageUrl": "/src/assets/optimized/cold-coffee.webp",
       "ingredients": [
         "Arabica Espresso",
         "Chilled Milk",
@@ -1314,7 +1606,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "coffee-iced-mocha",
@@ -1326,7 +1624,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/cold_coffee_brew_1794843900373.jpg",
+      "imageUrl": "/src/assets/optimized/cold-coffee.webp",
       "ingredients": [
         "Arabica Espresso",
         "Belgian Cocoa Sauce",
@@ -1371,7 +1669,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "coffee-cold-coffee",
@@ -1383,7 +1687,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/cold_coffee_brew_1794843900373.jpg",
+      "imageUrl": "/src/assets/optimized/cold-coffee.webp",
       "ingredients": [
         "House Espresso Blend",
         "Chilled Milk",
@@ -1429,7 +1733,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "coffee-cold-brew",
@@ -1441,7 +1751,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/cold_coffee_brew_1794843900373.jpg",
+      "imageUrl": "/src/assets/optimized/cold-coffee.webp",
       "ingredients": [
         "Coarse-Ground Single-Origin Arabica",
         "Cold Filtered Water"
@@ -1486,7 +1796,13 @@
       "isNew": true,
       "isNewArrival": true,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "coffee-vietnamese-coffee",
@@ -1498,7 +1814,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/cold_coffee_brew_1794843900373.jpg",
+      "imageUrl": "/src/assets/optimized/cold-coffee.webp",
       "ingredients": [
         "Dark Roast Phin Coffee",
         "Sweetened Condensed Milk",
@@ -1543,7 +1859,13 @@
       "isNew": true,
       "isNewArrival": true,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "croissant-classic-butter",
@@ -1555,7 +1877,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/butter_croissants_classic_1794843900571.jpg",
+      "imageUrl": "/src/assets/optimized/classic-croissant.webp",
       "ingredients": [
         "French T55 Flour",
         "Cultured European Butter",
@@ -1592,7 +1914,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "croissant-chocolate",
@@ -1604,7 +1932,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/chocolate_nut_croissants_1794843900444.jpg",
+      "imageUrl": "/src/assets/optimized/choc-nut-croissant.webp",
       "ingredients": [
         "Laminated Butter Pastry",
         "70% Dark Belgian Chocolate",
@@ -1640,7 +1968,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "croissant-almond",
@@ -1652,7 +1986,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/chocolate_nut_croissants_1794843900444.jpg",
+      "imageUrl": "/src/assets/optimized/choc-nut-croissant.webp",
       "ingredients": [
         "Butter Croissant",
         "Roasted Almond Frangipane",
@@ -1688,7 +2022,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "croissant-pistachio",
@@ -1700,7 +2040,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/chocolate_nut_croissants_1794843900444.jpg",
+      "imageUrl": "/src/assets/optimized/choc-nut-croissant.webp",
       "ingredients": [
         "Butter Croissant",
         "Roasted Pistachio Cream",
@@ -1736,7 +2076,13 @@
       "isNew": true,
       "isNewArrival": true,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "croissant-nutella",
@@ -1748,7 +2094,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/chocolate_nut_croissants_1794843900444.jpg",
+      "imageUrl": "/src/assets/optimized/choc-nut-croissant.webp",
       "ingredients": [
         "Butter Croissant",
         "Hazelnut Cocoa Spread",
@@ -1784,7 +2130,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "croissant-strawberry",
@@ -1796,7 +2148,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/fruit_savory_croissants_1794843901183.jpg",
+      "imageUrl": "/src/assets/optimized/fruit-savory-croissant.webp",
       "ingredients": [
         "Butter Croissant",
         "Vanilla Cream",
@@ -1833,7 +2185,13 @@
       "isNew": true,
       "isNewArrival": true,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "croissant-blueberry",
@@ -1845,7 +2203,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/fruit_savory_croissants_1794843901183.jpg",
+      "imageUrl": "/src/assets/optimized/fruit-savory-croissant.webp",
       "ingredients": [
         "Butter Croissant",
         "Wild Blueberry Compote",
@@ -1881,7 +2239,13 @@
       "isNew": true,
       "isNewArrival": true,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "croissant-cheese",
@@ -1893,7 +2257,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/fruit_savory_croissants_1794843901183.jpg",
+      "imageUrl": "/src/assets/optimized/fruit-savory-croissant.webp",
       "ingredients": [
         "Butter Croissant",
         "Aged Cheddar",
@@ -1930,7 +2294,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "croissant-garlic",
@@ -1942,7 +2312,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/fruit_savory_croissants_1794843901183.jpg",
+      "imageUrl": "/src/assets/optimized/fruit-savory-croissant.webp",
       "ingredients": [
         "Butter Croissant",
         "Roasted Garlic Butter",
@@ -1978,7 +2348,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "croissant-cream-cheese",
@@ -1990,7 +2366,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/fruit_savory_croissants_1794843901183.jpg",
+      "imageUrl": "/src/assets/optimized/fruit-savory-croissant.webp",
       "ingredients": [
         "Butter Croissant",
         "Whipped Cream Cheese",
@@ -2026,7 +2402,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "croissant-chicken",
@@ -2038,7 +2420,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "non-veg",
-      "imageUrl": "/src/assets/images/fruit_savory_croissants_1794843901183.jpg",
+      "imageUrl": "/src/assets/optimized/fruit-savory-croissant.webp",
       "ingredients": [
         "Butter Croissant",
         "Herb-Roasted Chicken",
@@ -2074,7 +2456,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "croissant-mushroom",
@@ -2086,7 +2474,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/fruit_savory_croissants_1794843901183.jpg",
+      "imageUrl": "/src/assets/optimized/fruit-savory-croissant.webp",
       "ingredients": [
         "Butter Croissant",
         "Roasted Cremini Mushrooms",
@@ -2123,7 +2511,13 @@
       "isNew": true,
       "isNewArrival": true,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "bakery-chocolate-muffin",
@@ -2135,7 +2529,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/bakery_desserts_assortment_1794843901822.jpg",
+      "imageUrl": "/src/assets/optimized/bakery-desserts.webp",
       "ingredients": [
         "Dutch Cocoa",
         "Dark Chocolate Chunks",
@@ -2171,7 +2565,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "bakery-blueberry-muffin",
@@ -2183,7 +2583,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/bakery_desserts_assortment_1794843901822.jpg",
+      "imageUrl": "/src/assets/optimized/bakery-desserts.webp",
       "ingredients": [
         "Wild Blueberries",
         "Sour Cream",
@@ -2218,7 +2618,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "bakery-cinnamon-roll",
@@ -2230,7 +2636,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/bakery_desserts_assortment_1794843901822.jpg",
+      "imageUrl": "/src/assets/optimized/bakery-desserts.webp",
       "ingredients": [
         "Brioche Dough",
         "Ceylon Cinnamon",
@@ -2266,7 +2672,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "bakery-brownies",
@@ -2278,7 +2690,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/bakery_desserts_assortment_1794843901822.jpg",
+      "imageUrl": "/src/assets/optimized/bakery-desserts.webp",
       "ingredients": [
         "70% Couverture Chocolate",
         "Cultured Butter",
@@ -2314,7 +2726,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "bakery-cheesecake",
@@ -2326,7 +2744,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/bakery_desserts_assortment_1794843901822.jpg",
+      "imageUrl": "/src/assets/optimized/bakery-desserts.webp",
       "ingredients": [
         "Cream Cheese",
         "Madagascar Vanilla",
@@ -2361,7 +2779,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "bakery-tiramisu",
@@ -2373,7 +2797,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/bakery_desserts_assortment_1794843901822.jpg",
+      "imageUrl": "/src/assets/optimized/bakery-desserts.webp",
       "ingredients": [
         "Mascarpone Cream",
         "Espresso-Soaked Savoiardi",
@@ -2409,7 +2833,13 @@
       "isNew": true,
       "isNewArrival": true,
       "isRecommended": true,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "bakery-cookies",
@@ -2421,7 +2851,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/bakery_desserts_assortment_1794843901822.jpg",
+      "imageUrl": "/src/assets/optimized/bakery-desserts.webp",
       "ingredients": [
         "Brown Butter",
         "Dark Chocolate Chunks",
@@ -2456,7 +2886,13 @@
       "isNew": false,
       "isNewArrival": false,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     },
     {
       "id": "bakery-danish-pastry",
@@ -2468,7 +2904,7 @@
       "price": null,
       "discountPrice": null,
       "dietaryType": "veg",
-      "imageUrl": "/src/assets/images/bakery_desserts_assortment_1794843901822.jpg",
+      "imageUrl": "/src/assets/optimized/bakery-desserts.webp",
       "ingredients": [
         "Laminated Danish Dough",
         "Vanilla Bean Custard",
@@ -2503,7 +2939,13 @@
       "isNew": true,
       "isNewArrival": true,
       "isRecommended": false,
-      "updatedAt": "2026-11-17T13:26:14.250Z"
+      "updatedAt": "2026-11-17T13:26:14.250Z",
+      "comboPrice": null,
+      "comboLabel": "",
+      "isDailySpecial": false,
+      "dailySpecialPrice": null,
+      "dailySpecialStartedAt": null,
+      "dailySpecialExpiresAt": null
     }
   ],
   "orders": [],
@@ -2565,7 +3007,7 @@
         "smoky-paneer-sizzler",
         "healthy-protein-bowl"
       ],
-      "updatedAt": "2026-11-17T13:26:14.252Z"
+      "updatedAt": "2026-11-17T14:13:49.274Z"
     },
     {
       "id": "inv-dosa-batter",
@@ -2738,5 +3180,21 @@
     "loyaltyPointsPerRupee": 0.1,
     "acceptingOrders": true,
     "acceptingReservations": true
-  }
+  },
+  "tableSessions": [
+    {
+      "id": "table-05",
+      "tableLabel": "Table 05",
+      "zone": "Main Dining",
+      "seats": 4,
+      "status": "occupied",
+      "source": "qr_link",
+      "userId": "guest",
+      "guestName": "Walk-In QR Guest",
+      "partySize": 4,
+      "activeOrderIds": [],
+      "checkedInAt": "2026-11-18T09:01:18.116Z",
+      "updatedAt": "2026-11-18T09:05:58.594Z"
+    }
+  ]
 }

@@ -2,6 +2,20 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { createHmac, randomBytes, scryptSync, timingSafeEqual } from 'node:crypto';
 import { validateBooking } from './booking.js';
+import { buildLowStockNotifications, evaluateInventoryStock } from './inventory-alerts.js';
+import {
+  computeDailySpecialSavingsPct,
+  createDailySpecialWindow,
+  formatDailySpecialRemaining,
+  isDailySpecialActive,
+} from './daily-specials.js';
+import {
+  FLOOR_PLAN_TABLES,
+  findFloorPlanTableMeta,
+  normalizeTableLabel,
+  tableLabelToId,
+} from './qr-tools.js';
+import { computeLoyaltyAnalytics } from './loyalty-analytics.js';
 
 export const OWNER_EMAIL = 'krishnaladva25@gmail.com';
 export const ORDER_STATUSES = ['confirmed', 'preparing', 'ready', 'out_for_delivery', 'completed', 'cancelled'];
@@ -67,12 +81,12 @@ export const SHOWCASE_SECTIONS = [
   'Bakery & Desserts',
 ];
 
-const IMG_HOT_COFFEE = '/src/assets/images/hot_espresso_latte_1794843900170.jpg';
-const IMG_COLD_COFFEE = '/src/assets/images/cold_coffee_brew_1794843900373.jpg';
-const IMG_CLASSIC_CROISSANT = '/src/assets/images/butter_croissants_classic_1794843900571.jpg';
-const IMG_CHOC_NUT_CROISSANT = '/src/assets/images/chocolate_nut_croissants_1794843900444.jpg';
-const IMG_FRUIT_SAVORY_CROISSANT = '/src/assets/images/fruit_savory_croissants_1794843901183.jpg';
-const IMG_BAKERY_DESSERTS = '/src/assets/images/bakery_desserts_assortment_1794843901822.jpg';
+const IMG_HOT_COFFEE = '/src/assets/optimized/hot-coffee.webp';
+const IMG_COLD_COFFEE = '/src/assets/optimized/cold-coffee.webp';
+const IMG_CLASSIC_CROISSANT = '/src/assets/optimized/classic-croissant.webp';
+const IMG_CHOC_NUT_CROISSANT = '/src/assets/optimized/choc-nut-croissant.webp';
+const IMG_FRUIT_SAVORY_CROISSANT = '/src/assets/optimized/fruit-savory-croissant.webp';
+const IMG_BAKERY_DESSERTS = '/src/assets/optimized/bakery-desserts.webp';
 
 const COFFEE_HOT_CUSTOMISATIONS = [
   { name: 'Cup Size', choices: ['Single / Regular', 'Large'] },
@@ -160,6 +174,8 @@ function makeCafeSeedItem({
     description,
     price: null,
     discountPrice: null,
+    comboPrice: null,
+    comboLabel: '',
     dietaryType,
     imageUrl,
     ingredients,
@@ -174,6 +190,10 @@ function makeCafeSeedItem({
     isNew: isNewArrival,
     isNewArrival,
     isRecommended,
+    isDailySpecial: false,
+    dailySpecialPrice: null,
+    dailySpecialStartedAt: null,
+    dailySpecialExpiresAt: null,
     updatedAt: now,
   };
 }
@@ -782,8 +802,10 @@ export function createSeedMenu() {
       description: 'Tender crispy patty wrapped with fresh lettuce, aged cheddar, and smoky house sauce.',
       price: 249,
       discountPrice: null,
+      comboPrice: 319,
+      comboLabel: 'Wrap + Piri Piri Fries + Chilled Cola',
       dietaryType: 'veg',
-      imageUrl: 'mc5.png',
+      imageUrl: '/src/assets/optimized/wrap-fries.webp',
       ingredients: ['Herb Crispy Patty', 'Romaine Lettuce', 'Aged Cheddar', 'Smoky House Sauce', 'Warm Tortilla'],
       dietaryTags: ['Signature', 'Vegetarian'],
       customisationOptions: [{ name: 'Spice Level', choices: ['Classic', 'Extra Smoky'] }],
@@ -807,8 +829,10 @@ export function createSeedMenu() {
       description: 'Freshly brewed dark roast single-origin coffee served piping hot with rich cacao aroma.',
       price: 129,
       discountPrice: null,
+      comboPrice: 219,
+      comboLabel: 'Black Coffee + Classic Butter Croissant',
       dietaryType: 'veg',
-      imageUrl: 'mc3.png',
+      imageUrl: '/src/assets/optimized/black-coffee.webp',
       ingredients: ['Dark Roast Arabica Beans', 'Filtered Spring Water'],
       dietaryTags: ['Vegan', 'Gluten-Free'],
       customisationOptions: [{ name: 'Strength', choices: ['Regular', 'Bold'] }],
@@ -832,8 +856,10 @@ export function createSeedMenu() {
       description: 'Crispy golden patty topped with melted cheddar, pickled jalapeños, and zesty herb aioli.',
       price: 229,
       discountPrice: null,
+      comboPrice: 309,
+      comboLabel: 'Burger + Seasoned Fries + Sparkling Cola',
       dietaryType: 'veg',
-      imageUrl: 'mc4.png',
+      imageUrl: '/src/assets/optimized/cheese-burger.webp',
       ingredients: ['Golden Crispy Patty', 'Melted Cheddar', 'Pickled Jalapeños', 'Zesty Aioli', 'Toasted Bun'],
       dietaryTags: ['Spicy', 'Vegetarian'],
       customisationOptions: [{ name: 'Cheese', choices: ['Single Cheddar', 'Double Cheddar'] }],
@@ -857,8 +883,10 @@ export function createSeedMenu() {
       description: 'Signature crispy burger paired with a rich, chilled dark chocolate espresso frappe.',
       price: 349,
       discountPrice: null,
+      comboPrice: null,
+      comboLabel: '',
       dietaryType: 'veg',
-      imageUrl: 'mc8.png',
+      imageUrl: '/src/assets/optimized/cold-coffee.webp',
       ingredients: ['Crispy Burger', 'Dark Cocoa Blend', 'Chilled Milk', 'Espresso Shot', 'Whipped Cream'],
       dietaryTags: ['Combo', 'Vegetarian'],
       customisationOptions: [],
@@ -882,8 +910,10 @@ export function createSeedMenu() {
       description: 'Classic crispy burger served with golden shoestring fries and house piri piri spice dust.',
       price: 369,
       discountPrice: null,
+      comboPrice: null,
+      comboLabel: '',
       dietaryType: 'veg',
-      imageUrl: 'mc9.png',
+      imageUrl: '/src/assets/optimized/cheese-burger.webp',
       ingredients: ['Crispy Burger', 'Russet Fries', 'Piri Piri Spice', 'Garlic Dip'],
       dietaryTags: ['Spicy', 'Combo', 'Vegetarian'],
       customisationOptions: [],
@@ -907,8 +937,10 @@ export function createSeedMenu() {
       description: 'Two fiery gochujang-glazed crispy burgers with seasoned fries and sparkling cooler.',
       price: 499,
       discountPrice: null,
+      comboPrice: null,
+      comboLabel: '',
       dietaryType: 'veg',
-      imageUrl: 'mc10.jpg',
+      imageUrl: '/src/assets/optimized/korean-burger.webp',
       ingredients: ['Double Crispy Burgers', 'Gochujang Glaze', 'Sesame Slaw', 'Seasoned Fries', 'Citrus Cooler'],
       dietaryTags: ['Spicy', 'Sharing', 'Vegetarian'],
       customisationOptions: [],
@@ -932,8 +964,10 @@ export function createSeedMenu() {
       description: 'Crunchy herb-seasoned patty layered with crisp iceberg lettuce and creamy house mayo.',
       price: 219,
       discountPrice: null,
+      comboPrice: 299,
+      comboLabel: 'Burger + Piri Fries + House Dip',
       dietaryType: 'veg',
-      imageUrl: 'mc11.png',
+      imageUrl: '/src/assets/optimized/cheese-burger.webp',
       ingredients: ['Herb-Seasoned Patty', 'Iceberg Lettuce', 'Creamy Mayo', 'Sesame Bun'],
       dietaryTags: ['Classic', 'Vegetarian'],
       customisationOptions: [],
@@ -957,8 +991,10 @@ export function createSeedMenu() {
       description: 'Herb-crusted patty on toasted sesame brioche served with roasted fries and marinated olives.',
       price: 399,
       discountPrice: null,
+      comboPrice: 469,
+      comboLabel: 'Brioche Burger + Iced Latte',
       dietaryType: 'veg',
-      imageUrl: 'burger.jpg',
+      imageUrl: '/src/assets/optimized/cheese-burger.webp',
       ingredients: ['Artisan Patty', 'Toasted Sesame Brioche', 'Caramelized Onions', 'Roasted Fries', 'Olives'],
       dietaryTags: ['Chef Special', 'Vegetarian'],
       customisationOptions: [],
@@ -971,6 +1007,10 @@ export function createSeedMenu() {
       isNew: true,
       isNewArrival: true,
       isRecommended: true,
+      isDailySpecial: true,
+      dailySpecialPrice: 339,
+      dailySpecialStartedAt: now,
+      dailySpecialExpiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
       updatedAt: now,
     },
     {
@@ -982,8 +1022,10 @@ export function createSeedMenu() {
       description: 'Golden fermented crepe stuffed with spiced potato masala, coconut chutney, and lentil sambar.',
       price: 279,
       discountPrice: null,
+      comboPrice: 349,
+      comboLabel: 'Masala Dosa + Cardamom Masala Chai',
       dietaryType: 'veg',
-      imageUrl: 'dosa.jpg',
+      imageUrl: '/src/assets/optimized/masala-dosa.webp',
       ingredients: ['Fermented Rice-Lentil Batter', 'Spiced Potato Masala', 'Coconut Chutney', 'Sambar'],
       dietaryTags: ['Vegetarian', 'Gluten-Free'],
       customisationOptions: [],
@@ -1007,8 +1049,10 @@ export function createSeedMenu() {
       description: 'Char-grilled cottage cheese over wok-tossed noodles, blistered veggies, and crispy fries.',
       price: 489,
       discountPrice: null,
+      comboPrice: 549,
+      comboLabel: 'Paneer Sizzler + Chilled Sparkling Cola',
       dietaryType: 'veg',
-      imageUrl: 'sizzlers.jpg',
+      imageUrl: '/src/assets/optimized/paneer-sizzler.webp',
       ingredients: ['Char-Grilled Paneer', 'Wok Noodles', 'Bell Peppers', 'Herb Pepper Sauce', 'Crispy Fries'],
       dietaryTags: ['Vegetarian', 'High-Protein'],
       customisationOptions: [],
@@ -1032,8 +1076,10 @@ export function createSeedMenu() {
       description: 'Grilled paneer cubes with shelled edamame, sweet corn, heirloom tomatoes, and crisp greens.',
       price: 349,
       discountPrice: null,
+      comboPrice: 419,
+      comboLabel: 'Protein Bowl + 18-Hour Cold Brew',
       dietaryType: 'veg',
-      imageUrl: 'dish.png',
+      imageUrl: '/src/assets/optimized/protein-bowl.webp',
       ingredients: ['Grilled Paneer', 'Edamame', 'Sweet Corn', 'Cherry Tomatoes', 'Baby Spinach', 'Lemon Vinaigrette'],
       dietaryTags: ['Vegetarian', 'Gluten-Free', 'High-Protein'],
       customisationOptions: [],
@@ -1057,8 +1103,10 @@ export function createSeedMenu() {
       description: 'Flaky spiced puff pastries paired with a steaming cup of cardamom-ginger masala chai.',
       price: 199,
       discountPrice: null,
+      comboPrice: null,
+      comboLabel: '',
       dietaryType: 'veg',
-      imageUrl: 'm2.png',
+      imageUrl: '/src/assets/optimized/chai-snacks.webp',
       ingredients: ['Flaky Puff Pastry', 'Spiced Vegetable Filling', 'Assam Tea', 'Cardamom', 'Fresh Ginger'],
       dietaryTags: ['Vegetarian'],
       customisationOptions: [],
@@ -1082,8 +1130,10 @@ export function createSeedMenu() {
       description: 'Warm fenugreek flatbread rolls served with tangy mango chundo and spiced house chai.',
       price: 179,
       discountPrice: null,
+      comboPrice: null,
+      comboLabel: '',
       dietaryType: 'veg',
-      imageUrl: 'm7.png',
+      imageUrl: '/src/assets/optimized/chai-snacks.webp',
       ingredients: ['Whole Wheat Flour', 'Fresh Fenugreek Leaves', 'Sweet Mango Chundo', 'Masala Chai'],
       dietaryTags: ['Vegetarian'],
       customisationOptions: [],
@@ -1107,8 +1157,10 @@ export function createSeedMenu() {
       description: 'Toasted English muffin with savory herb patty, golden hash brown, and velvety café latte.',
       price: 319,
       discountPrice: null,
+      comboPrice: null,
+      comboLabel: '',
       dietaryType: 'veg',
-      imageUrl: 'mc6.png',
+      imageUrl: '/src/assets/optimized/hot-coffee.webp',
       ingredients: ['English Muffin', 'Savory Herb Patty', 'Crispy Hash Brown', 'Steamed Milk', 'Espresso'],
       dietaryTags: ['Breakfast', 'Vegetarian'],
       customisationOptions: [],
@@ -1132,8 +1184,10 @@ export function createSeedMenu() {
       description: 'Creamy vanilla bean soft-serve swirled with dark fudge brownie bites and crushed cookies.',
       price: 199,
       discountPrice: null,
+      comboPrice: 279,
+      comboLabel: 'Brownie Sundae + Double Espresso',
       dietaryType: 'veg',
-      imageUrl: 'mc7.png',
+      imageUrl: '/src/assets/optimized/sundae-cola.webp',
       ingredients: ['Vanilla Bean Soft-Serve', 'Dark Fudge Brownie', 'Crushed Chocolate Cookies', 'Hot Fudge'],
       dietaryTags: ['Vegetarian', 'Sweet'],
       customisationOptions: [],
@@ -1157,8 +1211,10 @@ export function createSeedMenu() {
       description: 'Ice-cold classic sparkling cola poured over crushed ice and fresh zesty lime slices.',
       price: 89,
       discountPrice: null,
+      comboPrice: null,
+      comboLabel: '',
       dietaryType: 'veg',
-      imageUrl: 'coca.jpg',
+      imageUrl: '/src/assets/optimized/sundae-cola.webp',
       ingredients: ['Sparkling Cola', 'Fresh Lime Slices', 'Crushed Ice'],
       dietaryTags: ['Vegan', 'Gluten-Free'],
       customisationOptions: [],
@@ -1225,6 +1281,121 @@ export function createSeedReviews() {
   ];
 }
 
+export function createSeedCustomers() {
+  return [
+    {
+      uid: 'seed-guest-1',
+      email: 'ananya.verma@guest.pier25.in',
+      displayName: 'Ananya Verma',
+      passwordHash: '',
+      role: 'customer',
+      phone: '+91 98250 11402',
+      address: '14 Gulbai Tekra, Navrangpura, Ahmedabad',
+      dietaryPreferences: 'Smoky Paneer Sizzler · Pour-Over',
+      loyaltyPoints: 1420,
+      totalLoyaltyEarned: 1680,
+      totalOrders: 24,
+      historicalSpent: 16800,
+      createdAt: '2026-08-12T10:00:00.000Z',
+      updatedAt: '2026-11-15T19:10:00.000Z',
+      lastOrderAt: '2026-11-15T19:10:00.000Z',
+    },
+    {
+      uid: 'seed-guest-2',
+      email: 'rohan.desai@guest.pier25.in',
+      displayName: 'Rohan Desai',
+      passwordHash: '',
+      role: 'customer',
+      phone: '+91 98791 44210',
+      address: '78 Sindhu Bhavan Marg, Bodakdev, Ahmedabad',
+      dietaryPreferences: 'Crispy Masala Dosa · Cold Brew',
+      loyaltyPoints: 980,
+      totalLoyaltyEarned: 1290,
+      totalOrders: 19,
+      historicalSpent: 12900,
+      createdAt: '2026-08-24T09:30:00.000Z',
+      updatedAt: '2026-11-14T11:20:00.000Z',
+      lastOrderAt: '2026-11-14T11:20:00.000Z',
+    },
+    {
+      uid: 'seed-guest-4',
+      email: 'kabir.malhotra@guest.pier25.in',
+      displayName: 'Kabir Malhotra',
+      passwordHash: '',
+      role: 'customer',
+      phone: '+91 98980 22319',
+      address: '42 Prahlad Nagar, Ahmedabad',
+      dietaryPreferences: 'Almond Croissant · Double Espresso',
+      loyaltyPoints: 865,
+      totalLoyaltyEarned: 1045,
+      totalOrders: 15,
+      historicalSpent: 10450,
+      createdAt: '2026-09-05T08:45:00.000Z',
+      updatedAt: '2026-11-13T16:40:00.000Z',
+      lastOrderAt: '2026-11-13T16:40:00.000Z',
+    },
+    {
+      uid: 'seed-guest-3',
+      email: 'meera.joshi@guest.pier25.in',
+      displayName: 'Meera Joshi',
+      passwordHash: '',
+      role: 'customer',
+      phone: '+91 97240 67108',
+      address: '9 Satellite Road, Ahmedabad',
+      dietaryPreferences: 'Korean Spicy Duo · Cinnamon Roll',
+      loyaltyPoints: 740,
+      totalLoyaltyEarned: 890,
+      totalOrders: 13,
+      historicalSpent: 8900,
+      createdAt: '2026-09-18T14:15:00.000Z',
+      updatedAt: '2026-11-14T20:05:00.000Z',
+      lastOrderAt: '2026-11-14T20:05:00.000Z',
+    },
+    {
+      uid: 'seed-guest-5',
+      email: 'diya.patel@guest.pier25.in',
+      displayName: 'Diya Patel',
+      passwordHash: '',
+      role: 'customer',
+      phone: '+91 98245 90311',
+      address: '21 CG Road, Ahmedabad',
+      dietaryPreferences: 'Healthy Protein Bowl · Iced Latte',
+      loyaltyPoints: 615,
+      totalLoyaltyEarned: 725,
+      totalOrders: 11,
+      historicalSpent: 7250,
+      createdAt: '2026-10-02T12:00:00.000Z',
+      updatedAt: '2026-11-12T13:30:00.000Z',
+      lastOrderAt: '2026-11-12T13:30:00.000Z',
+    },
+    {
+      uid: 'seed-guest-6',
+      email: 'vikram.nair@guest.pier25.in',
+      displayName: 'Vikram Nair',
+      passwordHash: '',
+      role: 'customer',
+      phone: '+91 99099 54321',
+      address: '55 Thaltej Cross Road, Ahmedabad',
+      dietaryPreferences: 'Artisan Brioche Burger · Cold Coffee',
+      loyaltyPoints: 490,
+      totalLoyaltyEarned: 580,
+      totalOrders: 9,
+      historicalSpent: 5800,
+      createdAt: '2026-10-19T18:00:00.000Z',
+      updatedAt: '2026-11-11T21:15:00.000Z',
+      lastOrderAt: '2026-11-11T21:15:00.000Z',
+    },
+  ];
+}
+
+export function getLoyaltyTier(totalLoyaltyEarned = 0) {
+  const pts = Number(totalLoyaltyEarned || 0);
+  if (pts >= 1000) return 'Grand Reserve';
+  if (pts >= 600) return 'Gold Circle';
+  if (pts >= 300) return 'Forest Patron';
+  return 'Club Guest';
+}
+
 export function createSeedStaff() {
   return [
     { id: 'stf-1', name: 'Krishna Ladva', role: 'Owner & Executive Chef', shift: 'Full Day (10:00 – 22:30)', email: OWNER_EMAIL, status: 'active' },
@@ -1257,9 +1428,19 @@ export function roundMoney(value) {
   return Math.round((Number(value) + Number.EPSILON) * 100) / 100;
 }
 
-export function getEffectiveDishPrice(dish) {
+export function getEffectiveDishPrice(dish, pricingMode = 'individual', nowMs = Date.now()) {
+  if (pricingMode === 'combo') {
+    const combo = Number(dish?.comboPrice);
+    if (Number.isFinite(combo) && combo > 0) {
+      return roundMoney(combo);
+    }
+    return null;
+  }
   const base = Number(dish?.price);
   if (!Number.isFinite(base) || base <= 0) return null;
+  if (isDailySpecialActive(dish, nowMs)) {
+    return roundMoney(Number(dish.dailySpecialPrice));
+  }
   const discount = Number(dish?.discountPrice);
   if (Number.isFinite(discount) && discount > 0 && discount < base) {
     return roundMoney(discount);
@@ -1299,7 +1480,12 @@ export function calculateCartTotals(
     if (dish.available === false || dish.stockStatus === 'out_of_stock') {
       throw new Error(`"${dish.name}" is currently unavailable.`);
     }
-    const unitPrice = getEffectiveDishPrice(dish);
+
+    const pricingMode = entry?.pricingMode === 'combo' ? 'combo' : 'individual';
+    if (pricingMode === 'combo' && getEffectiveDishPrice(dish, 'combo') === null) {
+      throw new Error(`Combo pricing is not available for "${dish.name}".`);
+    }
+    const unitPrice = getEffectiveDishPrice(dish, pricingMode);
     if (unitPrice === null) {
       throw new Error(`Price for "${dish.name}" has not been set by the restaurant owner yet.`);
     }
@@ -1317,9 +1503,11 @@ export function calculateCartTotals(
     itemCount += qty;
     lineItems.push({
       id: dish.id,
-      name: dish.name,
+      name: pricingMode === 'combo' ? `${dish.name} (Combo)` : dish.name,
+      pricingMode,
+      ...(pricingMode === 'combo' && dish.comboLabel ? { comboLabel: dish.comboLabel } : {}),
       unitPrice,
-      originalPrice: roundMoney(dish.price),
+      originalPrice: roundMoney(dish.price ?? unitPrice),
       quantity: qty,
       lineTotal,
       imageUrl: dish.imageUrl,
@@ -1488,7 +1676,7 @@ export function computeAnalyticsSnapshot(store) {
   }
 
   const topDishes = [...dishSales.values()].sort((a, b) => b.qty - a.qty).slice(0, 5);
-  const lowStockItems = (store.inventory || []).filter((i) => i.stockQty <= i.reorderLevel);
+  const inventoryAlertSummary = buildLowStockNotifications(store.inventory || []);
   const reviews = store.reviews || [];
   const averageRating = reviews.length
     ? roundMoney(reviews.reduce((sum, r) => sum + Number(r.rating || 0), 0) / reviews.length)
@@ -1508,8 +1696,11 @@ export function computeAnalyticsSnapshot(store) {
     totalCustomers: (store.users || []).filter((u) => u.role === 'customer').length,
     averageRating,
     reviewCount: reviews.length,
-    lowStockCount: lowStockItems.length,
-    lowStockItems: lowStockItems.map((i) => ({ id: i.id, name: i.name, stockQty: i.stockQty, reorderLevel: i.reorderLevel })),
+    lowStockCount: inventoryAlertSummary.totalAlertCount,
+    lowStockActiveCount: inventoryAlertSummary.activeAlertCount,
+    lowStockCriticalCount: inventoryAlertSummary.criticalCount,
+    lowStockItems: inventoryAlertSummary.allAlerts,
+    inventoryAlertSummary,
     topDishes,
     categoryBreakdown: [...categoryRevenue.entries()].map(([category, revenue]) => ({ category, revenue })),
     menuCount: (store.menuItems || []).length,
@@ -1536,6 +1727,37 @@ export class RestaurantStore {
           migrated = true;
         }
       }
+      const seedById = new Map(createSeedMenu().map((s) => [s.id, s]));
+      const legacyImagePattern = /^(mc\d+\.(png|jpg)|burger\.jpg|dosa\.jpg|sizzlers\.jpg|dish\.png|m\d+\.png|coca\.jpg|\/src\/assets\/images\/.*)$/;
+      const hasDailySpecialField = (this.data.menuItems || []).some((m) => m.isDailySpecial !== undefined);
+      for (const item of this.data.menuItems || []) {
+        const seedMatch = seedById.get(item.id);
+        if (seedMatch) {
+          if (!item.imageUrl || legacyImagePattern.test(item.imageUrl)) {
+            item.imageUrl = seedMatch.imageUrl;
+            migrated = true;
+          }
+          if (item.comboPrice === undefined) {
+            item.comboPrice = seedMatch.comboPrice ?? null;
+            item.comboLabel = seedMatch.comboLabel ?? '';
+            migrated = true;
+          }
+          if (!hasDailySpecialField && seedMatch.isDailySpecial) {
+            item.isDailySpecial = true;
+            item.dailySpecialPrice = seedMatch.dailySpecialPrice;
+            item.dailySpecialStartedAt = new Date().toISOString();
+            item.dailySpecialExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+            migrated = true;
+          }
+        }
+        if (item.isDailySpecial === undefined) {
+          item.isDailySpecial = false;
+          item.dailySpecialPrice = null;
+          item.dailySpecialStartedAt = null;
+          item.dailySpecialExpiresAt = null;
+          migrated = true;
+        }
+      }
       if (!this.data.settings?.currencySymbol || String(this.data.settings?.restaurantName || '').includes('KRAZZY')) {
         this.data.settings = { ...createDefaultSettings(), ...this.data.settings, restaurantName: 'Pier 25', currency: 'INR', currencySymbol: '₹' };
         migrated = true;
@@ -1546,14 +1768,33 @@ export class RestaurantStore {
           migrated = true;
         }
       }
+      if (!Array.isArray(this.data.users)) {
+        this.data.users = [];
+        migrated = true;
+      }
+      if (!this.data.users.some((u) => u.role === 'customer') && (this.data.orders || []).length === 0) {
+        this.data.users.push(...createSeedCustomers());
+        migrated = true;
+      }
+      for (const usr of this.data.users) {
+        if (usr.totalLoyaltyEarned === undefined) {
+          usr.totalLoyaltyEarned = Number(usr.loyaltyPoints || 0);
+          migrated = true;
+        }
+      }
+      if (!Array.isArray(this.data.tableSessions)) {
+        this.data.tableSessions = [];
+        migrated = true;
+      }
       if (migrated) await this.persist();
     } catch {
       this.data = {
         sessionSecret: process.env.KRAZZY_SESSION_SECRET || randomBytes(32).toString('hex'),
-        users: [],
+        users: createSeedCustomers(),
         menuItems: createSeedMenu(),
         orders: [],
         reservations: [],
+        tableSessions: [],
         reviews: createSeedReviews(),
         inventory: createSeedInventory(),
         staff: createSeedStaff(),
@@ -1581,6 +1822,8 @@ export class RestaurantStore {
 
   sanitizeUser(user) {
     if (!user) return null;
+    const loyaltyPoints = Number(user.loyaltyPoints || 0);
+    const totalLoyaltyEarned = Math.max(loyaltyPoints, Number(user.totalLoyaltyEarned ?? loyaltyPoints));
     return {
       uid: user.uid,
       email: user.email,
@@ -1589,7 +1832,9 @@ export class RestaurantStore {
       phone: user.phone || '',
       address: user.address || '',
       dietaryPreferences: user.dietaryPreferences || '',
-      loyaltyPoints: user.loyaltyPoints || 0,
+      loyaltyPoints,
+      totalLoyaltyEarned,
+      tier: getLoyaltyTier(totalLoyaltyEarned),
       totalOrders: user.totalOrders || 0,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
@@ -1637,6 +1882,7 @@ export class RestaurantStore {
       address: String(address || '').slice(0, 240),
       dietaryPreferences: '',
       loyaltyPoints: 50,
+      totalLoyaltyEarned: 50,
       totalOrders: 0,
       createdAt: now,
       updatedAt: now,
@@ -1676,6 +1922,7 @@ export class RestaurantStore {
         address: '',
         dietaryPreferences: '',
         loyaltyPoints: 50,
+        totalLoyaltyEarned: 50,
         totalOrders: 0,
         createdAt: now,
         updatedAt: now,
@@ -1710,13 +1957,14 @@ export class RestaurantStore {
     return this.sanitizeUser(user);
   }
 
-  getMenuWithRatings() {
+  getMenuWithRatings(nowMs = Date.now()) {
     const reviews = this.data.reviews;
     return this.data.menuItems.map((item) => {
       const dishReviews = reviews.filter((r) => r.dishId === item.id);
       const avg = dishReviews.length
         ? roundMoney(dishReviews.reduce((s, r) => s + r.rating, 0) / dishReviews.length)
         : 4.8;
+      const activeSpecial = isDailySpecialActive(item, nowMs);
       return {
         ...item,
         dietaryType: item.dietaryType === 'non-veg' ? 'non-veg' : 'veg',
@@ -1728,6 +1976,13 @@ export class RestaurantStore {
         isBestseller: Boolean(item.isBestseller ?? item.isPopular),
         isNewArrival: Boolean(item.isNewArrival ?? item.isNew),
         isRecommended: Boolean(item.isRecommended),
+        isDailySpecial: Boolean(item.isDailySpecial),
+        dailySpecialPrice: item.dailySpecialPrice ?? null,
+        dailySpecialStartedAt: item.dailySpecialStartedAt ?? null,
+        dailySpecialExpiresAt: item.dailySpecialExpiresAt ?? null,
+        isDailySpecialActive: activeSpecial,
+        dailySpecialRemainingLabel: activeSpecial ? formatDailySpecialRemaining(item, nowMs) : '',
+        dailySpecialSavingsPct: activeSpecial ? computeDailySpecialSavingsPct(item, nowMs) : 0,
         customisationOptions: Array.isArray(item.customisationOptions) ? item.customisationOptions : [],
         rating: avg,
         reviewCount: dishReviews.length,
@@ -1735,7 +1990,7 @@ export class RestaurantStore {
     });
   }
 
-  async createOrder({ user, items, orderType, deliveryAddress, customerName, customerPhone, notes, promoCode, redeemPoints, payment }) {
+  async createOrder({ user, items, orderType, tableNumber = '', deliveryAddress, customerName, customerPhone, notes, promoCode, redeemPoints, payment }) {
     if (this.data.settings.acceptingOrders === false) {
       throw new Error('Online ordering is temporarily paused by the kitchen.');
     }
@@ -1764,6 +2019,12 @@ export class RestaurantStore {
     const now = new Date().toISOString();
     const orderId = `ORD-${randomBytes(3).toString('hex').toUpperCase()}`;
 
+    const cleanTable = orderType === 'dine_in' ? normalizeTableLabel(tableNumber) : '';
+    const cleanNotes = String(notes || '').trim();
+    const mergedNotes = cleanTable && !cleanNotes.toLowerCase().includes(cleanTable.toLowerCase())
+      ? `[${cleanTable}]${cleanNotes ? ` ${cleanNotes}` : ''}`
+      : cleanNotes;
+
     const order = {
       id: orderId,
       userId: user ? user.uid : 'guest',
@@ -1771,8 +2032,9 @@ export class RestaurantStore {
       customerEmail: user?.email || '',
       customerPhone: String(customerPhone || user?.phone || '').slice(0, 30),
       orderType,
+      tableNumber: cleanTable,
       deliveryAddress: orderType === 'delivery' ? String(deliveryAddress || user?.address || '').trim().slice(0, 240) : '',
-      notes: String(notes || '').trim().slice(0, 300),
+      notes: mergedNotes.slice(0, 300),
       items: totals.lineItems,
       itemCount: totals.itemCount,
       subtotal: totals.subtotal,
@@ -1806,6 +2068,12 @@ export class RestaurantStore {
       }
       if (deduction > 0) {
         inv.stockQty = Math.max(0, roundMoney(inv.stockQty - deduction));
+        if (inv.stockQty <= Number(inv.reorderLevel ?? 0)) {
+          if (!inv.lowStockAlertAt) inv.lowStockAlertAt = now;
+          if (inv.acknowledgedAtStockQty !== undefined && inv.acknowledgedAtStockQty !== null && inv.stockQty < Number(inv.acknowledgedAtStockQty)) {
+            delete inv.acknowledgedAtStockQty;
+          }
+        }
         inv.updatedAt = now;
       }
     }
@@ -1814,16 +2082,241 @@ export class RestaurantStore {
       const storedUser = this.findUserById(user.uid);
       if (storedUser) {
         storedUser.loyaltyPoints = Math.max(0, (storedUser.loyaltyPoints || 0) - totals.pointsRedeemed + totals.pointsEarned);
+        storedUser.totalLoyaltyEarned = Math.max(
+          storedUser.loyaltyPoints,
+          Number(storedUser.totalLoyaltyEarned ?? 0) + totals.pointsEarned
+        );
         storedUser.totalOrders = (storedUser.totalOrders || 0) + 1;
         storedUser.updatedAt = now;
       }
     }
 
     this.data.orders.unshift(order);
+    if (orderType === 'dine_in' && cleanTable) {
+      this._upsertTableSessionInMemory({
+        tableLabel: cleanTable,
+        user,
+        guestName: cleanName,
+        source: 'dine_in_order',
+        orderId,
+        now,
+      });
+    }
     await this.persist();
     return {
       order,
       user: user ? this.sanitizeUser(this.findUserById(user.uid)) : null,
+    };
+  }
+
+  _upsertTableSessionInMemory({
+    tableLabel,
+    user = null,
+    guestName = '',
+    partySize = null,
+    source = 'qr_scanner',
+    orderId = '',
+    now = new Date().toISOString(),
+  }) {
+    const meta = findFloorPlanTableMeta(tableLabel);
+    if (!meta) {
+      throw new Error('Please provide a valid table name (e.g. Table 05).');
+    }
+    if (!Array.isArray(this.data.tableSessions)) {
+      this.data.tableSessions = [];
+    }
+    const existing = this.data.tableSessions.find(
+      (s) => s.id === meta.id || s.tableLabel.toLowerCase() === meta.label.toLowerCase()
+    );
+    const validSources = ['qr_scanner', 'qr_link', 'owner_manual', 'dine_in_order'];
+    const cleanSource = validSources.includes(source) ? source : 'qr_scanner';
+    const cleanGuest = String(guestName || user?.displayName || existing?.guestName || 'Walk-In QR Guest')
+      .trim()
+      .slice(0, 80);
+    const cleanPartySize = Number.isFinite(Number(partySize)) && Number(partySize) >= 1
+      ? Math.min(20, Math.round(Number(partySize)))
+      : (existing?.partySize || meta.seats || 2);
+
+    const activeOrderIds = Array.isArray(existing?.activeOrderIds) ? [...existing.activeOrderIds] : [];
+    if (orderId && !activeOrderIds.includes(orderId)) {
+      activeOrderIds.unshift(orderId);
+    }
+
+    if (existing) {
+      Object.assign(existing, {
+        tableLabel: meta.label,
+        zone: meta.zone,
+        seats: meta.seats,
+        status: 'occupied',
+        source:
+          existing.source === 'qr_scanner' && cleanSource === 'dine_in_order'
+            ? 'qr_scanner'
+            : cleanSource,
+        userId: user?.uid || existing.userId || 'guest',
+        guestName: cleanGuest,
+        partySize: cleanPartySize,
+        activeOrderIds,
+        updatedAt: now,
+      });
+      return existing;
+    }
+
+    const session = {
+      id: meta.id,
+      tableLabel: meta.label,
+      zone: meta.zone,
+      seats: meta.seats,
+      status: 'occupied',
+      source: cleanSource,
+      userId: user?.uid || 'guest',
+      guestName: cleanGuest,
+      partySize: cleanPartySize,
+      activeOrderIds,
+      checkedInAt: now,
+      updatedAt: now,
+    };
+    this.data.tableSessions.push(session);
+    return session;
+  }
+
+  async checkInTable({ tableLabel, user = null, guestName = '', partySize = null, source = 'qr_scanner' } = {}) {
+    const now = new Date().toISOString();
+    const session = this._upsertTableSessionInMemory({
+      tableLabel,
+      user,
+      guestName,
+      partySize,
+      source,
+      now,
+    });
+    await this.persist();
+    return {
+      session,
+      floorPlan: this.getFloorPlanState(),
+    };
+  }
+
+  async releaseTable(tableIdOrLabel) {
+    if (!Array.isArray(this.data.tableSessions)) {
+      this.data.tableSessions = [];
+    }
+    const targetId = tableLabelToId(tableIdOrLabel) || String(tableIdOrLabel || '').trim().toLowerCase();
+    const idx = this.data.tableSessions.findIndex(
+      (s) => s.id === targetId || tableLabelToId(s.tableLabel) === targetId
+    );
+    let wasOccupied = false;
+    if (idx !== -1) {
+      this.data.tableSessions.splice(idx, 1);
+      wasOccupied = true;
+      await this.persist();
+    }
+    return {
+      releasedId: targetId,
+      wasOccupied,
+      floorPlan: this.getFloorPlanState(),
+    };
+  }
+
+  getFloorPlanState() {
+    const sessions = Array.isArray(this.data.tableSessions) ? this.data.tableSessions : [];
+    const activeDineInOrders = (this.data.orders || []).filter(
+      (o) => o.orderType === 'dine_in' && !['completed', 'cancelled'].includes(o.status) && o.tableNumber
+    );
+    const activeReservations = (this.data.reservations || []).filter(
+      (r) => ['confirmed', 'seated'].includes(r.status) && r.tableLabel
+    );
+
+    const sessionById = new Map(sessions.map((s) => [s.id, s]));
+    const customTables = [];
+    for (const s of sessions) {
+      if (!FLOOR_PLAN_TABLES.some((t) => t.id === s.id)) {
+        customTables.push({
+          id: s.id,
+          label: s.tableLabel,
+          zone: s.zone || 'Custom Seating',
+          seats: Number(s.seats || 4),
+          shape: 'square',
+          isCustom: true,
+        });
+      }
+    }
+
+    const allTableDefs = [...FLOOR_PLAN_TABLES, ...customTables];
+    const tables = allTableDefs.map((def) => {
+      const session = sessionById.get(def.id) || null;
+      const linkedOrders = activeDineInOrders.filter((o) => tableLabelToId(o.tableNumber) === def.id);
+      const linkedReservation =
+        activeReservations.find((r) => tableLabelToId(r.tableLabel) === def.id) || null;
+
+      let status = 'available';
+      let checkedInViaQr = false;
+      let guestName = '';
+      let source = '';
+      let checkedInAt = null;
+      let partySize = def.seats;
+
+      if (session || linkedOrders.length > 0) {
+        status = 'occupied';
+        source = session?.source || 'dine_in_order';
+        checkedInViaQr = source === 'qr_scanner' || source === 'qr_link';
+        guestName = session?.guestName || linkedOrders[0]?.customerName || 'Seated Guest';
+        checkedInAt = session?.checkedInAt || linkedOrders[0]?.createdAt || null;
+        partySize = session?.partySize || def.seats;
+      } else if (linkedReservation) {
+        status = 'reserved';
+        guestName = linkedReservation.name;
+        partySize = linkedReservation.partySize;
+      }
+
+      return {
+        ...def,
+        status,
+        checkedInViaQr,
+        source,
+        guestName,
+        partySize,
+        checkedInAt,
+        activeOrders: linkedOrders.map((o) => ({
+          id: o.id,
+          status: o.status,
+          total: o.total,
+          itemCount: o.itemCount,
+          customerName: o.customerName,
+        })),
+        reservation: linkedReservation
+          ? {
+              id: linkedReservation.id,
+              name: linkedReservation.name,
+              date: linkedReservation.date,
+              time: linkedReservation.time,
+              partySize: linkedReservation.partySize,
+              status: linkedReservation.status,
+            }
+          : null,
+      };
+    });
+
+    const occupiedCount = tables.filter((t) => t.status === 'occupied').length;
+    const qrCheckedInCount = tables.filter((t) => t.status === 'occupied' && t.checkedInViaQr).length;
+    const reservedCount = tables.filter((t) => t.status === 'reserved').length;
+    const availableCount = tables.filter((t) => t.status === 'available').length;
+    const totalSeats = tables.reduce((s, t) => s + Number(t.seats || 0), 0);
+    const occupiedSeats = tables
+      .filter((t) => t.status === 'occupied')
+      .reduce((s, t) => s + Number(t.seats || 0), 0);
+
+    return {
+      tables,
+      summary: {
+        totalTables: tables.length,
+        occupiedCount,
+        qrCheckedInCount,
+        reservedCount,
+        availableCount,
+        totalSeats,
+        occupiedSeats,
+      },
+      updatedAt: new Date().toISOString(),
     };
   }
 
@@ -1887,10 +2380,10 @@ export class RestaurantStore {
     return reservation;
   }
 
-  async updateReservationStatus(id, nextStatus, actor) {
+  async updateReservationStatus(id, nextStatus, actor, options = {}) {
     const res = this.data.reservations.find((r) => r.id === id);
     if (!res) throw new Error('Reservation not found.');
-    if (!RESERVATION_STATUSES.includes(nextStatus)) {
+    if (nextStatus && !RESERVATION_STATUSES.includes(nextStatus)) {
       throw new Error('Invalid reservation status.');
     }
     const isOwner = actor?.role === 'owner';
@@ -1904,7 +2397,19 @@ export class RestaurantStore {
         throw new Error('This reservation cannot be modified.');
       }
     }
-    res.status = nextStatus;
+    if (nextStatus) res.status = nextStatus;
+    if (isOwner && options?.tableLabel !== undefined) {
+      const cleanTable = normalizeTableLabel(options.tableLabel);
+      res.tableLabel = cleanTable || '';
+      if (cleanTable && (res.status === 'seated')) {
+        this._upsertTableSessionInMemory({
+          tableLabel: cleanTable,
+          guestName: res.name,
+          partySize: res.partySize,
+          source: 'owner_manual',
+        });
+      }
+    }
     res.updatedAt = new Date().toISOString();
     await this.persist();
     return res;
@@ -1940,6 +2445,10 @@ export class RestaurantStore {
       const storedUser = this.findUserById(user.uid);
       if (storedUser) {
         storedUser.loyaltyPoints = (storedUser.loyaltyPoints || 0) + 15;
+        storedUser.totalLoyaltyEarned = Math.max(
+          storedUser.loyaltyPoints,
+          Number(storedUser.totalLoyaltyEarned ?? 0) + 15
+        );
         storedUser.updatedAt = new Date().toISOString();
       }
     }
@@ -2003,7 +2512,25 @@ export class RestaurantStore {
       }
     }
 
-    const imageUrl = payload?.imageUrl !== undefined ? String(payload.imageUrl || 'dish.png').trim() : (existingItem?.imageUrl || 'dish.png');
+    let comboPrice = existingItem?.comboPrice ?? null;
+    if (payload?.comboPrice !== undefined) {
+      if (payload.comboPrice === null || payload.comboPrice === '') {
+        comboPrice = null;
+      } else {
+        const parsedCombo = roundMoney(Number(payload.comboPrice));
+        if (!Number.isFinite(parsedCombo) || parsedCombo <= 0 || parsedCombo > 100000) {
+          throw new Error('Combo price in ₹ must be a positive amount (between ₹1 and ₹100,000).');
+        }
+        comboPrice = parsedCombo;
+      }
+    }
+    const comboLabel = payload?.comboLabel !== undefined
+      ? String(payload.comboLabel || '').trim().slice(0, 100)
+      : (existingItem?.comboLabel || '');
+
+    const imageUrl = payload?.imageUrl !== undefined
+      ? String(payload.imageUrl || '/src/assets/optimized/hot-coffee.webp').trim()
+      : (existingItem?.imageUrl || '/src/assets/optimized/hot-coffee.webp');
     const dietaryType = payload?.dietaryType !== undefined
       ? (payload.dietaryType === 'non-veg' ? 'non-veg' : 'veg')
       : (existingItem?.dietaryType || 'veg');
@@ -2058,7 +2585,50 @@ export class RestaurantStore {
     if (category.length < 2 || category.length > 50) throw new Error('Category must be 2–50 characters.');
     if (description.length < 5 || description.length > 500) throw new Error('Description must be 5–500 characters.');
 
-    const now = new Date().toISOString();
+    const nowMs = Date.now();
+    const now = new Date(nowMs).toISOString();
+
+    let dailySpecialState = {
+      isDailySpecial: Boolean(existingItem?.isDailySpecial),
+      dailySpecialPrice: existingItem?.dailySpecialPrice ?? null,
+      dailySpecialStartedAt: existingItem?.dailySpecialStartedAt ?? null,
+      dailySpecialExpiresAt: existingItem?.dailySpecialExpiresAt ?? null,
+    };
+
+    if (payload?.isDailySpecial !== undefined) {
+      if (!payload.isDailySpecial) {
+        dailySpecialState = createDailySpecialWindow({ enabled: false });
+      } else {
+        const promoCandidate = payload.dailySpecialPrice !== undefined
+          ? payload.dailySpecialPrice
+          : dailySpecialState.dailySpecialPrice;
+        const alreadyActiveSamePrice =
+          existingItem &&
+          isDailySpecialActive(existingItem, nowMs) &&
+          roundMoney(Number(promoCandidate)) === roundMoney(Number(existingItem.dailySpecialPrice)) &&
+          !payload.resetDailySpecialWindow;
+
+        if (alreadyActiveSamePrice && price !== null && Number(promoCandidate) < price) {
+          dailySpecialState = {
+            isDailySpecial: true,
+            dailySpecialPrice: existingItem.dailySpecialPrice,
+            dailySpecialStartedAt: existingItem.dailySpecialStartedAt,
+            dailySpecialExpiresAt: existingItem.dailySpecialExpiresAt,
+          };
+        } else {
+          dailySpecialState = createDailySpecialWindow({
+            enabled: true,
+            dailySpecialPrice: promoCandidate,
+            regularPrice: price,
+            durationHours: payload.dailySpecialDurationHours || 24,
+            nowMs,
+          });
+        }
+      }
+    } else if (dailySpecialState.isDailySpecial && (price === null || Number(dailySpecialState.dailySpecialPrice) >= price)) {
+      dailySpecialState = createDailySpecialWindow({ enabled: false });
+    }
+
     if (existingItem) {
       Object.assign(existingItem, {
         name,
@@ -2068,6 +2638,8 @@ export class RestaurantStore {
         description,
         price,
         discountPrice,
+        comboPrice,
+        comboLabel,
         dietaryType,
         imageUrl,
         ingredients,
@@ -2082,6 +2654,7 @@ export class RestaurantStore {
         isNew: isNewArrival,
         isNewArrival,
         isRecommended,
+        ...dailySpecialState,
         updatedAt: now,
       });
       await this.persist();
@@ -2099,6 +2672,8 @@ export class RestaurantStore {
       description,
       price,
       discountPrice,
+      comboPrice,
+      comboLabel,
       dietaryType,
       imageUrl,
       ingredients,
@@ -2113,11 +2688,31 @@ export class RestaurantStore {
       isNew: isNewArrival,
       isNewArrival,
       isRecommended,
+      ...dailySpecialState,
       updatedAt: now,
     };
     this.data.menuItems.unshift(created);
     await this.persist();
     return created;
+  }
+
+  async setDailySpecial(id, { enabled, dailySpecialPrice, durationHours = 24, nowMs = Date.now() } = {}) {
+    const existingItem = this.data.menuItems.find((m) => m.id === id);
+    if (!existingItem) throw new Error('Menu item not found.');
+
+    const nextState = createDailySpecialWindow({
+      enabled: Boolean(enabled),
+      dailySpecialPrice: dailySpecialPrice ?? existingItem.dailySpecialPrice,
+      regularPrice: existingItem.price,
+      durationHours,
+      nowMs,
+    });
+
+    Object.assign(existingItem, nextState, {
+      updatedAt: new Date(nowMs).toISOString(),
+    });
+    await this.persist();
+    return this.getMenuWithRatings(nowMs).find((m) => m.id === id) || existingItem;
   }
 
   async deleteMenuItem(id) {
@@ -2129,9 +2724,12 @@ export class RestaurantStore {
   }
 
   async upsertInventoryItem(payload, id = null) {
-    const name = String(payload?.name || '').trim();
-    const sku = String(payload?.sku || `KRD-${randomBytes(2).toString('hex').toUpperCase()}`).trim();
-    const unit = String(payload?.unit || 'units').trim();
+    const hasName = payload?.name !== undefined;
+    const hasSku = payload?.sku !== undefined;
+    const hasUnit = payload?.unit !== undefined;
+    const name = hasName ? String(payload.name || '').trim() : '';
+    const sku = hasSku ? String(payload.sku || '').trim() : `KRD-${randomBytes(2).toString('hex').toUpperCase()}`;
+    const unit = hasUnit ? String(payload.unit || 'units').trim() : 'units';
     const stockQty = Math.max(0, Number(payload?.stockQty ?? 0));
     const reorderLevel = Math.max(0, Number(payload?.reorderLevel ?? 10));
     const costPerUnit = roundMoney(Math.max(0, Number(payload?.costPerUnit ?? 1)));
@@ -2141,13 +2739,26 @@ export class RestaurantStore {
     if (id) {
       const existing = this.data.inventory.find((i) => i.id === id);
       if (!existing) throw new Error('Inventory item not found.');
-      if (name) existing.name = name;
-      if (sku) existing.sku = sku;
-      if (unit) existing.unit = unit;
-      if (Number.isFinite(stockQty)) existing.stockQty = stockQty;
-      if (Number.isFinite(reorderLevel)) existing.reorderLevel = reorderLevel;
-      if (Number.isFinite(costPerUnit)) existing.costPerUnit = costPerUnit;
+      if (hasName && name) existing.name = name;
+      if (hasSku && sku) existing.sku = sku;
+      if (hasUnit && unit) existing.unit = unit;
+      if (payload?.stockQty !== undefined && Number.isFinite(stockQty)) existing.stockQty = stockQty;
+      if (payload?.reorderLevel !== undefined && Number.isFinite(reorderLevel)) existing.reorderLevel = reorderLevel;
+      if (payload?.costPerUnit !== undefined && Number.isFinite(costPerUnit)) existing.costPerUnit = costPerUnit;
       if (Array.isArray(payload?.linkedDishIds)) existing.linkedDishIds = linkedDishIds;
+      const evalState = evaluateInventoryStock(existing);
+      if (evalState.needsReorder) {
+        if (!existing.lowStockAlertAt) existing.lowStockAlertAt = now;
+        if (existing.acknowledgedAtStockQty !== undefined && existing.stockQty < Number(existing.acknowledgedAtStockQty)) {
+          delete existing.acknowledgedAtStockQty;
+        }
+        if (payload?.reorderLevel !== undefined && existing.stockQty <= existing.reorderLevel) {
+          delete existing.acknowledgedAtStockQty;
+        }
+      } else {
+        delete existing.lowStockAlertAt;
+        delete existing.acknowledgedAtStockQty;
+      }
       existing.updatedAt = now;
       await this.persist();
       return existing;
@@ -2163,11 +2774,54 @@ export class RestaurantStore {
       reorderLevel,
       costPerUnit,
       linkedDishIds,
+      ...(stockQty <= reorderLevel ? { lowStockAlertAt: now } : {}),
       updatedAt: now,
     };
     this.data.inventory.unshift(created);
     await this.persist();
     return created;
+  }
+
+  async restockInventoryItem(id, addQty = null) {
+    const existing = this.data.inventory.find((i) => i.id === id);
+    if (!existing) throw new Error('Inventory item not found.');
+    const evalBefore = evaluateInventoryStock(existing);
+    const delta = addQty !== null && addQty !== undefined && Number.isFinite(Number(addQty)) && Number(addQty) > 0
+      ? Number(addQty)
+      : Math.max(1, evalBefore.recommendedReorderQty || Math.max(1, existing.reorderLevel));
+    const now = new Date().toISOString();
+    existing.stockQty = roundMoney(existing.stockQty + delta);
+    if (existing.stockQty > Number(existing.reorderLevel ?? 0)) {
+      delete existing.lowStockAlertAt;
+      delete existing.acknowledgedAtStockQty;
+    }
+    existing.updatedAt = now;
+    await this.persist();
+    return {
+      item: existing,
+      addedQty: delta,
+      alertSummary: buildLowStockNotifications(this.data.inventory),
+    };
+  }
+
+  async acknowledgeInventoryAlert(id) {
+    const existing = this.data.inventory.find((i) => i.id === id);
+    if (!existing) throw new Error('Inventory item not found.');
+    existing.acknowledgedAtStockQty = Number(existing.stockQty || 0);
+    existing.updatedAt = new Date().toISOString();
+    await this.persist();
+    return {
+      item: existing,
+      alertSummary: buildLowStockNotifications(this.data.inventory),
+    };
+  }
+
+  async deleteInventoryItem(id) {
+    const idx = this.data.inventory.findIndex((i) => i.id === id);
+    if (idx === -1) throw new Error('Inventory item not found.');
+    this.data.inventory.splice(idx, 1);
+    await this.persist();
+    return { deleted: id, alertSummary: buildLowStockNotifications(this.data.inventory) };
   }
 
   async upsertStaffMember(payload, id = null) {
@@ -2242,12 +2896,55 @@ export class RestaurantStore {
       .filter((u) => u.role === 'customer')
       .map((u) => {
         const userOrders = this.data.orders.filter((o) => o.userId === u.uid && o.status !== 'cancelled');
-        const totalSpent = roundMoney(userOrders.reduce((s, o) => s + Number(o.total || 0), 0));
+        const ordersSpent = roundMoney(userOrders.reduce((s, o) => s + Number(o.total || 0), 0));
+        const totalSpent = roundMoney(ordersSpent + Number(u.historicalSpent || 0));
+        const base = this.sanitizeUser(u);
         return {
-          ...this.sanitizeUser(u),
+          ...base,
           totalSpent,
-          lastOrderAt: userOrders[0]?.createdAt || null,
+          lastOrderAt: userOrders[0]?.createdAt || u.lastOrderAt || null,
         };
+      })
+      .sort((a, b) => {
+        if (b.totalLoyaltyEarned !== a.totalLoyaltyEarned) return b.totalLoyaltyEarned - a.totalLoyaltyEarned;
+        if (b.totalOrders !== a.totalOrders) return b.totalOrders - a.totalOrders;
+        return a.displayName.localeCompare(b.displayName);
       });
+  }
+
+  getEliteGuestsLeaderboard({ limit = 6 } = {}) {
+    const crmCustomers = this.getCustomersCRM();
+    const maxCount = Math.max(1, Math.min(20, Math.round(Number(limit) || 6)));
+    const totalPointsAwarded = crmCustomers.reduce((sum, c) => sum + Number(c.totalLoyaltyEarned || 0), 0);
+
+    const guests = crmCustomers.slice(0, maxCount).map((c, idx) => {
+      const parts = String(c.displayName || 'Guest').trim().split(/\s+/);
+      const initials = parts.length >= 2
+        ? `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase()
+        : String(c.displayName || 'G').slice(0, 2).toUpperCase();
+
+      return {
+        rank: idx + 1,
+        uid: c.uid,
+        displayName: c.displayName,
+        initials,
+        tier: c.tier || getLoyaltyTier(c.totalLoyaltyEarned),
+        totalLoyaltyEarned: Number(c.totalLoyaltyEarned || 0),
+        loyaltyPoints: Number(c.loyaltyPoints || 0),
+        totalOrders: Number(c.totalOrders || 0),
+        favoriteHighlight: c.dietaryPreferences || '',
+      };
+    });
+
+    return {
+      guests,
+      totalMembers: crmCustomers.length,
+      totalPointsAwarded,
+      updatedAt: new Date().toISOString(),
+    };
+  }
+
+  getLoyaltyAnalytics(options = {}) {
+    return computeLoyaltyAnalytics(this.data, options);
   }
 }

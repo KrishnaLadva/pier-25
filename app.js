@@ -16,23 +16,37 @@ import {
   getVisibleCardsCount,
 } from './slider.js';
 import {
+  deleteInventoryItemFromFirestore,
   deleteMenuItemFromFirestore,
+  releaseTableSessionFromFirestore,
   signInWithGooglePopup,
   signOutFirebase,
+  syncEliteGuestToFirestore,
+  syncInventoryItemToFirestore,
   syncMenuItemToFirestore,
   syncOrderToFirestore,
   syncReservationToFirestore,
   syncReviewToFirestore,
+  syncTableSessionToFirestore,
 } from './firebase-client.js';
-import { createCartController, formatINR, getEffectiveItemPrice } from './cart-checkout.js';
+import { createCartController, formatINR, getComboItemPrice, getEffectiveItemPrice } from './cart-checkout.js';
 import { createAiConciergeController } from './ai-concierge.js';
 import { createOwnerDashboardController } from './owner-dashboard.js';
+import {
+  computeDailySpecialSavingsPct,
+  formatDailySpecialRemaining,
+  isDailySpecialActive,
+} from './daily-specials.js';
+import { buildTableMenuUrl, parseTableQueryFromSearch } from './qr-tools.js';
+import lottie from 'lottie-web/build/player/lottie_light';
+import { getCafeAromaLottieData, getHeroSparklesLottieData } from './lottie-animations.js';
 
 let currentUser = null;
 let menuItems = [];
 let siteSettings = {};
 let reviewsList = [];
 let activeCategory = 'All';
+let activePricingMode = 'individual';
 let activeAiMatchedIds = null;
 
 function escapeHtml(str) {
@@ -43,8 +57,72 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
-function getPriceMarkup(dish) {
-  const effective = getEffectiveItemPrice(dish);
+const OPTIMIZED_DIMENSIONS = {
+  'hero-host': { width: 720, height: 685, fallbackExt: 'png', smWidth: 420, lgWidth: 720, hasAlpha: true },
+  'community-dining': { width: 960, height: 717, fallbackExt: 'jpg', smWidth: 520, lgWidth: 960 },
+  'chef-avatar': { width: 256, height: 256, fallbackExt: 'jpg', smWidth: 160, lgWidth: 256 },
+  'chef-main': { width: 800, height: 737, fallbackExt: 'jpg', smWidth: 480, lgWidth: 800 },
+  'pillar-ai': { width: 220, height: 166, fallbackExt: 'png', smWidth: 140, lgWidth: 220, hasAlpha: true },
+  'pillar-ingredients': { width: 220, height: 218, fallbackExt: 'png', smWidth: 140, lgWidth: 220, hasAlpha: true },
+  'pillar-rewards': { width: 220, height: 142, fallbackExt: 'png', smWidth: 140, lgWidth: 220, hasAlpha: true },
+};
+
+function renderOptimizedPictureHtml(imageUrl, alt, options = {}) {
+  const safeUrl = String(imageUrl || '').trim();
+  const safeAlt = escapeHtml(alt);
+  const loading = options.eager ? 'eager' : 'lazy';
+  const fetchAttr = options.eager ? ' fetchpriority="high"' : '';
+  const sizes = escapeHtml(options.sizes || '(max-width: 600px) 92vw, 300px');
+  const match = safeUrl.match(/^\/src\/assets\/optimized\/([a-z0-9-]+)\.(avif|webp|jpg|jpeg|png)$/i);
+
+  if (!match) {
+    return `<img src="${escapeHtml(safeUrl)}" alt="${safeAlt}" loading="${loading}" decoding="async">`;
+  }
+
+  const stem = match[1];
+  const dims = OPTIMIZED_DIMENSIONS[stem] || { width: 800, height: 597, fallbackExt: 'jpg', smWidth: 480, lgWidth: 800 };
+  const base = `/src/assets/optimized/${stem}`;
+  const avifSource = dims.hasAlpha
+    ? ''
+    : `<source type="image/avif" srcset="${base}-sm.avif ${dims.smWidth}w, ${base}.avif ${dims.lgWidth}w" sizes="${sizes}">\n      `;
+  return `
+    <picture>
+      ${avifSource}<source type="image/webp" srcset="${base}-sm.webp ${dims.smWidth}w, ${base}.webp ${dims.lgWidth}w" sizes="${sizes}">
+      <img src="${base}.${dims.fallbackExt}" alt="${safeAlt}" width="${dims.width}" height="${dims.height}" loading="${loading}"${fetchAttr} decoding="async">
+    </picture>
+  `;
+}
+
+function getEffectiveModeForDish(dish, pricingMode = activePricingMode) {
+  return pricingMode === 'combo' && getComboItemPrice(dish) !== null ? 'combo' : 'individual';
+}
+
+function getPriceMarkup(dish, pricingMode = 'individual') {
+  const effectiveMode = getEffectiveModeForDish(dish, pricingMode);
+  if (effectiveMode === 'combo') {
+    const comboPrice = getComboItemPrice(dish);
+    const individual = getEffectiveItemPrice(dish, 'individual');
+    const comboCaption = dish.comboLabel ? escapeHtml(dish.comboLabel) : 'Meal Combo Pairing';
+    return `
+      <span class="price-combo-wrap">
+        <span class="price-combo-offer tabular-nums">${formatINR(comboPrice)}</span>
+        <span class="price-combo-tag">Combo</span>
+        ${individual !== null && comboPrice !== individual ? `<span class="price-strike tabular-nums">${formatINR(individual)}</span>` : ''}
+      </span>
+      <span class="price-combo-caption">${comboCaption}</span>
+    `;
+  }
+
+  if (isDailySpecialActive(dish)) {
+    const remaining = formatDailySpecialRemaining(dish);
+    return `
+      <span class="price-offer price-special-offer tabular-nums">${formatINR(dish.dailySpecialPrice)}</span>
+      <span class="price-strike tabular-nums">${formatINR(dish.price)}</span>
+      <span class="price-special-window tabular-nums">24h Special${remaining ? ` · ${escapeHtml(remaining)}` : ''}</span>
+    `;
+  }
+
+  const effective = getEffectiveItemPrice(dish, 'individual');
   if (effective === null) {
     return '<span class="price-pending-label">Price Set by Owner</span>';
   }
@@ -52,6 +130,25 @@ function getPriceMarkup(dish) {
     return `<span class="price-offer tabular-nums">${formatINR(dish.discountPrice)}</span> <span class="price-strike tabular-nums">${formatINR(dish.price)}</span>`;
   }
   return `<span class="price-regular tabular-nums">${formatINR(effective)}</span>`;
+}
+
+function renderMenuOverlayBadges(dish) {
+  const badges = [];
+  if (isDailySpecialActive(dish)) {
+    const pct = computeDailySpecialSavingsPct(dish);
+    badges.push(`<span class="menu-overlay-badge badge-daily-special">Daily Special${pct > 0 ? ` · ${pct}% Off` : ''}</span>`);
+  }
+  if (dish.isBestseller || dish.isPopular) {
+    badges.push('<span class="menu-overlay-badge badge-bestseller">Bestseller</span>');
+  }
+  if (dish.isNewArrival || dish.isNew) {
+    badges.push('<span class="menu-overlay-badge badge-new">New</span>');
+  }
+  if (dish.isRecommended) {
+    badges.push('<span class="menu-overlay-badge badge-recommended">Recommended</span>');
+  }
+  if (badges.length === 0) return '';
+  return `<div class="menu-card-badges" aria-hidden="true">${badges.join('')}</div>`;
 }
 
 function getDietaryMarkHtml(dish) {
@@ -62,6 +159,10 @@ function getDietaryMarkHtml(dish) {
 
 function getHighlightMeta(dish) {
   const flags = [];
+  if (isDailySpecialActive(dish)) {
+    const remaining = formatDailySpecialRemaining(dish);
+    flags.push(remaining ? `24h Daily Special (${remaining})` : '24h Daily Special');
+  }
   if (dish.isBestseller || dish.isPopular) flags.push('Bestseller');
   if (dish.isNewArrival || dish.isNew) flags.push('New Arrival');
   if (dish.isRecommended) flags.push('Recommended');
@@ -70,8 +171,12 @@ function getHighlightMeta(dish) {
   return flags;
 }
 
-function isOrderable(dish) {
-  return getEffectiveItemPrice(dish) !== null && dish.available !== false && dish.stockStatus !== 'out_of_stock';
+function isOrderable(dish, pricingMode = 'individual') {
+  return (
+    getEffectiveItemPrice(dish, pricingMode) !== null &&
+    dish.available !== false &&
+    dish.stockStatus !== 'out_of_stock'
+  );
 }
 
 async function apiFetch(url, options = {}) {
@@ -140,6 +245,7 @@ const cartController = createCartController({
   onOrderCompleted: (order) => {
     syncOrderToFirestore(order).catch(() => {});
     if (currentUser) loadProfileOrders();
+    loadEliteGuestsLeaderboard();
   },
   onCartChanged: (count) => {
     document.querySelectorAll('[data-cart-count]').forEach((el) => {
@@ -161,6 +267,37 @@ const aiController = createAiConciergeController({
       openDishModal(dish.id);
     }
   },
+  onTableQrScanned: async (parsed) => {
+    const res = await apiFetch('/api/tables/check-in', {
+      method: 'POST',
+      body: JSON.stringify({
+        tableLabel: parsed.tableLabel,
+        guestName: currentUser?.displayName || 'Walk-In QR Guest',
+        source: 'qr_scanner',
+      }),
+    });
+    if (res?.session) {
+      syncTableSessionToFirestore(res.session).catch(() => {});
+    }
+    const nextUrl = buildTableMenuUrl({
+      origin: window.location?.origin || 'http://localhost:3000',
+      tableLabel: parsed.tableLabel,
+      orderType: 'dine_in',
+      sectionHash: '#interactive-menu',
+    });
+    try {
+      const parsedUrl = new URL(nextUrl);
+      window.history?.replaceState({}, '', `${parsedUrl.pathname}${parsedUrl.search}${parsedUrl.hash}`);
+      applyTableSessionFromUrl(parsedUrl.search, parsedUrl.hash, {
+        scrollToMenu: false,
+        registerCheckIn: false,
+      });
+    } catch {
+      cartController.setTableNumber(parsed.tableLabel);
+      aiController.setActiveTableSeat(parsed.tableLabel);
+    }
+    return res;
+  },
 });
 
 const ownerController = createOwnerDashboardController({
@@ -175,8 +312,29 @@ const ownerController = createOwnerDashboardController({
   onMenuDeleteFromFirestore: async (itemId) => {
     await deleteMenuItemFromFirestore(itemId);
   },
+  onInventorySyncToFirestore: async (item) => {
+    await syncInventoryItemToFirestore(item);
+  },
+  onInventoryDeleteFromFirestore: async (itemId) => {
+    await deleteInventoryItemFromFirestore(itemId);
+  },
   onReservationsMutated: async () => {
     await loadReservations();
+  },
+  onTableSessionSyncToFirestore: async (session) => {
+    await syncTableSessionToFirestore(session);
+  },
+  onTableReleaseFromFirestore: async (tableId) => {
+    await releaseTableSessionFromFirestore(tableId);
+  },
+  onOpenTablePreview: (url) => {
+    try {
+      const parsed = new URL(url, window.location.origin);
+      window.history.replaceState({}, '', `${parsed.pathname}${parsed.search}${parsed.hash}`);
+      applyTableSessionFromUrl(parsed.search, parsed.hash, { scrollToMenu: true, registerCheckIn: true });
+    } catch {
+      document.querySelector('#interactive-menu')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   },
 });
 
@@ -208,21 +366,22 @@ function openDishModal(dishId) {
   const dish = menuItems.find((m) => m.id === dishId);
   if (!dish || !dishModal || !dishModalContent) return;
 
-  const canOrder = isOrderable(dish);
-  const effectivePrice = getEffectiveItemPrice(dish);
+  const itemMode = getEffectiveModeForDish(dish, activePricingMode);
+  const canOrder = isOrderable(dish, itemMode);
+  const effectivePrice = getEffectiveItemPrice(dish, itemMode);
   const customGroups = Array.isArray(dish.customisationOptions) ? dish.customisationOptions : [];
   const highlights = getHighlightMeta(dish);
 
   dishModalContent.innerHTML = `
     <div class="dish-detail-grid">
-      <img src="${escapeHtml(dish.imageUrl)}" alt="${escapeHtml(dish.name)}">
+      ${renderOptimizedPictureHtml(dish.imageUrl, dish.name, { eager: true, sizes: '(max-width: 600px) 88vw, 320px' })}
       <div class="dish-detail-info">
         <p class="eyebrow">
           ${getDietaryMarkHtml(dish)}
           ${escapeHtml(dish.category)}${dish.subcategory ? ` · ${escapeHtml(dish.subcategory)}` : ''} · ${dish.prepMinutes || 10} mins · ${dish.calories || 250} kcal
         </p>
         <h3 id="dish-modal-title">${escapeHtml(dish.name)}</h3>
-        <div class="dish-detail-price">${getPriceMarkup(dish)}</div>
+        <div class="dish-detail-price">${getPriceMarkup(dish, itemMode)}</div>
         <p>${escapeHtml(dish.description)}</p>
         <p class="menu-card-tags">
           ${[...new Set([...highlights, ...(dish.dietaryTags || [])])].map(escapeHtml).join(' · ') || 'House Favorite'} · ${dish.rating || 4.8}★
@@ -264,7 +423,9 @@ function openDishModal(dishId) {
                 ? 'Currently Unavailable'
                 : effectivePrice === null
                   ? 'Price Set by Owner'
-                  : `Add to Order · ${formatINR(effectivePrice)}`
+                  : itemMode === 'combo'
+                    ? `Add Combo · ${formatINR(effectivePrice)}`
+                    : `Add to Order · ${formatINR(effectivePrice)}`
             }
           </button>
           <button type="button" class="btn-outline-sm" id="modal-ask-ai">Ask AI Pairing</button>
@@ -282,7 +443,8 @@ function openDishModal(dishId) {
     const added = cartController.addDish(
       dish,
       1,
-      Object.keys(selectedCustomisations).length > 0 ? selectedCustomisations : null
+      Object.keys(selectedCustomisations).length > 0 ? selectedCustomisations : null,
+      itemMode
     );
     if (added) {
       dishModal.hidden = true;
@@ -369,7 +531,7 @@ function createShowcaseCard(dish) {
   card.className = `cafe-item-card${unavailable ? ' is-unavailable' : ''}`;
   card.innerHTML = `
     <div class="cafe-card-media" data-open-dish="${escapeHtml(dish.id)}">
-      <img src="${escapeHtml(dish.imageUrl)}" alt="${escapeHtml(dish.name)}" loading="lazy">
+      ${renderOptimizedPictureHtml(dish.imageUrl, dish.name, { sizes: '(max-width: 600px) 92vw, 280px' })}
     </div>
     <div class="cafe-card-body">
       <div class="cafe-card-meta">
@@ -382,7 +544,7 @@ function createShowcaseCard(dish) {
       <p class="cafe-card-desc">${escapeHtml(dish.description)}</p>
       <p class="cafe-card-ing">${escapeHtml((dish.ingredients || []).slice(0, 3).join(' · '))}</p>
       <div class="cafe-card-foot">
-        <div class="cafe-card-price">${getPriceMarkup(dish)}</div>
+        <div class="cafe-card-price">${getPriceMarkup(dish, 'individual')}</div>
         <div class="cafe-card-actions">
           <button type="button" class="btn-outline-sm" data-open-dish="${escapeHtml(dish.id)}">${hasCustom ? 'Customise' : 'Details'}</button>
           ${
@@ -400,7 +562,7 @@ function createShowcaseCard(dish) {
   });
 
   card.querySelector('[data-add-dish]')?.addEventListener('click', () => {
-    if (cartController.addDish(dish, 1)) {
+    if (cartController.addDish(dish, 1, null, 'individual')) {
       cartController.openDrawer();
     }
   });
@@ -448,6 +610,8 @@ function renderCafeShowcaseSections() {
 }
 
 // Interactive Menu Catalog & Filters (Unified Food Items)
+const tableSessionBannerEl = document.querySelector('#table-session-banner');
+const dailySpecialsShowcaseEl = document.querySelector('#daily-specials-showcase');
 const categoryTabsEl = document.querySelector('#menu-category-tabs');
 const subcategoryFilterEl = document.querySelector('#menu-subcategory-filter');
 const vegFilterEl = document.querySelector('#menu-veg-filter');
@@ -457,6 +621,133 @@ const searchInputEl = document.querySelector('#menu-search-input');
 const dietaryFilterEl = document.querySelector('#menu-dietary-filter');
 const sortSelectEl = document.querySelector('#menu-sort-select');
 const aiSearchBannerEl = document.querySelector('#ai-search-banner');
+
+function applyTableSessionFromUrl(
+  searchStr = window.location.search,
+  hashStr = window.location.hash,
+  { scrollToMenu = false, registerCheckIn = true } = {}
+) {
+  const parsed = parseTableQueryFromSearch(searchStr, hashStr);
+  if (parsed.hasTable) {
+    cartController.setTableNumber(parsed.tableLabel);
+    aiController.setActiveTableSeat(parsed.tableLabel);
+    if (registerCheckIn) {
+      apiFetch('/api/tables/check-in', {
+        method: 'POST',
+        body: JSON.stringify({
+          tableLabel: parsed.tableLabel,
+          guestName: currentUser?.displayName || 'Walk-In QR Guest',
+          source: 'qr_link',
+        }),
+      })
+        .then((res) => {
+          if (res?.session) syncTableSessionToFirestore(res.session).catch(() => {});
+        })
+        .catch(() => {});
+    }
+    if (tableSessionBannerEl) {
+      tableSessionBannerEl.hidden = false;
+      tableSessionBannerEl.innerHTML = `
+        <div class="table-session-copy">
+          <span class="table-session-tag"><i class="fa-solid fa-qrcode"></i> QR Table Order</span>
+          <strong>Serving ${escapeHtml(parsed.tableLabel)} · Dine-In Express Ordering</strong>
+          <span>Your checkout is pre-configured for direct table service at Pier 25.</span>
+        </div>
+        <div class="table-session-actions">
+          <button type="button" class="btn-gold-sm" id="table-banner-cart-btn">View Table Basket</button>
+          <button type="button" class="btn-outline-sm" id="clear-table-session-btn">Switch Mode</button>
+        </div>
+      `;
+      tableSessionBannerEl.querySelector('#table-banner-cart-btn')?.addEventListener('click', () => {
+        cartController.openDrawer();
+      });
+      tableSessionBannerEl.querySelector('#clear-table-session-btn')?.addEventListener('click', () => {
+        cartController.setTableNumber('');
+        aiController.setActiveTableSeat('');
+        tableSessionBannerEl.hidden = true;
+        tableSessionBannerEl.innerHTML = '';
+        if (window.history?.replaceState) {
+          window.history.replaceState({}, '', `${window.location.pathname}${window.location.hash || ''}`);
+        }
+      });
+    }
+    if (scrollToMenu) {
+      document.querySelector('#interactive-menu')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  } else {
+    aiController.setActiveTableSeat('');
+    if (tableSessionBannerEl) {
+      tableSessionBannerEl.hidden = true;
+      tableSessionBannerEl.innerHTML = '';
+    }
+  }
+  return parsed;
+}
+
+function renderDailySpecialsShowcase() {
+  if (!dailySpecialsShowcaseEl) return;
+  const activeSpecials = menuItems.filter((m) => isDailySpecialActive(m) && m.available !== false);
+  if (activeSpecials.length === 0) {
+    dailySpecialsShowcaseEl.hidden = true;
+    dailySpecialsShowcaseEl.innerHTML = '';
+    return;
+  }
+
+  dailySpecialsShowcaseEl.hidden = false;
+  dailySpecialsShowcaseEl.innerHTML = `
+    <div class="daily-specials-head">
+      <div>
+        <p class="eyebrow">24-Hour Chef Window · Limited Time Offers</p>
+        <h3>Today&rsquo;s <span>Daily Specials</span></h3>
+      </div>
+      <span class="daily-specials-sub tabular-nums">${activeSpecials.length} ${activeSpecials.length === 1 ? 'dish' : 'dishes'} featuring 24h promotional pricing</span>
+    </div>
+    <div class="daily-specials-grid"></div>
+  `;
+
+  const gridEl = dailySpecialsShowcaseEl.querySelector('.daily-specials-grid');
+  for (const dish of activeSpecials) {
+    const remaining = formatDailySpecialRemaining(dish) || 'Limited 24h';
+    const pct = computeDailySpecialSavingsPct(dish);
+    const canOrder = isOrderable(dish, 'individual');
+    const card = document.createElement('article');
+    card.className = 'daily-special-card';
+    card.innerHTML = `
+      <div class="daily-special-media" data-open-dish="${escapeHtml(dish.id)}">
+        ${renderOptimizedPictureHtml(dish.imageUrl, dish.name, { sizes: '(max-width: 600px) 90vw, 240px' })}
+        <span class="menu-overlay-badge badge-daily-special tabular-nums">${pct}% Off · ${escapeHtml(remaining)}</span>
+      </div>
+      <div class="daily-special-body">
+        <div class="cafe-card-meta">
+          ${getDietaryMarkHtml(dish)}
+          <span>${escapeHtml(dish.category)}</span>
+          <span>· ${dish.prepMinutes || 10}m</span>
+        </div>
+        <h4 data-open-dish="${escapeHtml(dish.id)}">${escapeHtml(dish.name)}</h4>
+        <p>${escapeHtml(dish.description)}</p>
+        <div class="daily-special-foot">
+          <div class="daily-special-prices">
+            <span class="price-offer price-special-offer tabular-nums">${formatINR(dish.dailySpecialPrice)}</span>
+            <span class="price-strike tabular-nums">${formatINR(dish.price)}</span>
+          </div>
+          <div class="daily-special-actions">
+            <button type="button" class="btn-outline-sm" data-open-dish="${escapeHtml(dish.id)}">Details</button>
+            ${canOrder ? `<button type="button" class="btn-forest btn-sm-inline" data-add-special="${escapeHtml(dish.id)}">+ Add</button>` : ''}
+          </div>
+        </div>
+      </div>
+    `;
+    card.querySelectorAll('[data-open-dish]').forEach((el) => {
+      el.addEventListener('click', () => openDishModal(dish.id));
+    });
+    card.querySelector('[data-add-special]')?.addEventListener('click', () => {
+      if (cartController.addDish(dish, 1, null, 'individual')) {
+        cartController.openDrawer();
+      }
+    });
+    gridEl.appendChild(card);
+  }
+}
 
 function renderCategoryTabs() {
   if (!categoryTabsEl) return;
@@ -500,6 +791,21 @@ function populateSubcategoryFilter() {
   subcategoryFilterEl.value = subs.includes(currentVal) ? currentVal : 'all';
 }
 
+const pricingModeBtns = document.querySelectorAll('[data-pricing-mode]');
+pricingModeBtns.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const nextMode = btn.getAttribute('data-pricing-mode') === 'combo' ? 'combo' : 'individual';
+    if (nextMode === activePricingMode) return;
+    activePricingMode = nextMode;
+    pricingModeBtns.forEach((b) => {
+      const isSelected = b.getAttribute('data-pricing-mode') === activePricingMode;
+      b.classList.toggle('active', isSelected);
+      b.setAttribute('aria-pressed', String(isSelected));
+    });
+    renderMenuCatalog();
+  });
+});
+
 function renderMenuCatalog() {
   if (!menuGridEl) return;
   const q = (searchInputEl?.value || '').trim().toLowerCase();
@@ -523,7 +829,9 @@ function renderMenuCatalog() {
   if (vegType !== 'all') {
     list = list.filter((m) => (m.dietaryType === 'non-veg' ? 'non-veg' : 'veg') === vegType);
   }
-  if (highlight === 'bestseller') {
+  if (highlight === 'daily-special') {
+    list = list.filter((m) => isDailySpecialActive(m));
+  } else if (highlight === 'bestseller') {
     list = list.filter((m) => m.isBestseller || m.isPopular);
   } else if (highlight === 'new') {
     list = list.filter((m) => m.isNewArrival || m.isNew);
@@ -545,9 +853,17 @@ function renderMenuCatalog() {
   }
 
   if (sortBy === 'price-asc') {
-    list.sort((a, b) => (getEffectiveItemPrice(a) ?? Infinity) - (getEffectiveItemPrice(b) ?? Infinity));
+    list.sort(
+      (a, b) =>
+        (getEffectiveItemPrice(a, getEffectiveModeForDish(a, activePricingMode)) ?? Infinity) -
+        (getEffectiveItemPrice(b, getEffectiveModeForDish(b, activePricingMode)) ?? Infinity)
+    );
   } else if (sortBy === 'price-desc') {
-    list.sort((a, b) => (getEffectiveItemPrice(b) ?? -1) - (getEffectiveItemPrice(a) ?? -1));
+    list.sort(
+      (a, b) =>
+        (getEffectiveItemPrice(b, getEffectiveModeForDish(b, activePricingMode)) ?? -1) -
+        (getEffectiveItemPrice(a, getEffectiveModeForDish(a, activePricingMode)) ?? -1)
+    );
   } else if (sortBy === 'prep-asc') {
     list.sort((a, b) => (a.prepMinutes || 15) - (b.prepMinutes || 15));
   }
@@ -559,14 +875,16 @@ function renderMenuCatalog() {
   }
 
   for (const dish of list) {
-    const canOrder = isOrderable(dish);
+    const itemMode = getEffectiveModeForDish(dish, activePricingMode);
+    const canOrder = isOrderable(dish, itemMode);
     const unavailable = dish.available === false || dish.stockStatus === 'out_of_stock';
     const highlights = getHighlightMeta(dish);
     const card = document.createElement('article');
     card.className = `menu-card${unavailable ? ' is-unavailable' : ''}`;
     card.innerHTML = `
       <div class="menu-card-media" data-open-dish="${escapeHtml(dish.id)}">
-        <img src="${escapeHtml(dish.imageUrl)}" alt="${escapeHtml(dish.name)}" loading="lazy">
+        ${renderOptimizedPictureHtml(dish.imageUrl, dish.name, { sizes: '(max-width: 600px) 92vw, 280px' })}
+        ${renderMenuOverlayBadges(dish)}
       </div>
       <div class="menu-card-body">
         <div class="menu-card-meta">
@@ -579,12 +897,12 @@ function renderMenuCatalog() {
         <p class="menu-card-desc">${escapeHtml(dish.description)}</p>
         <p class="menu-card-tags">${[...new Set([...highlights, ...(dish.dietaryTags || [])])].map(escapeHtml).join(' · ') || 'House Special'}</p>
         <div class="menu-card-footer">
-          <div class="menu-card-price">${getPriceMarkup(dish)}</div>
+          <div class="menu-card-price">${getPriceMarkup(dish, itemMode)}</div>
           <div class="menu-card-actions">
             <button type="button" class="btn-outline-sm" data-open-dish="${escapeHtml(dish.id)}">Details</button>
             ${
               canOrder
-                ? `<button type="button" class="btn-gold-sm" data-add-dish="${escapeHtml(dish.id)}">+ Add</button>`
+                ? `<button type="button" class="btn-gold-sm" data-add-dish="${escapeHtml(dish.id)}">${itemMode === 'combo' ? '+ Combo' : '+ Add'}</button>`
                 : ''
             }
           </div>
@@ -595,7 +913,7 @@ function renderMenuCatalog() {
       el.addEventListener('click', () => openDishModal(dish.id));
     });
     card.querySelector('[data-add-dish]')?.addEventListener('click', () => {
-      if (cartController.addDish(dish, 1)) {
+      if (cartController.addDish(dish, 1, null, itemMode)) {
         cartController.openDrawer();
       }
     });
@@ -609,7 +927,7 @@ function syncStaticShowcasePrices() {
     const dish = byId.get(el.getAttribute('data-dish-id'));
     if (!dish) return;
     const priceEl = el.querySelector('.item-price, .fav-price, .new-food-price');
-    if (priceEl) priceEl.innerHTML = getPriceMarkup(dish);
+    if (priceEl) priceEl.innerHTML = getPriceMarkup(dish, 'individual');
   });
 }
 
@@ -619,6 +937,7 @@ async function loadMenuCatalog() {
     menuItems = res.items || [];
     siteSettings = res.settings || {};
     renderCafeShowcaseSections();
+    renderDailySpecialsShowcase();
     renderCategoryTabs();
     populateSubcategoryFilter();
     renderMenuCatalog();
@@ -785,10 +1104,178 @@ reviewForm?.addEventListener('submit', async (e) => {
     syncReviewToFirestore(res.review).catch(() => {});
     document.querySelector('#review-comment').value = '';
     if (reviewStatus) reviewStatus.textContent = 'Thank you! +15 loyalty points added.';
-    await loadReviews();
+    await Promise.all([loadReviews(), loadEliteGuestsLeaderboard()]);
   } catch (err) {
     if (reviewStatus) reviewStatus.textContent = err.message;
   }
+});
+
+// Elite Guests Homepage Leaderboard (Fetched from CRM Database)
+const eliteTotalMembersEl = document.querySelector('#elite-total-members');
+const eliteTotalPointsEl = document.querySelector('#elite-total-points');
+const eliteStatusEl = document.querySelector('#elite-guests-status');
+const elitePodiumEl = document.querySelector('#elite-guests-podium');
+const eliteListEl = document.querySelector('#elite-guests-list');
+const eliteUserTitleEl = document.querySelector('#elite-user-bar-title');
+const eliteUserCopyEl = document.querySelector('#elite-user-bar-copy');
+const eliteCtaBtn = document.querySelector('#elite-guests-cta-btn');
+let latestEliteGuests = [];
+
+function updateEliteUserBar() {
+  if (!eliteUserTitleEl || !eliteUserCopyEl || !eliteCtaBtn) return;
+  if (!currentUser) {
+    eliteUserTitleEl.textContent = 'Join the Pier 25 Loyalty Circle';
+    eliteUserCopyEl.textContent = 'Earn 50 welcome points on signup, 10% back in points on every order, and +15 bonus points per verified review.';
+    eliteCtaBtn.textContent = 'Sign In to Earn Points';
+    return;
+  }
+  const earned = Number(currentUser.totalLoyaltyEarned ?? currentUser.loyaltyPoints ?? 0);
+  const avail = Number(currentUser.loyaltyPoints || 0);
+  const match = latestEliteGuests.find((g) => g.uid === currentUser.uid);
+  if (currentUser.role === 'owner') {
+    eliteUserTitleEl.textContent = `Welcome, ${currentUser.displayName} (Owner Studio)`;
+    eliteUserCopyEl.textContent = 'CRM loyalty standings update automatically as guests complete orders and post verified reviews.';
+    eliteCtaBtn.textContent = 'Open CRM in Owner Studio';
+    return;
+  }
+  const rankCopy = match ? `Ranked #${match.rank} on the Pier 25 leaderboard` : 'Keep dining & reviewing to enter the Top 6';
+  eliteUserTitleEl.textContent = `${currentUser.displayName} · ${earned.toLocaleString('en-IN')} pts earned (${avail.toLocaleString('en-IN')} redeemable)`;
+  eliteUserCopyEl.textContent = `${rankCopy} · Redeem points for instant checkout savings anytime.`;
+  eliteCtaBtn.textContent = 'Order & Earn Points';
+}
+
+function renderEliteGuestsLeaderboard(payload) {
+  const guests = Array.isArray(payload?.guests) ? payload.guests : [];
+  latestEliteGuests = guests;
+  if (eliteTotalMembersEl) {
+    eliteTotalMembersEl.textContent = Number(payload?.totalMembers || 0).toLocaleString('en-IN');
+  }
+  if (eliteTotalPointsEl) {
+    eliteTotalPointsEl.textContent = Number(payload?.totalPointsAwarded || 0).toLocaleString('en-IN');
+  }
+
+  if (!elitePodiumEl || !eliteListEl) return;
+  elitePodiumEl.innerHTML = '';
+  eliteListEl.innerHTML = '';
+
+  if (guests.length === 0) {
+    if (eliteStatusEl) {
+      eliteStatusEl.hidden = false;
+      eliteStatusEl.textContent = 'No guest loyalty standings recorded yet. Create an account and place an order to claim #1.';
+    }
+    updateEliteUserBar();
+    return;
+  }
+
+  if (eliteStatusEl) {
+    eliteStatusEl.hidden = true;
+    eliteStatusEl.textContent = '';
+  }
+
+  const podiumGuests = guests.slice(0, 3);
+  const remainingGuests = guests.slice(3);
+
+  for (const guest of podiumGuests) {
+    const isCurrent = Boolean(currentUser && guest.uid === currentUser.uid);
+    const card = document.createElement('article');
+    card.className = `elite-podium-card rank-${guest.rank}${isCurrent ? ' is-current-guest' : ''}`;
+    card.innerHTML = `
+      <div class="elite-card-top">
+        <span class="elite-rank-num tabular-nums">#${String(guest.rank).padStart(2, '0')}</span>
+        <span class="elite-tier-label">${escapeHtml(guest.tier || 'Club Guest')}</span>
+      </div>
+      <div class="elite-guest-identity">
+        <div class="elite-avatar" aria-hidden="true">${escapeHtml(guest.initials || 'G')}</div>
+        <div>
+          <h3>${escapeHtml(guest.displayName)}${isCurrent ? ' <small class="elite-you-tag">(You)</small>' : ''}</h3>
+          <p class="elite-guest-pref">${escapeHtml(guest.favoriteHighlight || 'Pier 25 Regular Guest')}</p>
+        </div>
+      </div>
+      <div class="elite-card-metrics">
+        <div>
+          <span>Total Earned</span>
+          <strong class="tabular-nums">${Number(guest.totalLoyaltyEarned || 0).toLocaleString('en-IN')} pts</strong>
+        </div>
+        <div>
+          <span>Completed Visits</span>
+          <strong class="tabular-nums">${Number(guest.totalOrders || 0)} ${Number(guest.totalOrders) === 1 ? 'order' : 'orders'}</strong>
+        </div>
+      </div>
+    `;
+    elitePodiumEl.appendChild(card);
+  }
+
+  if (remainingGuests.length > 0) {
+    const listCard = document.createElement('div');
+    listCard.className = 'elite-list-panel';
+    listCard.innerHTML = `
+      <div class="elite-list-head">
+        <span>Rank &amp; Guest</span>
+        <span>Tier</span>
+        <span>Orders</span>
+        <span>Total Loyalty Earned</span>
+      </div>
+    `;
+    for (const guest of remainingGuests) {
+      const isCurrent = Boolean(currentUser && guest.uid === currentUser.uid);
+      const row = document.createElement('div');
+      row.className = `elite-list-row${isCurrent ? ' is-current-guest' : ''}`;
+      row.innerHTML = `
+        <div class="elite-list-guest">
+          <span class="elite-rank-inline tabular-nums">#${String(guest.rank).padStart(2, '0')}</span>
+          <div class="elite-avatar-sm" aria-hidden="true">${escapeHtml(guest.initials || 'G')}</div>
+          <div>
+            <strong>${escapeHtml(guest.displayName)}${isCurrent ? ' <small class="elite-you-tag">(You)</small>' : ''}</strong>
+            <small>${escapeHtml(guest.favoriteHighlight || 'Pier 25 Club Guest')}</small>
+          </div>
+        </div>
+        <div class="elite-list-tier">${escapeHtml(guest.tier || 'Club Guest')}</div>
+        <div class="elite-list-orders tabular-nums">${Number(guest.totalOrders || 0)} orders</div>
+        <div class="elite-list-points tabular-nums">${Number(guest.totalLoyaltyEarned || 0).toLocaleString('en-IN')} pts</div>
+      `;
+      listCard.appendChild(row);
+    }
+    eliteListEl.appendChild(listCard);
+  }
+
+  updateEliteUserBar();
+}
+
+async function loadEliteGuestsLeaderboard() {
+  if (eliteStatusEl && latestEliteGuests.length === 0) {
+    eliteStatusEl.hidden = false;
+    eliteStatusEl.textContent = 'Loading Elite Guests standings from CRM...';
+  }
+  try {
+    const res = await apiFetch('/api/crm/elite-guests?limit=6');
+    renderEliteGuestsLeaderboard(res);
+    if (currentUser?.role === 'owner' && Array.isArray(res?.guests)) {
+      for (const guest of res.guests) {
+        syncEliteGuestToFirestore(guest).catch(() => {});
+      }
+    }
+  } catch (err) {
+    if (eliteStatusEl) {
+      eliteStatusEl.hidden = false;
+      eliteStatusEl.textContent = err?.message || 'Unable to load Elite Guests standings right now.';
+    }
+  }
+}
+
+document.querySelector('#elite-refresh-btn')?.addEventListener('click', () => {
+  loadEliteGuestsLeaderboard();
+});
+
+eliteCtaBtn?.addEventListener('click', () => {
+  if (!currentUser) {
+    openAuthModal();
+    return;
+  }
+  if (currentUser.role === 'owner') {
+    ownerController.openModal('crm');
+    return;
+  }
+  document.querySelector('#interactive-menu')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
 // Table Reservations (#book-table preserved + backend synced)
@@ -1114,7 +1601,7 @@ authForm?.addEventListener('submit', async (e) => {
     });
     currentUser = res.user;
     updateAuthHeaderUI();
-    await loadReservations();
+    await Promise.all([loadReservations(), loadEliteGuestsLeaderboard()]);
     openAuthModal();
   } catch (err) {
     if (authStatusEl) {
@@ -1137,7 +1624,7 @@ document.querySelector('#google-signin-btn')?.addEventListener('click', async ()
     });
     currentUser = res.user;
     updateAuthHeaderUI();
-    await loadReservations();
+    await Promise.all([loadReservations(), loadEliteGuestsLeaderboard()]);
     openAuthModal();
   } catch (err) {
     if (authStatusEl) {
@@ -1162,6 +1649,7 @@ document.querySelector('#profile-update-form')?.addEventListener('submit', async
     });
     currentUser = res.user;
     updateAuthHeaderUI();
+    loadEliteGuestsLeaderboard();
     if (status) status.textContent = 'Saved!';
   } catch (err) {
     if (status) status.textContent = err.message;
@@ -1173,7 +1661,7 @@ document.querySelector('#profile-logout-btn')?.addEventListener('click', async (
   await signOutFirebase();
   currentUser = null;
   updateAuthHeaderUI();
-  await loadReservations();
+  await Promise.all([loadReservations(), loadEliteGuestsLeaderboard()]);
   openAuthModal();
 });
 
@@ -1304,8 +1792,74 @@ if (newFoodSection && newFoodTrack) {
   startAutoSlide();
 }
 
+// Lightweight Lottie vector animations & reduced-motion-safe scroll reveals
+function initVisualAnimations() {
+  const reducedMotionQuery = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  const prefersReducedMotion = Boolean(reducedMotionQuery?.matches);
+
+  const lottieSlots = [
+    { el: document.querySelector('#hero-lottie-sparkle'), data: getHeroSparklesLottieData },
+    { el: document.querySelector('#cafe-lottie-aroma'), data: getCafeAromaLottieData },
+  ];
+
+  const activeInstances = [];
+  for (const slot of lottieSlots) {
+    if (!slot.el) continue;
+    try {
+      const anim = lottie.loadAnimation({
+        container: slot.el,
+        renderer: 'svg',
+        loop: !prefersReducedMotion,
+        autoplay: !prefersReducedMotion,
+        animationData: slot.data(),
+      });
+      if (prefersReducedMotion) {
+        anim.goToAndStop(30, true);
+      }
+      activeInstances.push(anim);
+    } catch {
+      // Non-critical visual accent fallback
+    }
+  }
+
+  reducedMotionQuery?.addEventListener?.('change', (evt) => {
+    for (const anim of activeInstances) {
+      if (evt.matches) {
+        anim.pause();
+      } else {
+        anim.loop = true;
+        anim.play();
+      }
+    }
+  });
+
+  const revealTargets = document.querySelectorAll('.reveal-on-scroll');
+  if (!revealTargets.length) return;
+
+  if (prefersReducedMotion || typeof window.IntersectionObserver !== 'function') {
+    revealTargets.forEach((el) => el.classList.add('is-revealed'));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          observer.unobserve(entry.target);
+        }
+      }
+    },
+    { threshold: 0.08, rootMargin: '0px 0px -32px 0px' }
+  );
+
+  revealTargets.forEach((el) => observer.observe(el));
+}
+
 // Boot Application State
 async function bootstrap() {
+  initVisualAnimations();
+  const initialTableState = applyTableSessionFromUrl(window.location.search, window.location.hash, { scrollToMenu: false });
   try {
     const authRes = await apiFetch('/api/auth/me');
     currentUser = authRes.user || null;
@@ -1313,7 +1867,10 @@ async function bootstrap() {
     currentUser = null;
   }
   updateAuthHeaderUI();
-  await Promise.all([loadMenuCatalog(), loadReviews(), loadReservations()]);
+  await Promise.all([loadMenuCatalog(), loadReviews(), loadReservations(), loadEliteGuestsLeaderboard()]);
+  if (initialTableState?.hasTable && initialTableState?.openMenu) {
+    document.querySelector('#interactive-menu')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 
 bootstrap();

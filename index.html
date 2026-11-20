@@ -115,14 +115,22 @@
         </div>
       </div>
       <div class="hero-visual">
-        <img src="men4.png" alt="Pier 25 signature chef platter">
+        <div id="hero-lottie-sparkle" class="lottie-hero-sparkle" aria-hidden="true"></div>
+        <picture>
+          <source type="image/webp" srcset="/src/assets/optimized/hero-host-sm.webp 420w, /src/assets/optimized/hero-host.webp 720w" sizes="(max-width: 600px) 88vw, 470px">
+          <img src="/src/assets/optimized/hero-host.png" alt="Welcoming 3D Pier 25 barista and chef host serving espresso and fresh croissant on a golden platter" width="720" height="685" class="hero-host-img hero-float" loading="eager" fetchpriority="high" decoding="async">
+        </picture>
       </div>
     </section>
 
-    <section class="food-items" aria-label="Signature spotlight dishes">
+    <section class="food-items reveal-on-scroll" aria-label="Signature spotlight dishes">
       <div class="item" data-dish-id="crispy-grill-wrap">
         <div>
-          <img src="mc5.png" alt="Crispy Grill Wrap">
+          <picture>
+            <source type="image/avif" srcset="/src/assets/optimized/wrap-fries-sm.avif 480w, /src/assets/optimized/wrap-fries.avif 800w" sizes="(max-width: 600px) 86vw, 300px">
+            <source type="image/webp" srcset="/src/assets/optimized/wrap-fries-sm.webp 480w, /src/assets/optimized/wrap-fries.webp 800w" sizes="(max-width: 600px) 86vw, 300px">
+            <img src="/src/assets/optimized/wrap-fries.jpg" alt="Crispy Grill Wrap with spiced fries" width="800" height="597" loading="lazy" decoding="async">
+          </picture>
         </div>
         <h1>Crispy Grill Wrap</h1>
         <p>Tender crispy patty wrapped with fresh lettuce, cheddar, and smoky house sauce.</p>
@@ -131,7 +139,11 @@
       </div>
       <div class="item" data-dish-id="roasted-black-coffee">
         <div>
-          <img src="mc3.png" alt="Roasted Black Coffee">
+          <picture>
+            <source type="image/avif" srcset="/src/assets/optimized/black-coffee-sm.avif 480w, /src/assets/optimized/black-coffee.avif 800w" sizes="(max-width: 600px) 86vw, 300px">
+            <source type="image/webp" srcset="/src/assets/optimized/black-coffee-sm.webp 480w, /src/assets/optimized/black-coffee.webp 800w" sizes="(max-width: 600px) 86vw, 300px">
+            <img src="/src/assets/optimized/black-coffee.jpg" alt="Roasted Black Coffee in porcelain cup" width="800" height="597" loading="lazy" decoding="async">
+          </picture>
         </div>
         <h1>Roasted Black Coffee</h1>
         <p>Freshly brewed dark roast coffee served piping hot with rich cacao aroma.</p>
@@ -140,7 +152,11 @@
       </div>
       <div class="item" data-dish-id="jalapeno-cheese-burger">
         <div>
-          <img src="mc4.png" alt="Jalapeño Cheese Burger">
+          <picture>
+            <source type="image/avif" srcset="/src/assets/optimized/cheese-burger-sm.avif 480w, /src/assets/optimized/cheese-burger.avif 800w" sizes="(max-width: 600px) 86vw, 300px">
+            <source type="image/webp" srcset="/src/assets/optimized/cheese-burger-sm.webp 480w, /src/assets/optimized/cheese-burger.webp 800w" sizes="(max-width: 600px) 86vw, 300px">
+            <img src="/src/assets/optimized/cheese-burger.jpg" alt="Jalapeño Cheese Burger with melted cheddar" width="800" height="597" loading="lazy" decoding="async">
+          </picture>
         </div>
         <h1>Jalapeño Cheese Burger</h1>
         <p>Crispy golden patty topped with melted cheese, jalapeños, and zesty sauce.</p>
@@ -149,9 +165,13 @@
       </div>
     </section>
 
-    <section class="main-slide1" id="about-us">
+    <section class="main-slide1 reveal-on-scroll" id="about-us">
       <div class="food-img">
-        <img src="mc1.png" alt="Fresh ingredients at Pier 25 kitchen">
+        <picture>
+          <source type="image/avif" srcset="/src/assets/optimized/community-dining-sm.avif 520w, /src/assets/optimized/community-dining.avif 960w" sizes="(max-width: 600px) 92vw, 480px">
+          <source type="image/webp" srcset="/src/assets/optimized/community-dining-sm.webp 520w, /src/assets/optimized/community-dining.webp 960w" sizes="(max-width: 600px) 92vw, 480px">
+          <img src="/src/assets/optimized/community-dining.jpg" alt="Children, teens, parents, and seniors enjoying family dining together at Pier 25" width="960" height="717" loading="lazy" decoding="async">
+        </picture>
       </div>
       <div class="question">
         <div>
@@ -159,7 +179,10 @@
         </div>
         <div class="q-ans">
           <div>
-            <img src="mc7.png" alt="Freshly prepared desserts and pairings">
+            <picture>
+              <source type="image/webp" srcset="/src/assets/optimized/pillar-ingredients-sm.webp 140w, /src/assets/optimized/pillar-ingredients.webp 220w" sizes="60px">
+              <img src="/src/assets/optimized/pillar-ingredients.png" alt="Fresh 3D produce, whole spices, and coffee beans" width="220" height="218" loading="lazy" decoding="async">
+            </picture>
           </div>
           <div>
             <h4>Curated Farm-Fresh Ingredients</h4>
@@ -168,7 +191,10 @@
         </div>
         <div class="q-ans">
           <div>
-            <img src="mc5.png" alt="AI culinary recommendations">
+            <picture>
+              <source type="image/webp" srcset="/src/assets/optimized/pillar-ai-sm.webp 140w, /src/assets/optimized/pillar-ai.webp 220w" sizes="60px">
+              <img src="/src/assets/optimized/pillar-ai.png" alt="3D culinary cloche and AI concierge sparkles" width="220" height="166" loading="lazy" decoding="async">
+            </picture>
           </div>
           <div>
             <h4>AI Concierge &amp; Visual Dish Search</h4>
@@ -177,7 +203,10 @@
         </div>
         <div class="q-ans">
           <div>
-            <img src="mc6.png" alt="Loyalty rewards and live tracking">
+            <picture>
+              <source type="image/webp" srcset="/src/assets/optimized/pillar-rewards-sm.webp 140w, /src/assets/optimized/pillar-rewards.webp 220w" sizes="60px">
+              <img src="/src/assets/optimized/pillar-rewards.png" alt="3D golden loyalty crown and gift box" width="220" height="142" loading="lazy" decoding="async">
+            </picture>
           </div>
           <div>
             <h4>Live Order Tracking &amp; Rewards</h4>
@@ -187,7 +216,7 @@
       </div>
     </section>
 
-    <section class="main-slide3" id="food-menu">
+    <section class="main-slide3 reveal-on-scroll" id="food-menu">
       <div class="fav-head">
         <h3>Our Popular Food Items</h3>
         <p>Explore our customer favorites, freshly prepared daily with signature spices, crisp greens, and bold flavors.</p>
@@ -195,7 +224,11 @@
       <div class="fav-food">
         <div class="item" data-dish-id="choco-frappe-combo" tabindex="0">
           <div>
-            <img src="mc8.png" alt="Choco Frappe Burger Combo">
+            <picture>
+              <source type="image/avif" srcset="/src/assets/optimized/sundae-cola-sm.avif 480w, /src/assets/optimized/sundae-cola.avif 800w" sizes="(max-width: 600px) 86vw, 240px">
+              <source type="image/webp" srcset="/src/assets/optimized/sundae-cola-sm.webp 480w, /src/assets/optimized/sundae-cola.webp 800w" sizes="(max-width: 600px) 86vw, 240px">
+              <img src="/src/assets/optimized/sundae-cola.jpg" alt="Choco Frappe Burger Combo" width="800" height="597" loading="lazy" decoding="async">
+            </picture>
           </div>
           <h3>Choco Frappe Combo</h3>
           <p>Signature crispy burger paired with a rich, chilled chocolate frappe.</p>
@@ -203,7 +236,11 @@
         </div>
         <div class="item" data-dish-id="piri-piri-fries-meal" tabindex="0">
           <div>
-            <img src="mc9.png" alt="Piri Piri Fries Meal">
+            <picture>
+              <source type="image/avif" srcset="/src/assets/optimized/wrap-fries-sm.avif 480w, /src/assets/optimized/wrap-fries.avif 800w" sizes="(max-width: 600px) 86vw, 240px">
+              <source type="image/webp" srcset="/src/assets/optimized/wrap-fries-sm.webp 480w, /src/assets/optimized/wrap-fries.webp 800w" sizes="(max-width: 600px) 86vw, 240px">
+              <img src="/src/assets/optimized/wrap-fries.jpg" alt="Piri Piri Fries Meal" width="800" height="597" loading="lazy" decoding="async">
+            </picture>
           </div>
           <h3>Piri Piri Fries Meal</h3>
           <p>Classic crispy burger served with golden fries and tangy piri piri spice.</p>
@@ -211,7 +248,11 @@
         </div>
         <div class="item" data-dish-id="korean-spicy-duo" tabindex="0">
           <div>
-            <img src="mc10.jpg" alt="Korean Spicy Duo Meal">
+            <picture>
+              <source type="image/avif" srcset="/src/assets/optimized/korean-burger-sm.avif 480w, /src/assets/optimized/korean-burger.avif 800w" sizes="(max-width: 600px) 86vw, 240px">
+              <source type="image/webp" srcset="/src/assets/optimized/korean-burger-sm.webp 480w, /src/assets/optimized/korean-burger.webp 800w" sizes="(max-width: 600px) 86vw, 240px">
+              <img src="/src/assets/optimized/korean-burger.jpg" alt="Korean Spicy Duo Meal" width="800" height="597" loading="lazy" decoding="async">
+            </picture>
           </div>
           <h3>Korean Spicy Duo</h3>
           <p>Two fiery Korean-glazed crispy burgers with fries and sparkling cooler.</p>
@@ -219,7 +260,11 @@
         </div>
         <div class="item" data-dish-id="classic-crispy-burger" tabindex="0">
           <div>
-            <img src="mc11.png" alt="Classic Crispy Burger">
+            <picture>
+              <source type="image/avif" srcset="/src/assets/optimized/cheese-burger-sm.avif 480w, /src/assets/optimized/cheese-burger.avif 800w" sizes="(max-width: 600px) 86vw, 240px">
+              <source type="image/webp" srcset="/src/assets/optimized/cheese-burger-sm.webp 480w, /src/assets/optimized/cheese-burger.webp 800w" sizes="(max-width: 600px) 86vw, 240px">
+              <img src="/src/assets/optimized/cheese-burger.jpg" alt="Classic Crispy Burger" width="800" height="597" loading="lazy" decoding="async">
+            </picture>
           </div>
           <h3>Classic Crispy Burger</h3>
           <p>Crunchy herb-seasoned patty layered with crisp lettuce and creamy mayo.</p>
@@ -229,11 +274,14 @@
       <div class="dsgn"></div>
     </section>
 
-    <section class="cafe-collection-section" id="coffee-croissant-collection" aria-labelledby="cafe-collection-heading">
+    <section class="cafe-collection-section reveal-on-scroll" id="coffee-croissant-collection" aria-labelledby="cafe-collection-heading">
       <div class="cafe-collection-header">
         <div>
           <p class="eyebrow">Artisanal Roastery &amp; Viennoiserie</p>
-          <h2 id="cafe-collection-heading">Coffee, <span>Croissants</span> &amp; Bakery Collection</h2>
+          <div class="cafe-heading-row">
+            <h2 id="cafe-collection-heading">Coffee, <span>Croissants</span> &amp; Bakery Collection</h2>
+            <span id="cafe-lottie-aroma" class="lottie-cafe-aroma" aria-hidden="true"></span>
+          </div>
           <p class="cafe-collection-lead">Hand-laminated cultured butter croissants, single-origin espresso pours, cold brews, and small-batch desserts crafted fresh daily.</p>
         </div>
         <div class="cafe-section-nav" id="cafe-section-nav" aria-label="Jump to Coffee and Croissant sections"></div>
@@ -241,7 +289,8 @@
       <div id="coffee-croissant-sections" class="cafe-sections-stack" aria-live="polite"></div>
     </section>
 
-    <section class="catalog-section" id="interactive-menu" aria-labelledby="catalog-heading">
+    <section class="catalog-section reveal-on-scroll" id="interactive-menu" aria-labelledby="catalog-heading">
+      <div id="table-session-banner" class="table-session-banner" hidden role="status" aria-live="polite"></div>
       <div class="catalog-header">
         <div>
           <p class="eyebrow">Full Interactive Menu</p>
@@ -260,8 +309,16 @@
         </div>
       </div>
 
+      <div id="daily-specials-showcase" class="daily-specials-showcase" hidden aria-label="Today's 24-Hour Daily Specials"></div>
+
       <div class="catalog-filters-bar">
-        <div class="category-tabs" id="menu-category-tabs" role="tablist" aria-label="Menu categories"></div>
+        <div class="catalog-tabs-pricing-row">
+          <div class="category-tabs" id="menu-category-tabs" role="tablist" aria-label="Menu categories"></div>
+          <div class="pricing-mode-toggle" id="pricing-mode-toggle" role="group" aria-label="Pricing mode">
+            <button type="button" id="pricing-mode-individual" class="pricing-mode-btn active" data-pricing-mode="individual" aria-pressed="true">Individual Pricing</button>
+            <button type="button" id="pricing-mode-combo" class="pricing-mode-btn" data-pricing-mode="combo" aria-pressed="false">Combo Pricing</button>
+          </div>
+        </div>
         <div class="filter-controls">
           <select id="menu-subcategory-filter" aria-label="Filter by subcategory">
             <option value="all">All Subcategories</option>
@@ -273,6 +330,7 @@
           </select>
           <select id="menu-highlight-filter" aria-label="Filter by menu highlight">
             <option value="all">All Highlights</option>
+            <option value="daily-special">24h Daily Specials</option>
             <option value="bestseller">Bestsellers</option>
             <option value="new">New Arrivals</option>
             <option value="recommended">Recommended</option>
@@ -298,7 +356,7 @@
       <div id="menu-catalog-grid" class="menu-catalog-grid" aria-live="polite"></div>
     </section>
 
-    <section id="new-food-items" class="new-food-section" aria-labelledby="new-food-heading">
+    <section id="new-food-items" class="new-food-section reveal-on-scroll" aria-labelledby="new-food-heading">
       <div class="new-food-header">
         <div>
           <h2 id="new-food-heading">New <span>Food Items</span></h2>
@@ -321,7 +379,11 @@
           <article class="new-food-slide">
             <div class="new-food-card" data-dish-id="artisan-brioche-burger">
               <div class="new-food-img-wrap">
-                <img src="burger.jpg" alt="Artisan Brioche Burger">
+                <picture>
+                  <source type="image/avif" srcset="/src/assets/optimized/cheese-burger-sm.avif 480w, /src/assets/optimized/cheese-burger.avif 800w" sizes="(max-width: 600px) 88vw, 320px">
+                  <source type="image/webp" srcset="/src/assets/optimized/cheese-burger-sm.webp 480w, /src/assets/optimized/cheese-burger.webp 800w" sizes="(max-width: 600px) 88vw, 320px">
+                  <img src="/src/assets/optimized/cheese-burger.jpg" alt="Artisan Brioche Burger" width="800" height="597" loading="lazy" decoding="async">
+                </picture>
                 <span class="new-food-badge">New</span>
               </div>
               <div class="new-food-body">
@@ -337,7 +399,11 @@
           <article class="new-food-slide">
             <div class="new-food-card" data-dish-id="crispy-masala-dosa">
               <div class="new-food-img-wrap">
-                <img src="dosa.jpg" alt="Crispy Masala Dosa">
+                <picture>
+                  <source type="image/avif" srcset="/src/assets/optimized/masala-dosa-sm.avif 480w, /src/assets/optimized/masala-dosa.avif 800w" sizes="(max-width: 600px) 88vw, 320px">
+                  <source type="image/webp" srcset="/src/assets/optimized/masala-dosa-sm.webp 480w, /src/assets/optimized/masala-dosa.webp 800w" sizes="(max-width: 600px) 88vw, 320px">
+                  <img src="/src/assets/optimized/masala-dosa.jpg" alt="Crispy Masala Dosa" width="800" height="597" loading="lazy" decoding="async">
+                </picture>
                 <span class="new-food-badge">New</span>
               </div>
               <div class="new-food-body">
@@ -353,7 +419,11 @@
           <article class="new-food-slide">
             <div class="new-food-card" data-dish-id="smoky-paneer-sizzler">
               <div class="new-food-img-wrap">
-                <img src="sizzlers.jpg" alt="Smoky Paneer Sizzler">
+                <picture>
+                  <source type="image/avif" srcset="/src/assets/optimized/paneer-sizzler-sm.avif 480w, /src/assets/optimized/paneer-sizzler.avif 800w" sizes="(max-width: 600px) 88vw, 320px">
+                  <source type="image/webp" srcset="/src/assets/optimized/paneer-sizzler-sm.webp 480w, /src/assets/optimized/paneer-sizzler.webp 800w" sizes="(max-width: 600px) 88vw, 320px">
+                  <img src="/src/assets/optimized/paneer-sizzler.jpg" alt="Smoky Paneer Sizzler" width="800" height="597" loading="lazy" decoding="async">
+                </picture>
                 <span class="new-food-badge">New</span>
               </div>
               <div class="new-food-body">
@@ -369,7 +439,11 @@
           <article class="new-food-slide">
             <div class="new-food-card" data-dish-id="healthy-protein-bowl">
               <div class="new-food-img-wrap">
-                <img src="dish.png" alt="Healthy Protein Bowl">
+                <picture>
+                  <source type="image/avif" srcset="/src/assets/optimized/protein-bowl-sm.avif 480w, /src/assets/optimized/protein-bowl.avif 800w" sizes="(max-width: 600px) 88vw, 320px">
+                  <source type="image/webp" srcset="/src/assets/optimized/protein-bowl-sm.webp 480w, /src/assets/optimized/protein-bowl.webp 800w" sizes="(max-width: 600px) 88vw, 320px">
+                  <img src="/src/assets/optimized/protein-bowl.jpg" alt="Healthy Protein Bowl" width="800" height="597" loading="lazy" decoding="async">
+                </picture>
                 <span class="new-food-badge">New</span>
               </div>
               <div class="new-food-body">
@@ -385,7 +459,11 @@
           <article class="new-food-slide">
             <div class="new-food-card" data-dish-id="masala-puff-chai">
               <div class="new-food-img-wrap">
-                <img src="m2.png" alt="Masala Puff and Chai Combo">
+                <picture>
+                  <source type="image/avif" srcset="/src/assets/optimized/chai-snacks-sm.avif 480w, /src/assets/optimized/chai-snacks.avif 800w" sizes="(max-width: 600px) 88vw, 320px">
+                  <source type="image/webp" srcset="/src/assets/optimized/chai-snacks-sm.webp 480w, /src/assets/optimized/chai-snacks.webp 800w" sizes="(max-width: 600px) 88vw, 320px">
+                  <img src="/src/assets/optimized/chai-snacks.jpg" alt="Masala Puff and Chai Combo" width="800" height="597" loading="lazy" decoding="async">
+                </picture>
                 <span class="new-food-badge">New</span>
               </div>
               <div class="new-food-body">
@@ -401,7 +479,11 @@
           <article class="new-food-slide">
             <div class="new-food-card" data-dish-id="methi-thepla-chai">
               <div class="new-food-img-wrap">
-                <img src="m7.png" alt="Methi Thepla and Chai">
+                <picture>
+                  <source type="image/avif" srcset="/src/assets/optimized/chai-snacks-sm.avif 480w, /src/assets/optimized/chai-snacks.avif 800w" sizes="(max-width: 600px) 88vw, 320px">
+                  <source type="image/webp" srcset="/src/assets/optimized/chai-snacks-sm.webp 480w, /src/assets/optimized/chai-snacks.webp 800w" sizes="(max-width: 600px) 88vw, 320px">
+                  <img src="/src/assets/optimized/chai-snacks.jpg" alt="Methi Thepla and Chai" width="800" height="597" loading="lazy" decoding="async">
+                </picture>
                 <span class="new-food-badge">New</span>
               </div>
               <div class="new-food-body">
@@ -417,7 +499,11 @@
           <article class="new-food-slide">
             <div class="new-food-card" data-dish-id="muffin-cafe-latte">
               <div class="new-food-img-wrap">
-                <img src="mc6.png" alt="Breakfast Muffin and Latte">
+                <picture>
+                  <source type="image/avif" srcset="/src/assets/optimized/hot-coffee-sm.avif 480w, /src/assets/optimized/hot-coffee.avif 800w" sizes="(max-width: 600px) 88vw, 320px">
+                  <source type="image/webp" srcset="/src/assets/optimized/hot-coffee-sm.webp 480w, /src/assets/optimized/hot-coffee.webp 800w" sizes="(max-width: 600px) 88vw, 320px">
+                  <img src="/src/assets/optimized/hot-coffee.jpg" alt="Breakfast Muffin and Latte" width="800" height="597" loading="lazy" decoding="async">
+                </picture>
                 <span class="new-food-badge">New</span>
               </div>
               <div class="new-food-body">
@@ -433,7 +519,11 @@
           <article class="new-food-slide">
             <div class="new-food-card" data-dish-id="choco-brownie-sundae">
               <div class="new-food-img-wrap">
-                <img src="mc7.png" alt="Choco Oreo Sundae Trio">
+                <picture>
+                  <source type="image/avif" srcset="/src/assets/optimized/sundae-cola-sm.avif 480w, /src/assets/optimized/sundae-cola.avif 800w" sizes="(max-width: 600px) 88vw, 320px">
+                  <source type="image/webp" srcset="/src/assets/optimized/sundae-cola-sm.webp 480w, /src/assets/optimized/sundae-cola.webp 800w" sizes="(max-width: 600px) 88vw, 320px">
+                  <img src="/src/assets/optimized/sundae-cola.jpg" alt="Choco Oreo Sundae Trio" width="800" height="597" loading="lazy" decoding="async">
+                </picture>
                 <span class="new-food-badge">New</span>
               </div>
               <div class="new-food-body">
@@ -449,7 +539,11 @@
           <article class="new-food-slide">
             <div class="new-food-card" data-dish-id="chilled-sparkling-cola">
               <div class="new-food-img-wrap">
-                <img src="coca.jpg" alt="Chilled Sparkling Cola">
+                <picture>
+                  <source type="image/avif" srcset="/src/assets/optimized/cold-coffee-sm.avif 480w, /src/assets/optimized/cold-coffee.avif 800w" sizes="(max-width: 600px) 88vw, 320px">
+                  <source type="image/webp" srcset="/src/assets/optimized/cold-coffee-sm.webp 480w, /src/assets/optimized/cold-coffee.webp 800w" sizes="(max-width: 600px) 88vw, 320px">
+                  <img src="/src/assets/optimized/cold-coffee.jpg" alt="Chilled Sparkling Cola and Cold Drinks" width="800" height="597" loading="lazy" decoding="async">
+                </picture>
                 <span class="new-food-badge">New</span>
               </div>
               <div class="new-food-body">
@@ -467,13 +561,17 @@
       <div class="new-food-dots" id="new-food-dots" role="tablist" aria-label="New food items slides"></div>
     </section>
 
-    <section class="main-slide4" id="reviews-section">
+    <section class="main-slide4 reveal-on-scroll" id="reviews-section">
       <div class="chef-feed">
         <h2>Guest <span>Reviews &amp; Rewards</span></h2>
         <p class="chef-quote">Every dining experience earns Pier 25 Loyalty Rewards. Share your thoughts after dining or ordering and earn +15 bonus points toward your next meal.</p>
         <div class="chef-detail">
           <div>
-            <img src="t6.png" alt="Executive Chef Krishna Ladva">
+            <picture>
+              <source type="image/avif" srcset="/src/assets/optimized/chef-avatar-sm.avif 160w, /src/assets/optimized/chef-avatar.avif 256w" sizes="52px">
+              <source type="image/webp" srcset="/src/assets/optimized/chef-avatar-sm.webp 160w, /src/assets/optimized/chef-avatar.webp 256w" sizes="52px">
+              <img src="/src/assets/optimized/chef-avatar.jpg" alt="Executive Chef Krishna Ladva portrait" width="256" height="256" loading="lazy" decoding="async">
+            </picture>
           </div>
           <div>
             <h6>Chef Krishna Ladva</h6>
@@ -503,11 +601,51 @@
         </form>
       </div>
       <div class="chef">
-        <img src="chef-main.jpeg" alt="Pier 25 Executive Chef plating signature dish">
+        <picture>
+          <source type="image/avif" srcset="/src/assets/optimized/chef-main-sm.avif 480w, /src/assets/optimized/chef-main.avif 800w" sizes="(max-width: 600px) 88vw, 390px">
+          <source type="image/webp" srcset="/src/assets/optimized/chef-main-sm.webp 480w, /src/assets/optimized/chef-main.webp 800w" sizes="(max-width: 600px) 88vw, 390px">
+          <img src="/src/assets/optimized/chef-main.jpg" alt="Pier 25 Executive Chef plating signature dish" width="800" height="737" loading="lazy" decoding="async">
+        </picture>
       </div>
     </section>
 
-    <section id="book-table" class="book-table-section" aria-labelledby="book-table-heading">
+    <section id="elite-guests" class="elite-guests-section reveal-on-scroll" aria-labelledby="elite-guests-heading">
+      <div class="elite-guests-header">
+        <div>
+          <p class="eyebrow">Pier 25 Loyalty Circle · Live CRM Standings</p>
+          <h2 id="elite-guests-heading">Elite <span>Guests</span></h2>
+          <p class="elite-guests-lead">Celebrating our most loyal diners ranked by total loyalty points earned across online orders, café visits, and verified guest reviews.</p>
+        </div>
+        <div class="elite-crm-summary" aria-label="Loyalty club totals">
+          <div class="elite-stat">
+            <span>CRM Members</span>
+            <strong id="elite-total-members" class="tabular-nums">—</strong>
+          </div>
+          <div class="elite-stat">
+            <span>Total Points Earned</span>
+            <strong id="elite-total-points" class="tabular-nums">—</strong>
+          </div>
+          <button type="button" id="elite-refresh-btn" class="btn-outline-sm" aria-label="Refresh Elite Guests leaderboard">
+            <i class="fa-solid fa-rotate"></i> Refresh
+          </button>
+        </div>
+      </div>
+
+      <p id="elite-guests-status" class="elite-guests-status" aria-live="polite">Loading Elite Guests standings from CRM...</p>
+
+      <div id="elite-guests-podium" class="elite-podium-grid" aria-label="Top three Elite Guests"></div>
+      <div id="elite-guests-list" class="elite-rank-list" aria-label="Additional top loyalty guests"></div>
+
+      <div id="elite-guests-user-status" class="elite-user-bar">
+        <div>
+          <strong id="elite-user-bar-title">Join the Pier 25 Loyalty Circle</strong>
+          <p id="elite-user-bar-copy">Earn 50 welcome points on signup, 10% back in points on every order, and +15 bonus points per verified review.</p>
+        </div>
+        <button type="button" id="elite-guests-cta-btn" class="btn-forest">Sign In to Earn Points</button>
+      </div>
+    </section>
+
+    <section id="book-table" class="book-table-section reveal-on-scroll" aria-labelledby="book-table-heading">
       <div class="booking-card">
         <div class="booking-header">
           <h2 id="book-table-heading">Book a <span>Table</span></h2>
@@ -606,6 +744,7 @@
       <div class="footer-links">
         <a href="#food-menu">Menu</a> ·
         <a href="#new-food-items">New Arrivals</a> ·
+        <a href="#elite-guests">Elite Guests</a> ·
         <a href="#book-table">Reservations</a> ·
         <button type="button" class="text-link-btn" id="footer-owner-link">Owner Studio</button>
       </div>
@@ -641,6 +780,7 @@
       <ul id="cart-items-list" class="cart-items-list"></ul>
 
       <form id="checkout-form" class="checkout-form" hidden>
+        <div id="checkout-table-banner" class="checkout-table-banner" hidden></div>
         <div class="checkout-section">
           <label>Fulfillment
             <select id="checkout-order-type">
@@ -750,15 +890,33 @@
       </div>
 
       <div data-ai-panel="visual" hidden>
+        <div class="visual-qr-card">
+          <div class="visual-qr-head">
+            <div>
+              <span class="visual-qr-eyebrow"><i class="fa-solid fa-qrcode"></i> Table Seat Check-In</span>
+              <h4>Scan Pier 25 Table QR Code</h4>
+            </div>
+            <span id="visual-qr-active-seat" class="qr-seat-badge is-empty">No table linked</span>
+          </div>
+          <p class="visual-qr-copy">Point your camera or upload a tabletop QR code to check in and route dine-in orders directly to your physical seat.</p>
+          <div class="visual-qr-actions">
+            <button type="button" id="open-qr-scanner-btn" class="btn-gold-sm">
+              <i class="fa-solid fa-camera"></i> Launch QR Scanner Overlay
+            </button>
+          </div>
+        </div>
+
+        <hr class="owner-divider">
+
         <form id="ai-visual-form" class="checkout-form">
-          <label>Upload a Food Photo to Identify &amp; Match Menu
+          <label>Or Upload a Food Photo to Identify &amp; Match Menu
             <input type="file" id="ai-visual-file" accept="image/png,image/jpeg,image/webp">
           </label>
           <div class="visual-samples">
-            <span>Or test with dish photo:</span>
-            <button type="button" class="btn-outline-sm" data-visual-sample="sizzlers.jpg">Sizzler</button>
-            <button type="button" class="btn-outline-sm" data-visual-sample="dosa.jpg">Dosa</button>
-            <button type="button" class="btn-outline-sm" data-visual-sample="burger.jpg">Burger</button>
+            <span>Test with dish photo:</span>
+            <button type="button" class="btn-outline-sm" data-visual-sample="/src/assets/optimized/paneer-sizzler.jpg">Sizzler</button>
+            <button type="button" class="btn-outline-sm" data-visual-sample="/src/assets/optimized/masala-dosa.jpg">Dosa</button>
+            <button type="button" class="btn-outline-sm" data-visual-sample="/src/assets/optimized/cheese-burger.jpg">Burger</button>
           </div>
           <div id="ai-visual-preview" class="ai-visual-preview" hidden></div>
           <button type="submit" class="btn-forest btn-full">Analyze Image with Gemini Vision</button>
@@ -840,11 +998,72 @@
         <button type="button" class="owner-tab-btn" data-owner-tab="menu">Food Items</button>
         <button type="button" class="owner-tab-btn" data-owner-tab="orders">Orders</button>
         <button type="button" class="owner-tab-btn" data-owner-tab="reservations">Reservations</button>
-        <button type="button" class="owner-tab-btn" data-owner-tab="inventory">Inventory</button>
+        <button type="button" class="owner-tab-btn" data-owner-tab="inventory">Inventory <span id="owner-inv-alert-badge" class="owner-tab-badge tabular-nums" hidden>0</span></button>
         <button type="button" class="owner-tab-btn" data-owner-tab="crm">CRM &amp; Reviews</button>
         <button type="button" class="owner-tab-btn" data-owner-tab="ai-studio">AI Studio &amp; Staff</button>
+        <button type="button" class="owner-tab-btn" data-owner-tab="tools">Owner Tools</button>
       </div>
       <div id="owner-tab-content" class="owner-tab-content"></div>
+    </div>
+  </div>
+
+  <!-- Table QR Code Scanner Overlay (AI Concierge Visual Search) -->
+  <div id="qr-scanner-overlay" class="modal-overlay qr-scanner-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="qr-scanner-title">
+    <div class="modal-card qr-scanner-modal-card">
+      <div class="qr-scanner-modal-head">
+        <div>
+          <p class="eyebrow">Pier 25 Visual Check-In</p>
+          <h3 id="qr-scanner-title">Scan Your Table QR Code</h3>
+        </div>
+        <button type="button" class="modal-close" id="close-qr-scanner-btn" aria-label="Close QR scanner overlay">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="qr-viewfinder-stage" id="qr-viewfinder-stage">
+        <video id="qr-camera-video" playsinline muted hidden></video>
+        <canvas id="qr-scan-canvas" hidden></canvas>
+        <div class="qr-reticle" aria-hidden="true">
+          <span class="qr-corner qr-tl"></span>
+          <span class="qr-corner qr-tr"></span>
+          <span class="qr-corner qr-bl"></span>
+          <span class="qr-corner qr-br"></span>
+          <span class="qr-scan-beam"></span>
+        </div>
+        <div id="qr-camera-idle" class="qr-camera-idle">
+          <i class="fa-solid fa-qrcode"></i>
+          <strong>Align Pier 25 Table QR inside the frame</strong>
+          <p>Supports live rear/desktop camera, uploaded QR PNG/JPG cards, or pasted QR menu URLs.</p>
+          <div class="qr-camera-btns">
+            <button type="button" id="qr-start-camera-btn" class="btn-gold-sm">
+              <i class="fa-solid fa-video"></i> Start Live Camera
+            </button>
+          </div>
+        </div>
+        <button type="button" id="qr-stop-camera-btn" class="btn-outline-sm qr-stop-btn" hidden>
+          <i class="fa-solid fa-stop"></i> Stop Camera
+        </button>
+      </div>
+
+      <div class="qr-scanner-fallbacks">
+        <div class="qr-upload-row">
+          <label class="qr-upload-box" for="qr-image-file">
+            <i class="fa-solid fa-upload"></i>
+            <span>Scan from QR Image (PNG / JPG)</span>
+            <input type="file" id="qr-image-file" accept="image/png,image/jpeg,image/webp">
+          </label>
+          <button type="button" id="qr-demo-scan-btn" class="btn-outline-sm">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Test Live Scan (Table 05)
+          </button>
+        </div>
+
+        <form id="qr-manual-form" class="qr-manual-form">
+          <input type="text" id="qr-manual-input" placeholder="Paste scanned QR link or table (e.g. Table 05, Courtyard A1)" aria-label="Scanned QR code URL or table label">
+          <button type="submit" class="btn-forest">Check In Table</button>
+        </form>
+      </div>
+
+      <p id="qr-scanner-status" class="form-status" aria-live="polite"></p>
     </div>
   </div>
 

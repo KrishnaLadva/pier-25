@@ -40,10 +40,11 @@ service cloud.firestore {
 
     function isValidUserPublic(data, userId) {
       return data.keys().hasAll(['uid', 'displayName', 'loyaltyPoints', 'totalOrders', 'createdAt', 'updatedAt'])
-        && data.keys().hasOnly(['uid', 'displayName', 'loyaltyPoints', 'totalOrders', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['uid', 'displayName', 'loyaltyPoints', 'totalLoyaltyEarned', 'totalOrders', 'createdAt', 'updatedAt'])
         && data.uid == userId
         && data.displayName is string && data.displayName.size() >= 1 && data.displayName.size() <= 80
         && data.loyaltyPoints is int && data.loyaltyPoints >= 0 && data.loyaltyPoints <= 1000000
+        && (!('totalLoyaltyEarned' in data) || (data.totalLoyaltyEarned is int && data.totalLoyaltyEarned >= 0 && data.totalLoyaltyEarned <= 1000000))
         && data.totalOrders is int && data.totalOrders >= 0 && data.totalOrders <= 1000000
         && data.createdAt is timestamp
         && data.updatedAt is timestamp;
@@ -72,10 +73,11 @@ service cloud.firestore {
       return data.keys().hasAll(['id', 'name', 'category', 'description', 'imageUrl', 'available', 'updatedAt'])
         && data.keys().hasOnly([
           'id', 'name', 'category', 'subcategory', 'showcaseSection', 'description',
-          'price', 'discountPrice', 'dietaryType', 'imageUrl', 'ingredients',
+          'price', 'discountPrice', 'comboPrice', 'comboLabel', 'dietaryType', 'imageUrl', 'ingredients',
           'dietaryTags', 'customisationOptions', 'prepMinutes', 'calories',
           'available', 'stockStatus', 'isPopular', 'isBestseller', 'isNew',
-          'isNewArrival', 'isRecommended', 'updatedAt'
+          'isNewArrival', 'isRecommended', 'isDailySpecial', 'dailySpecialPrice',
+          'dailySpecialStartedAt', 'dailySpecialExpiresAt', 'updatedAt'
         ])
         && data.id == itemId
         && data.name is string && data.name.size() >= 2 && data.name.size() <= 100
@@ -85,6 +87,8 @@ service cloud.firestore {
         && data.description is string && data.description.size() >= 5 && data.description.size() <= 500
         && (!('price' in data) || data.price == null || (data.price is number && data.price >= 0 && data.price <= 100000))
         && (!('discountPrice' in data) || data.discountPrice == null || (data.discountPrice is number && data.discountPrice >= 0 && data.discountPrice <= 100000))
+        && (!('comboPrice' in data) || data.comboPrice == null || (data.comboPrice is number && data.comboPrice >= 0 && data.comboPrice <= 100000))
+        && (!('comboLabel' in data) || (data.comboLabel is string && data.comboLabel.size() <= 100))
         && (!('dietaryType' in data) || data.dietaryType in ['veg', 'non-veg'])
         && data.imageUrl is string && data.imageUrl.size() >= 1 && data.imageUrl.size() <= 300
         && data.available is bool
@@ -99,12 +103,16 @@ service cloud.firestore {
         && (!('isNew' in data) || data.isNew is bool)
         && (!('isNewArrival' in data) || data.isNewArrival is bool)
         && (!('isRecommended' in data) || data.isRecommended is bool)
+        && (!('isDailySpecial' in data) || data.isDailySpecial is bool)
+        && (!('dailySpecialPrice' in data) || data.dailySpecialPrice == null || (data.dailySpecialPrice is number && data.dailySpecialPrice >= 0 && data.dailySpecialPrice <= 100000))
+        && (!('dailySpecialStartedAt' in data) || data.dailySpecialStartedAt == null || (data.dailySpecialStartedAt is string && data.dailySpecialStartedAt.size() <= 40))
+        && (!('dailySpecialExpiresAt' in data) || data.dailySpecialExpiresAt == null || (data.dailySpecialExpiresAt is string && data.dailySpecialExpiresAt.size() <= 40))
         && data.updatedAt is timestamp;
     }
 
     function isValidOrder(data, orderId) {
       return data.keys().hasAll(['id', 'userId', 'customerName', 'itemCount', 'total', 'status', 'paymentStatus', 'orderType', 'createdAt', 'updatedAt'])
-        && data.keys().hasOnly(['id', 'userId', 'customerName', 'itemCount', 'total', 'status', 'paymentStatus', 'paymentReference', 'orderType', 'deliveryAddress', 'notes', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['id', 'userId', 'customerName', 'itemCount', 'total', 'status', 'paymentStatus', 'paymentReference', 'orderType', 'tableNumber', 'deliveryAddress', 'notes', 'createdAt', 'updatedAt'])
         && data.id == orderId
         && isValidId(data.userId)
         && data.customerName is string && data.customerName.size() >= 2 && data.customerName.size() <= 80
@@ -114,6 +122,7 @@ service cloud.firestore {
         && data.paymentStatus in ['verified', 'pending', 'refunded']
         && data.orderType in ['delivery', 'pickup', 'dine_in']
         && (!('paymentReference' in data) || (data.paymentReference is string && data.paymentReference.size() <= 80))
+        && (!('tableNumber' in data) || (data.tableNumber is string && data.tableNumber.size() <= 24))
         && (!('deliveryAddress' in data) || (data.deliveryAddress is string && data.deliveryAddress.size() <= 240))
         && (!('notes' in data) || (data.notes is string && data.notes.size() <= 300))
         && data.createdAt is timestamp
@@ -122,7 +131,7 @@ service cloud.firestore {
 
     function isValidReservation(data, reservationId) {
       return data.keys().hasAll(['id', 'userId', 'name', 'date', 'time', 'partySize', 'status', 'createdAt', 'updatedAt'])
-        && data.keys().hasOnly(['id', 'userId', 'name', 'date', 'time', 'partySize', 'status', 'notes', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['id', 'userId', 'name', 'date', 'time', 'partySize', 'status', 'tableLabel', 'notes', 'createdAt', 'updatedAt'])
         && data.id == reservationId
         && isValidId(data.userId)
         && data.name is string && data.name.size() >= 2 && data.name.size() <= 80
@@ -130,6 +139,7 @@ service cloud.firestore {
         && data.time is string && data.time.size() == 5 && data.time.matches('^\\d{2}:\\d{2}$')
         && data.partySize is int && data.partySize >= 1 && data.partySize <= 20
         && data.status in ['confirmed', 'seated', 'completed', 'cancelled']
+        && (!('tableLabel' in data) || (data.tableLabel is string && data.tableLabel.size() <= 24))
         && (!('notes' in data) || (data.notes is string && data.notes.size() <= 300))
         && data.createdAt is timestamp
         && data.updatedAt is timestamp;
@@ -145,6 +155,50 @@ service cloud.firestore {
         && data.comment is string && data.comment.size() >= 3 && data.comment.size() <= 500
         && (!('dishId' in data) || (data.dishId is string && data.dishId.size() <= 128))
         && data.createdAt is timestamp;
+    }
+
+    function isValidEliteGuest(data, guestId) {
+      return data.keys().hasAll(['uid', 'displayName', 'tier', 'totalLoyaltyEarned', 'loyaltyPoints', 'totalOrders', 'updatedAt'])
+        && data.keys().hasOnly(['uid', 'displayName', 'tier', 'totalLoyaltyEarned', 'loyaltyPoints', 'totalOrders', 'updatedAt'])
+        && data.uid == guestId
+        && data.displayName is string && data.displayName.size() >= 2 && data.displayName.size() <= 80
+        && data.tier in ['Grand Reserve', 'Gold Circle', 'Forest Patron', 'Club Guest']
+        && data.totalLoyaltyEarned is int && data.totalLoyaltyEarned >= 0 && data.totalLoyaltyEarned <= 1000000
+        && data.loyaltyPoints is int && data.loyaltyPoints >= 0 && data.loyaltyPoints <= 1000000
+        && data.totalOrders is int && data.totalOrders >= 0 && data.totalOrders <= 1000000
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidInventoryItem(data, itemId) {
+      return data.keys().hasAll(['id', 'name', 'sku', 'unit', 'stockQty', 'reorderLevel', 'costPerUnit', 'updatedAt'])
+        && data.keys().hasOnly(['id', 'name', 'sku', 'unit', 'stockQty', 'reorderLevel', 'costPerUnit', 'linkedDishIds', 'lowStockAlertAt', 'updatedAt'])
+        && data.id == itemId
+        && data.name is string && data.name.size() >= 2 && data.name.size() <= 100
+        && data.sku is string && data.sku.size() >= 2 && data.sku.size() <= 40
+        && data.unit is string && data.unit.size() >= 1 && data.unit.size() <= 30
+        && data.stockQty is number && data.stockQty >= 0 && data.stockQty <= 1000000
+        && data.reorderLevel is number && data.reorderLevel >= 0 && data.reorderLevel <= 1000000
+        && data.costPerUnit is number && data.costPerUnit >= 0 && data.costPerUnit <= 1000000
+        && (!('linkedDishIds' in data) || (data.linkedDishIds is list && data.linkedDishIds.size() <= 50 && (data.linkedDishIds.size() == 0 || data.linkedDishIds[0] is string)))
+        && (!('lowStockAlertAt' in data) || data.lowStockAlertAt == null || data.lowStockAlertAt is timestamp)
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidTableSession(data, tableId) {
+      return data.keys().hasAll(['id', 'tableLabel', 'zone', 'seats', 'status', 'source', 'userId', 'guestName', 'checkedInAt', 'updatedAt'])
+        && data.keys().hasOnly(['id', 'tableLabel', 'zone', 'seats', 'status', 'source', 'userId', 'guestName', 'partySize', 'activeOrderIds', 'checkedInAt', 'updatedAt'])
+        && data.id == tableId
+        && data.tableLabel is string && data.tableLabel.size() >= 1 && data.tableLabel.size() <= 24
+        && data.zone is string && data.zone.size() >= 1 && data.zone.size() <= 40
+        && data.seats is int && data.seats >= 1 && data.seats <= 20
+        && data.status == 'occupied'
+        && data.source in ['qr_scanner', 'qr_link', 'owner_manual', 'dine_in_order']
+        && isValidId(data.userId)
+        && data.guestName is string && data.guestName.size() >= 1 && data.guestName.size() <= 80
+        && (!('partySize' in data) || (data.partySize is int && data.partySize >= 1 && data.partySize <= 20))
+        && (!('activeOrderIds' in data) || (data.activeOrderIds is list && data.activeOrderIds.size() <= 20 && (data.activeOrderIds.size() == 0 || data.activeOrderIds[0] is string)))
+        && data.checkedInAt is timestamp
+        && data.updatedAt is timestamp;
     }
 
     match /users/{userId} {
@@ -204,10 +258,11 @@ service cloud.firestore {
         && incoming().updatedAt == request.time
         && incoming().diff(existing()).affectedKeys().hasOnly([
           'name', 'category', 'subcategory', 'showcaseSection', 'description',
-          'price', 'discountPrice', 'dietaryType', 'imageUrl', 'ingredients',
+          'price', 'discountPrice', 'comboPrice', 'comboLabel', 'dietaryType', 'imageUrl', 'ingredients',
           'dietaryTags', 'customisationOptions', 'prepMinutes', 'calories',
           'available', 'stockStatus', 'isPopular', 'isBestseller', 'isNew',
-          'isNewArrival', 'isRecommended', 'updatedAt'
+          'isNewArrival', 'isRecommended', 'isDailySpecial', 'dailySpecialPrice',
+          'dailySpecialStartedAt', 'dailySpecialExpiresAt', 'updatedAt'
         ]);
       allow delete: if isValidId(itemId) && isAdmin();
     }
@@ -280,6 +335,51 @@ service cloud.firestore {
       allow update: if false;
       allow delete: if isValidId(reviewId) && isVerifiedUser()
         && (existing().userId == request.auth.uid || isAdmin());
+    }
+
+    match /eliteGuests/{guestId} {
+      allow get: if isValidId(guestId);
+      allow list: if true;
+      allow create: if isValidId(guestId) && isAdmin()
+        && isValidEliteGuest(incoming(), guestId)
+        && incoming().updatedAt == request.time;
+      allow update: if isValidId(guestId) && isAdmin()
+        && isValidEliteGuest(incoming(), guestId)
+        && incoming().uid == existing().uid
+        && incoming().updatedAt == request.time
+        && incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'tier', 'totalLoyaltyEarned', 'loyaltyPoints', 'totalOrders', 'updatedAt']);
+      allow delete: if isValidId(guestId) && isAdmin();
+    }
+
+    match /inventory/{itemId} {
+      allow get: if isValidId(itemId) && isAdmin();
+      allow list: if isBootstrappedOwner();
+      allow create: if isValidId(itemId) && isAdmin()
+        && isValidInventoryItem(incoming(), itemId)
+        && incoming().updatedAt == request.time;
+      allow update: if isValidId(itemId) && isAdmin()
+        && isValidInventoryItem(incoming(), itemId)
+        && incoming().id == existing().id
+        && incoming().updatedAt == request.time
+        && incoming().diff(existing()).affectedKeys().hasOnly(['name', 'sku', 'unit', 'stockQty', 'reorderLevel', 'costPerUnit', 'linkedDishIds', 'lowStockAlertAt', 'updatedAt']);
+      allow delete: if isValidId(itemId) && isAdmin();
+    }
+
+    match /tableSessions/{tableId} {
+      allow get: if isValidId(tableId) && (isAdmin() || (isVerifiedUser() && existing().userId == request.auth.uid));
+      allow list: if isBootstrappedOwner() || (isVerifiedUser() && resource.data.userId == request.auth.uid);
+      allow create: if isValidId(tableId) && isVerifiedUser()
+        && isValidTableSession(incoming(), tableId)
+        && (isAdmin() || incoming().userId == request.auth.uid)
+        && incoming().checkedInAt == request.time
+        && incoming().updatedAt == request.time;
+      allow update: if isValidId(tableId) && isVerifiedUser()
+        && isValidTableSession(incoming(), tableId)
+        && incoming().id == existing().id
+        && incoming().checkedInAt == existing().checkedInAt
+        && incoming().updatedAt == request.time
+        && (isAdmin() || (existing().userId == request.auth.uid && incoming().userId == request.auth.uid));
+      allow delete: if isValidId(tableId) && isAdmin();
     }
   }
 }

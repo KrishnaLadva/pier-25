@@ -92,6 +92,7 @@ export async function ensureUserDocumentsInFirestore(firebaseUser) {
         uid: firebaseUser.uid,
         displayName,
         loyaltyPoints: 0,
+        totalLoyaltyEarned: 0,
         totalOrders: 0,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
@@ -136,6 +137,7 @@ export async function syncOrderToFirestore(order) {
       paymentStatus: order.paymentStatus || 'verified',
       paymentReference: String(order.paymentReference || '').slice(0, 80),
       orderType: order.orderType || 'delivery',
+      tableNumber: String(order.tableNumber || '').slice(0, 24),
       deliveryAddress: String(order.deliveryAddress || '').slice(0, 240),
       notes: String(order.notes || '').slice(0, 300),
       createdAt: serverTimestamp(),
@@ -201,6 +203,8 @@ export async function syncMenuItemToFirestore(item) {
       description: String(item.description || '').slice(0, 500),
       price: item.price === null || item.price === undefined ? null : Number(item.price),
       discountPrice: item.discountPrice === null || item.discountPrice === undefined ? null : Number(item.discountPrice),
+      comboPrice: item.comboPrice === null || item.comboPrice === undefined ? null : Number(item.comboPrice),
+      comboLabel: String(item.comboLabel || '').slice(0, 100),
       dietaryType: item.dietaryType === 'non-veg' ? 'non-veg' : 'veg',
       imageUrl: String(item.imageUrl || 'dish.png').slice(0, 300),
       ingredients: Array.isArray(item.ingredients) ? item.ingredients.slice(0, 25) : [],
@@ -215,6 +219,10 @@ export async function syncMenuItemToFirestore(item) {
       isNew: Boolean(item.isNewArrival || item.isNew),
       isNewArrival: Boolean(item.isNewArrival || item.isNew),
       isRecommended: Boolean(item.isRecommended),
+      isDailySpecial: Boolean(item.isDailySpecial),
+      dailySpecialPrice: item.dailySpecialPrice === null || item.dailySpecialPrice === undefined ? null : Number(item.dailySpecialPrice),
+      dailySpecialStartedAt: item.dailySpecialStartedAt ? String(item.dailySpecialStartedAt).slice(0, 40) : null,
+      dailySpecialExpiresAt: item.dailySpecialExpiresAt ? String(item.dailySpecialExpiresAt).slice(0, 40) : null,
       updatedAt: serverTimestamp(),
     });
   } catch (error) {
@@ -232,4 +240,96 @@ export async function deleteMenuItemFromFirestore(itemId) {
     handleFirestoreError(error, OperationType.DELETE, path);
   }
 }
+
+export async function syncInventoryItemToFirestore(item) {
+  const user = auth.currentUser;
+  if (!user?.uid || !user.emailVerified || user.email !== 'krishnaladva25@gmail.com' || !item?.id) return;
+  const path = `inventory/${item.id}`;
+  try {
+    await setDoc(doc(db, 'inventory', item.id), {
+      id: String(item.id).slice(0, 128),
+      name: String(item.name || '').slice(0, 100),
+      sku: String(item.sku || 'KRD-001').slice(0, 40),
+      unit: String(item.unit || 'units').slice(0, 30),
+      stockQty: Math.max(0, Number(item.stockQty ?? 0)),
+      reorderLevel: Math.max(0, Number(item.reorderLevel ?? 0)),
+      costPerUnit: Math.max(0, Number(item.costPerUnit ?? 0)),
+      linkedDishIds: Array.isArray(item.linkedDishIds) ? item.linkedDishIds.slice(0, 50) : [],
+      lowStockAlertAt: item.stockQty <= item.reorderLevel ? serverTimestamp() : null,
+      updatedAt: serverTimestamp(),
+    });
+  } catch (error) {
+    handleFirestoreError(error, OperationType.WRITE, path);
+  }
+}
+
+export async function deleteInventoryItemFromFirestore(itemId) {
+  const user = auth.currentUser;
+  if (!user?.uid || !user.emailVerified || user.email !== 'krishnaladva25@gmail.com' || !itemId) return;
+  const path = `inventory/${itemId}`;
+  try {
+    await deleteDoc(doc(db, 'inventory', itemId));
+  } catch (error) {
+    handleFirestoreError(error, OperationType.DELETE, path);
+  }
+}
+
+export async function syncEliteGuestToFirestore(guest) {
+  const user = auth.currentUser;
+  if (!user?.uid || !user.emailVerified || user.email !== 'krishnaladva25@gmail.com' || !guest?.uid) return;
+  const path = `eliteGuests/${guest.uid}`;
+  try {
+    await setDoc(doc(db, 'eliteGuests', guest.uid), {
+      uid: String(guest.uid).slice(0, 128),
+      displayName: String(guest.displayName || 'Guest').slice(0, 80),
+      tier: ['Grand Reserve', 'Gold Circle', 'Forest Patron', 'Club Guest'].includes(guest.tier)
+        ? guest.tier
+        : 'Club Guest',
+      totalLoyaltyEarned: Math.max(0, Math.round(Number(guest.totalLoyaltyEarned || 0))),
+      loyaltyPoints: Math.max(0, Math.round(Number(guest.loyaltyPoints || 0))),
+      totalOrders: Math.max(0, Math.round(Number(guest.totalOrders || 0))),
+      updatedAt: serverTimestamp(),
+    });
+  } catch (error) {
+    handleFirestoreError(error, OperationType.WRITE, path);
+  }
+}
+
+export async function syncTableSessionToFirestore(session) {
+  const user = auth.currentUser;
+  if (!user?.uid || !user.emailVerified || !session?.id) return;
+  const path = `tableSessions/${session.id}`;
+  try {
+    await setDoc(doc(db, 'tableSessions', session.id), {
+      id: String(session.id).slice(0, 128),
+      tableLabel: String(session.tableLabel || 'Table').slice(0, 24),
+      zone: String(session.zone || 'Main Dining').slice(0, 40),
+      seats: Math.max(1, Math.min(20, Math.round(Number(session.seats || 4)))),
+      status: 'occupied',
+      source: ['qr_scanner', 'qr_link', 'owner_manual', 'dine_in_order'].includes(session.source)
+        ? session.source
+        : 'qr_scanner',
+      userId: user.uid,
+      guestName: String(session.guestName || user.displayName || 'Guest').slice(0, 80),
+      partySize: Math.max(1, Math.min(20, Math.round(Number(session.partySize || session.seats || 2)))),
+      activeOrderIds: Array.isArray(session.activeOrderIds) ? session.activeOrderIds.slice(0, 20) : [],
+      checkedInAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    });
+  } catch (error) {
+    handleFirestoreError(error, OperationType.WRITE, path);
+  }
+}
+
+export async function releaseTableSessionFromFirestore(tableId) {
+  const user = auth.currentUser;
+  if (!user?.uid || !user.emailVerified || user.email !== 'krishnaladva25@gmail.com' || !tableId) return;
+  const path = `tableSessions/${tableId}`;
+  try {
+    await deleteDoc(doc(db, 'tableSessions', tableId));
+  } catch (error) {
+    handleFirestoreError(error, OperationType.DELETE, path);
+  }
+}
+
 

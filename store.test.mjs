@@ -117,16 +117,21 @@ test('RestaurantStore persists owner ₹ price updates, customisation orders, in
     });
     assert.equal(owner.role, 'owner');
 
-    // Owner enters ₹180 regular and ₹150 discount price for Espresso inside unified Food Items
-    const updatedEspresso = await store.upsertMenuItem({ price: 180, discountPrice: 150 }, 'coffee-espresso');
+    // Owner enters ₹180 regular, ₹150 discount, and ₹290 combo price for Espresso inside unified Food Items
+    const updatedEspresso = await store.upsertMenuItem(
+      { price: 180, discountPrice: 150, comboPrice: 290, comboLabel: 'Espresso + Butter Croissant' },
+      'coffee-espresso'
+    );
     assert.equal(updatedEspresso.price, 180);
     assert.equal(updatedEspresso.discountPrice, 150);
+    assert.equal(updatedEspresso.comboPrice, 290);
+    assert.equal(updatedEspresso.comboLabel, 'Espresso + Butter Croissant');
 
     const { order, user: updatedCustomer } = await store.createOrder({
       user: customer,
       items: [
-        { id: 'smoky-paneer-sizzler', quantity: 2 },
-        { id: 'coffee-espresso', quantity: 1, customisations: { 'Roast Profile': 'Single-Origin Fruity' } },
+        { id: 'smoky-paneer-sizzler', quantity: 2, pricingMode: 'combo' }, // ₹549 * 2 = ₹1098
+        { id: 'coffee-espresso', quantity: 1, pricingMode: 'individual', customisations: { 'Roast Profile': 'Single-Origin Fruity' } },
       ],
       orderType: 'pickup',
       customerName: 'Maya Guest',
@@ -135,9 +140,17 @@ test('RestaurantStore persists owner ₹ price updates, customisation orders, in
 
     assert.equal(order.status, 'confirmed');
     assert.equal(order.paymentStatus, 'verified');
-    assert.equal(order.subtotal, 978 + 150);
+    assert.equal(order.subtotal, 1098 + 150);
     assert.equal(order.items[1].customisationSummary, 'Roast Profile: Single-Origin Fruity');
     assert.ok(updatedCustomer.loyaltyPoints > 50);
+
+    // Reject combo mode when item has no comboPrice
+    const baseDosa = store.data.menuItems.find((m) => m.id === 'crispy-masala-dosa');
+    assert.ok(baseDosa.comboPrice > 0);
+    assert.throws(
+      () => calculateCartTotals([{ id: 'masala-puff-chai', quantity: 1, pricingMode: 'combo' }], store.data.menuItems),
+      /Combo pricing is not available/
+    );
 
     // Stock deducted for linked Paneer Blocks (initial 18 - 2 = 16)
     const paneer = store.data.inventory.find((i) => i.id === 'inv-paneer');
@@ -151,8 +164,81 @@ test('RestaurantStore persists owner ₹ price updates, customisation orders, in
     const reloaded = await new RestaurantStore(join(dir, 'store.json')).init();
     assert.equal(reloaded.data.orders.length, 1);
     assert.equal(reloaded.data.menuItems.find((m) => m.id === 'coffee-espresso')?.discountPrice, 150);
+    assert.equal(reloaded.data.menuItems.find((m) => m.id === 'coffee-espresso')?.comboPrice, 290);
     assert.equal(reloaded.findUserByEmail(OWNER_EMAIL).role, 'owner');
   } finally {
     await rm(dir, { recursive: true, force: true });
   }
 });
+
+test('RestaurantStore Elite Guests leaderboard ranks by totalLoyaltyEarned without leaking PII and updates on orders', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'pier25-elite-'));
+  try {
+    const store = await new RestaurantStore(join(dir, 'store.json')).init();
+    const initialBoard = store.getEliteGuestsLeaderboard({ limit: 6 });
+    assert.equal(initialBoard.guests.length, 6);
+    assert.equal(initialBoard.guests[0].displayName, 'Ananya Verma');
+    assert.equal(initialBoard.guests[0].totalLoyaltyEarned, 1680);
+
+    // Ensure PII fields are completely absent from public leaderboard response
+    for (const g of initialBoard.guests) {
+      assert.equal(g.email, undefined);
+      assert.equal(g.phone, undefined);
+      assert.equal(g.address, undefined);
+    }
+
+    // Register a new high-volume customer and redeem points while keeping cumulative earned intact
+    const vip = await store.registerUser({
+      displayName: 'Zara Kapoor',
+      email: 'zara.vip@example.com',
+      password: 'password123',
+    });
+    assert.equal(vip.totalLoyaltyEarned, 50);
+
+    // High-value order earns > 1800 points (₹19,560 subtotal -> ~1956 points)
+    await store.createOrder({
+      user: vip,
+      items: [{ id: 'smoky-paneer-sizzler', quantity: 40 }],
+      orderType: 'pickup',
+      customerName: 'Zara Kapoor',
+      redeemPoints: 50,
+      payment: { method: 'upi', upiId: 'zara@okbank' },
+    });
+
+    const reviewGuest = await store.findUserById(vip.uid);
+    await store.addReview({
+      user: store.sanitizeUser(reviewGuest),
+      rating: 5,
+      comment: 'Incredible sizzler catering!',
+      dishId: 'smoky-paneer-sizzler',
+    });
+
+    const updatedBoard = store.getEliteGuestsLeaderboard({ limit: 6 });
+    assert.equal(updatedBoard.guests[0].displayName, 'Zara Kapoor');
+    assert.ok(updatedBoard.guests[0].totalLoyaltyEarned > 1900);
+    assert.equal(updatedBoard.guests[0].tier, 'Grand Reserve');
+    assert.equal(updatedBoard.guests[0].email, undefined);
+
+    // Verify automated inventory threshold, acknowledgment, and restock workflows
+    const chai = store.data.inventory.find((i) => i.id === 'inv-chai-pastry');
+    assert.ok(chai.stockQty <= chai.reorderLevel);
+
+    const ackRes = await store.acknowledgeInventoryAlert('inv-chai-pastry');
+    assert.equal(ackRes.alertSummary.activeAlerts.some((a) => a.id === 'inv-chai-pastry'), false);
+
+    // Raising threshold on a healthy SKU triggers a fresh alert automatically and preserves SKU/unit
+    const paneerUpdate = await store.upsertInventoryItem({ reorderLevel: 25 }, 'inv-paneer');
+    assert.ok(paneerUpdate.lowStockAlertAt);
+    assert.equal(paneerUpdate.sku, 'KRD-102');
+    assert.equal(paneerUpdate.unit, 'kg');
+
+    // One-click restock replenishes above threshold and clears alert
+    const restockRes = await store.restockInventoryItem('inv-paneer');
+    assert.ok(restockRes.item.stockQty > restockRes.item.reorderLevel);
+    assert.equal(restockRes.alertSummary.allAlerts.some((a) => a.id === 'inv-paneer'), false);
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+});
+
+

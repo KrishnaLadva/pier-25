@@ -9,6 +9,7 @@ import {
   signSessionToken,
   verifySessionToken,
 } from './backend-store.mjs';
+import { buildLowStockNotifications, evaluateInventoryStock } from './inventory-alerts.js';
 import {
   analyzeReviewSentiment,
   askBusinessAssistant,
@@ -33,6 +34,7 @@ const types = {
   '.gif': 'image/gif',
   '.svg': 'image/svg+xml',
   '.webp': 'image/webp',
+  '.avif': 'image/avif',
 };
 
 const COOKIE_NAME = 'krazzy_session';
@@ -188,6 +190,16 @@ async function handleApiRequest(request, response, pathname) {
       return sendJson(response, 200, { reviews: store.data.reviews });
     }
 
+    if (method === 'GET' && pathname === '/api/crm/elite-guests') {
+      const reqUrl = new URL(request.url || '/api/crm/elite-guests', 'http://localhost');
+      const limitParam = reqUrl.searchParams.get('limit');
+      return sendJson(
+        response,
+        200,
+        store.getEliteGuestsLeaderboard({ limit: limitParam ? Number(limitParam) : 6 })
+      );
+    }
+
     if (method === 'POST' && pathname === '/api/newsletter') {
       const body = await readJsonBody(request);
       const res = await store.subscribeNewsletter(body.email);
@@ -263,6 +275,7 @@ async function handleApiRequest(request, response, pathname) {
         user,
         items: body.items,
         orderType: body.orderType || 'delivery',
+        tableNumber: body.tableNumber || '',
         deliveryAddress: body.deliveryAddress,
         customerName: body.customerName,
         customerPhone: body.customerPhone,
@@ -321,6 +334,22 @@ async function handleApiRequest(request, response, pathname) {
       const resId = decodeURIComponent(pathname.slice('/api/reservations/'.length, -'/cancel'.length));
       const reservation = await store.updateReservationStatus(resId, 'cancelled', user);
       return sendJson(response, 200, { reservation });
+    }
+
+    // QR Table Check-In (Visual Search Scanner & Table URLs)
+    if (method === 'POST' && pathname === '/api/tables/check-in') {
+      const body = await readJsonBody(request);
+      const res = await store.checkInTable({
+        tableLabel: body.tableLabel,
+        user,
+        guestName: body.guestName || user?.displayName || 'Walk-In QR Guest',
+        partySize: body.partySize,
+        source: body.source === 'qr_link' ? 'qr_link' : 'qr_scanner',
+      });
+      return sendJson(response, 200, {
+        session: res.session,
+        floorPlanSummary: res.floorPlan.summary,
+      });
     }
 
     // Reviews
@@ -412,12 +441,47 @@ async function handleApiRequest(request, response, pathname) {
         analytics: computeAnalyticsSnapshot(store.data),
         orders: store.data.orders,
         reservations: store.data.reservations,
+        floorPlan: store.getFloorPlanState(),
         inventory: store.data.inventory,
+        inventoryAlertSummary: buildLowStockNotifications(store.data.inventory),
         customers: store.getCustomersCRM(),
+        loyaltyAnalytics: store.getLoyaltyAnalytics(),
         reviews: store.data.reviews,
         staff: store.data.staff,
         settings: store.data.settings,
       });
+    }
+
+    if (method === 'GET' && pathname === '/api/owner/loyalty-analytics') {
+      const reqUrl = new URL(request.url || '/api/owner/loyalty-analytics', 'http://localhost');
+      const range = ['30d', '90d', 'all'].includes(reqUrl.searchParams.get('range'))
+        ? reqUrl.searchParams.get('range')
+        : 'all';
+      const segmentBy = ['tier', 'neighborhood', 'preference'].includes(reqUrl.searchParams.get('segmentBy'))
+        ? reqUrl.searchParams.get('segmentBy')
+        : 'tier';
+      return sendJson(response, 200, store.getLoyaltyAnalytics({ range, segmentBy }));
+    }
+
+    if (method === 'GET' && pathname === '/api/owner/floor-plan') {
+      return sendJson(response, 200, store.getFloorPlanState());
+    }
+
+    if (method === 'POST' && pathname === '/api/owner/tables/check-in') {
+      const body = await readJsonBody(request);
+      const res = await store.checkInTable({
+        tableLabel: body.tableLabel,
+        guestName: body.guestName || 'Walk-In Guest',
+        partySize: body.partySize,
+        source: 'owner_manual',
+      });
+      return sendJson(response, 200, res);
+    }
+
+    if (method === 'POST' && pathname.startsWith('/api/owner/tables/') && pathname.endsWith('/release')) {
+      const tableId = decodeURIComponent(pathname.slice('/api/owner/tables/'.length, -'/release'.length));
+      const res = await store.releaseTable(tableId);
+      return sendJson(response, 200, res);
     }
 
     if (method === 'POST' && pathname === '/api/owner/upload-image') {
@@ -444,6 +508,17 @@ async function handleApiRequest(request, response, pathname) {
       return sendJson(response, 201, { item });
     }
 
+    if (method === 'PATCH' && pathname.startsWith('/api/owner/menu/') && pathname.endsWith('/daily-special')) {
+      const itemId = decodeURIComponent(pathname.slice('/api/owner/menu/'.length, -'/daily-special'.length));
+      const body = await readJsonBody(request);
+      const item = await store.setDailySpecial(itemId, {
+        enabled: Boolean(body.enabled),
+        dailySpecialPrice: body.dailySpecialPrice,
+        durationHours: body.durationHours || 24,
+      });
+      return sendJson(response, 200, { item });
+    }
+
     if (method === 'PUT' && pathname.startsWith('/api/owner/menu/')) {
       const itemId = decodeURIComponent(pathname.slice('/api/owner/menu/'.length));
       const body = await readJsonBody(request);
@@ -467,21 +542,54 @@ async function handleApiRequest(request, response, pathname) {
     if (method === 'PATCH' && pathname.startsWith('/api/owner/reservations/')) {
       const resId = decodeURIComponent(pathname.slice('/api/owner/reservations/'.length));
       const body = await readJsonBody(request);
-      const reservation = await store.updateReservationStatus(resId, body.status, user);
-      return sendJson(response, 200, { reservation });
+      const reservation = await store.updateReservationStatus(resId, body.status, user, {
+        tableLabel: body.tableLabel,
+      });
+      return sendJson(response, 200, { reservation, floorPlan: store.getFloorPlanState() });
+    }
+
+    if (method === 'GET' && pathname === '/api/owner/inventory/alerts') {
+      return sendJson(response, 200, buildLowStockNotifications(store.data.inventory));
     }
 
     if (method === 'POST' && pathname === '/api/owner/inventory') {
       const body = await readJsonBody(request);
       const item = await store.upsertInventoryItem(body);
-      return sendJson(response, 201, { item });
+      return sendJson(response, 201, {
+        item,
+        evaluation: evaluateInventoryStock(item),
+        alertSummary: buildLowStockNotifications(store.data.inventory),
+      });
+    }
+
+    if (method === 'POST' && pathname.startsWith('/api/owner/inventory/') && pathname.endsWith('/restock')) {
+      const invId = decodeURIComponent(pathname.slice('/api/owner/inventory/'.length, -'/restock'.length));
+      const body = await readJsonBody(request);
+      const result = await store.restockInventoryItem(invId, body?.quantity);
+      return sendJson(response, 200, result);
+    }
+
+    if (method === 'POST' && pathname.startsWith('/api/owner/inventory/') && pathname.endsWith('/acknowledge')) {
+      const invId = decodeURIComponent(pathname.slice('/api/owner/inventory/'.length, -'/acknowledge'.length));
+      const result = await store.acknowledgeInventoryAlert(invId);
+      return sendJson(response, 200, result);
     }
 
     if (method === 'PUT' && pathname.startsWith('/api/owner/inventory/')) {
       const invId = decodeURIComponent(pathname.slice('/api/owner/inventory/'.length));
       const body = await readJsonBody(request);
       const item = await store.upsertInventoryItem(body, invId);
-      return sendJson(response, 200, { item });
+      return sendJson(response, 200, {
+        item,
+        evaluation: evaluateInventoryStock(item),
+        alertSummary: buildLowStockNotifications(store.data.inventory),
+      });
+    }
+
+    if (method === 'DELETE' && pathname.startsWith('/api/owner/inventory/')) {
+      const invId = decodeURIComponent(pathname.slice('/api/owner/inventory/'.length));
+      const result = await store.deleteInventoryItem(invId);
+      return sendJson(response, 200, result);
     }
 
     if (method === 'DELETE' && pathname.startsWith('/api/owner/reviews/')) {
@@ -594,6 +702,25 @@ createServer(async (request, response) => {
     try {
       const file = await readFile(resolve(UPLOADS_DIR, fileName));
       response.writeHead(200, { 'Content-Type': type });
+      return response.end(request.method === 'HEAD' ? undefined : file);
+    } catch {
+      return response.writeHead(404).end('Not found');
+    }
+  }
+
+  // Optimized AVIF / WebP / PNG / JPEG visual assets under /src/assets/optimized/<filename>
+  if (pathname.startsWith('/src/assets/optimized/')) {
+    const fileName = pathname.slice('/src/assets/optimized/'.length);
+    const type = types[extname(fileName).toLowerCase()];
+    if (!/^[a-z0-9][a-z0-9._-]*$/i.test(fileName) || !type) {
+      return response.writeHead(404).end('Not found');
+    }
+    try {
+      const file = await readFile(resolve(process.cwd(), 'src', 'assets', 'optimized', fileName));
+      response.writeHead(200, {
+        'Content-Type': type,
+        'Cache-Control': 'public, max-age=604800',
+      });
       return response.end(request.method === 'HEAD' ? undefined : file);
     } catch {
       return response.writeHead(404).end('Not found');

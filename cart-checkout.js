@@ -1,8 +1,23 @@
+import { isDailySpecialActive } from './daily-specials.js';
+
 export const CART_STORAGE_KEY = 'krazzy_cart_items';
 
-export function getEffectiveItemPrice(item) {
+export function getComboItemPrice(item) {
+  const combo = Number(item?.comboPrice);
+  if (!Number.isFinite(combo) || combo <= 0) return null;
+  return Math.round(combo * 100) / 100;
+}
+
+export function getEffectiveItemPrice(item, pricingMode = 'individual', nowMs = Date.now()) {
+  if (pricingMode === 'combo') {
+    const combo = getComboItemPrice(item);
+    if (combo !== null) return combo;
+  }
   const base = Number(item?.price);
   if (!Number.isFinite(base) || base <= 0) return null;
+  if (isDailySpecialActive(item, nowMs)) {
+    return Math.round(Number(item.dailySpecialPrice) * 100) / 100;
+  }
   const disc = Number(item?.discountPrice);
   if (Number.isFinite(disc) && disc > 0 && disc < base) {
     return Math.round(disc * 100) / 100;
@@ -10,13 +25,14 @@ export function getEffectiveItemPrice(item) {
   return Math.round(base * 100) / 100;
 }
 
-export function buildCartKey(itemId, customisations = null) {
-  if (!customisations || typeof customisations !== 'object') return itemId;
+export function buildCartKey(itemId, customisations = null, pricingMode = 'individual') {
+  const modeSuffix = pricingMode === 'combo' ? '::mode=combo' : '';
+  if (!customisations || typeof customisations !== 'object') return `${itemId}${modeSuffix}`;
   const entries = Object.entries(customisations)
     .filter(([, val]) => String(val || '').trim())
     .sort(([a], [b]) => a.localeCompare(b));
-  if (entries.length === 0) return itemId;
-  return `${itemId}::${entries.map(([k, v]) => `${k}=${v}`).join('|')}`;
+  if (entries.length === 0) return `${itemId}${modeSuffix}`;
+  return `${itemId}${modeSuffix}::${entries.map(([k, v]) => `${k}=${v}`).join('|')}`;
 }
 
 export function formatINR(value) {
@@ -27,11 +43,13 @@ export function formatINR(value) {
     : `₹${num.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
-export function addItemToCart(cartItems, item, qty = 1, customisations = null) {
-  const unitPrice = getEffectiveItemPrice(item);
+export function addItemToCart(cartItems, item, qty = 1, customisations = null, pricingMode = 'individual') {
+  const useCombo = pricingMode === 'combo' && getComboItemPrice(item) !== null;
+  const effectiveMode = useCombo ? 'combo' : 'individual';
+  const unitPrice = getEffectiveItemPrice(item, effectiveMode);
   if (unitPrice === null) return cartItems;
   const safeQty = Math.max(1, Math.min(20, Math.floor(Number(qty) || 1)));
-  const cartKey = buildCartKey(item.id, customisations);
+  const cartKey = buildCartKey(item.id, customisations, effectiveMode);
   const existing = cartItems.find((entry) => (entry.cartKey || entry.id) === cartKey);
   if (existing) {
     return cartItems.map((entry) =>
@@ -46,8 +64,10 @@ export function addItemToCart(cartItems, item, qty = 1, customisations = null) {
       id: item.id,
       cartKey,
       name: item.name,
+      pricingMode: effectiveMode,
+      ...(useCombo && item.comboLabel ? { comboLabel: item.comboLabel } : {}),
       price: unitPrice,
-      originalPrice: Number(item.price),
+      originalPrice: Number(item.price || unitPrice),
       imageUrl: item.imageUrl,
       ...(customisations && Object.keys(customisations).length > 0 ? { customisations } : {}),
       quantity: safeQty,
@@ -58,17 +78,17 @@ export function addItemToCart(cartItems, item, qty = 1, customisations = null) {
 export function updateCartItemQty(cartItems, keyOrId, nextQty) {
   const qty = Math.floor(Number(nextQty));
   if (!Number.isFinite(qty) || qty <= 0) {
-    return cartItems.filter((entry) => entry.cartKey !== keyOrId && entry.id !== keyOrId);
+    return cartItems.filter((entry) => (entry.cartKey || entry.id) !== keyOrId);
   }
   return cartItems.map((entry) =>
-    entry.cartKey === keyOrId || entry.id === keyOrId
+    (entry.cartKey || entry.id) === keyOrId
       ? { ...entry, quantity: Math.min(50, qty) }
       : entry
   );
 }
 
 export function removeCartItem(cartItems, keyOrId) {
-  return cartItems.filter((entry) => entry.cartKey !== keyOrId && entry.id !== keyOrId);
+  return cartItems.filter((entry) => (entry.cartKey || entry.id) !== keyOrId);
 }
 
 export function getCartTotalCount(cartItems) {
@@ -106,7 +126,8 @@ export function parseStoredCart(rawJson) {
       )
       .map((entry) => ({
         ...entry,
-        cartKey: entry.cartKey || buildCartKey(entry.id, entry.customisations || null),
+        pricingMode: entry.pricingMode === 'combo' ? 'combo' : 'individual',
+        cartKey: entry.cartKey || buildCartKey(entry.id, entry.customisations || null, entry.pricingMode === 'combo' ? 'combo' : 'individual'),
       }));
   } catch {
     return [];
@@ -127,6 +148,7 @@ export function createCartController({
   let cartItems = [];
   let activeOrder = null;
   let pollTimer = null;
+  let activeTableNumber = '';
 
   try {
     cartItems = parseStoredCart(window.localStorage.getItem(CART_STORAGE_KEY));
@@ -140,6 +162,7 @@ export function createCartController({
   const cartListEl = document.querySelector('#cart-items-list');
   const cartEmptyEl = document.querySelector('#cart-empty-state');
   const checkoutForm = document.querySelector('#checkout-form');
+  const checkoutTableBadge = document.querySelector('#checkout-table-banner');
   const summaryEl = document.querySelector('#checkout-summary');
   const statusEl = document.querySelector('#checkout-status');
   const orderTypeSelect = document.querySelector('#checkout-order-type');
@@ -160,6 +183,17 @@ export function createCartController({
   const trackingLookupInput = document.querySelector('#order-lookup-input');
 
   let quoteState = null;
+
+  function syncTableBannerUi() {
+    if (!checkoutTableBadge) return;
+    if (activeTableNumber) {
+      checkoutTableBadge.hidden = false;
+      checkoutTableBadge.textContent = `Dine-In Service · ${activeTableNumber}`;
+    } else {
+      checkoutTableBadge.hidden = true;
+      checkoutTableBadge.textContent = '';
+    }
+  }
 
   function persistCart() {
     try {
@@ -221,6 +255,7 @@ export function createCartController({
           items: cartItems.map((c) => ({
             id: c.id,
             quantity: c.quantity,
+            pricingMode: c.pricingMode === 'combo' ? 'combo' : 'individual',
             ...(c.customisations ? { customisations: c.customisations } : {}),
           })),
           orderType: orderTypeSelect?.value || 'delivery',
@@ -255,7 +290,8 @@ export function createCartController({
 
     for (const item of cartItems) {
       const latest = menuMap.get(item.id);
-      const effectivePrice = latest ? (getEffectiveItemPrice(latest) ?? item.price) : item.price;
+      const itemMode = item.pricingMode === 'combo' ? 'combo' : 'individual';
+      const effectivePrice = latest ? (getEffectiveItemPrice(latest, itemMode) ?? item.price) : item.price;
       const key = item.cartKey || item.id;
 
       const li = document.createElement('li');
@@ -269,11 +305,18 @@ export function createCartController({
       const info = document.createElement('div');
       info.className = 'cart-row-info';
       const title = document.createElement('strong');
-      title.textContent = item.name;
+      title.textContent = itemMode === 'combo' ? `${item.name} (Combo)` : item.name;
       const meta = document.createElement('span');
       meta.className = 'tabular-nums';
       meta.textContent = `${formatINR(effectivePrice)} each`;
       info.append(title, meta);
+
+      if (itemMode === 'combo' && (latest?.comboLabel || item.comboLabel)) {
+        const comboNote = document.createElement('small');
+        comboNote.className = 'cart-customisation-note';
+        comboNote.textContent = `Combo: ${latest?.comboLabel || item.comboLabel}`;
+        info.appendChild(comboNote);
+      }
 
       if (item.customisations && Object.keys(item.customisations).length > 0) {
         const cust = document.createElement('small');
@@ -380,7 +423,7 @@ export function createCartController({
       <div class="tracking-header">
         <div>
           <strong>Live Order ${order.id}</strong>
-          <div class="tracking-meta">${order.orderType.replace(/_/g, ' ')} · ${order.itemCount} items · ${formatINR(order.total)} · Ref ${order.paymentReference || 'VERIFIED'}</div>
+          <div class="tracking-meta">${order.orderType.replace(/_/g, ' ')}${order.tableNumber ? ` · ${order.tableNumber}` : ''} · ${order.itemCount} items · ${formatINR(order.total)} · Ref ${order.paymentReference || 'VERIFIED'}</div>
         </div>
         <button type="button" class="btn-outline-sm" id="refresh-tracking-btn">Refresh</button>
       </div>
@@ -450,9 +493,11 @@ export function createCartController({
           items: cartItems.map((c) => ({
             id: c.id,
             quantity: c.quantity,
+            pricingMode: c.pricingMode === 'combo' ? 'combo' : 'individual',
             ...(c.customisations ? { customisations: c.customisations } : {}),
           })),
           orderType: orderTypeSelect?.value || 'delivery',
+          tableNumber: (orderTypeSelect?.value || 'delivery') === 'dine_in' ? activeTableNumber : '',
           customerName: nameInput?.value || '',
           customerPhone: phoneInput?.value || '',
           deliveryAddress: addressInput?.value || '',
@@ -499,15 +544,17 @@ export function createCartController({
   persistCart();
 
   return {
-    addDish(dish, qty = 1, customisations = null) {
-      if (getEffectiveItemPrice(dish) === null) {
+    addDish(dish, qty = 1, customisations = null, pricingMode = 'individual') {
+      const useCombo = pricingMode === 'combo' && getComboItemPrice(dish) !== null;
+      const effectiveMode = useCombo ? 'combo' : 'individual';
+      if (getEffectiveItemPrice(dish, effectiveMode) === null) {
         if (statusEl) {
           statusEl.textContent = `Price for "${dish.name}" is set by the owner before online ordering.`;
           statusEl.className = 'form-status info';
         }
         return false;
       }
-      cartItems = addItemToCart(cartItems, dish, qty, customisations);
+      cartItems = addItemToCart(cartItems, dish, qty, customisations, effectiveMode);
       persistCart();
       refreshQuoteAndRender();
       return true;
@@ -518,6 +565,18 @@ export function createCartController({
       activeOrder = order;
       openDrawer();
       renderTrackingOrder(order);
+    },
+    setTableNumber(tableLabel, { preferDineIn = true } = {}) {
+      activeTableNumber = String(tableLabel || '').trim().slice(0, 24);
+      if (activeTableNumber && preferDineIn && orderTypeSelect) {
+        orderTypeSelect.value = 'dine_in';
+        if (addressGroup) addressGroup.hidden = true;
+      }
+      syncTableBannerUi();
+      refreshQuoteAndRender();
+    },
+    getTableNumber() {
+      return activeTableNumber;
     },
     getCartCount() {
       return getCartTotalCount(cartItems);
